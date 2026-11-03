@@ -37,8 +37,8 @@
     "@type": "FAQPage",
     "mainEntity": [
       {"@type":"Question","name":"Is Transcript TikTok free?","acceptedAnswer":{"@type":"Answer","text":"Transcript TikTok is free to try without an account. Transcript processing depends on available provider capacity and usage limits."}},
-      {"@type":"Question","name":"Do I need to create an account?","acceptedAnswer":{"@type":"Answer","text":"No. You can paste a public TikTok video link and use Transcript TikTok without creating an account."}},
-      {"@type":"Question","name":"Can Transcript TikTok transcribe any TikTok video?","acceptedAnswer":{"@type":"Answer","text":"No. Videos must be public and accessible. Private, deleted, restricted, or unsupported videos may not be processed."}},
+      {"@type":"Question","name":"Do I need to create an account?","acceptedAnswer":{"@type":"Answer","text":"No account is needed to use this simple interface."}},
+      {"@type":"Question","name":"Can I transcribe any video?","acceptedAnswer":{"@type":"Answer","text":"No. The video must be public and accessible. Private, deleted, region-restricted, or otherwise unavailable videos may not be processed."}},
       {"@type":"Question","name":"Does Transcript TikTok work when a video has no captions?","acceptedAnswer":{"@type":"Answer","text":"Transcript TikTok requests automatic transcription fallback when supported by its transcript provider. Results depend on audio quality, video access, and provider availability."}},
       {"@type":"Question","name":"Which video platforms are supported?","acceptedAnswer":{"@type":"Answer","text":"The tool accepts accessible public video links from TikTok, YouTube, Facebook, and Instagram."}}
     ]
@@ -386,6 +386,7 @@
           const messages = {
             CONFIG_MISSING: 'Transcript service is not configured yet. Add your Supadata API key in Vercel settings.',
             TRANSCRIPT_UNAVAILABLE: 'No transcript was available for this video. Try another accessible public video with clear speech.',
+            VIDEO_INACCESSIBLE: 'This video is private, restricted, or unavailable to the transcript provider. Try a public video link.',
             PRIVATE_OR_RESTRICTED: 'This video is private or restricted and cannot be accessed.',
             RATE_LIMITED: 'The free transcript request limit has been reached. Please try again later.'
           };
