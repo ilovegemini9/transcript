@@ -201,6 +201,24 @@
       .section-heading { margin-bottom:20px; }
       .feature { padding:16px; }
     }
+
+    /* Mobile navigation and keyboard accessibility */
+    :focus-visible { outline:2px solid #f5f5f5; outline-offset:3px; }
+    @media(max-width:650px) {
+      .nav { gap:12px; min-width:0; }
+      .brand { flex-shrink:0; font-size:16px; letter-spacing:-.6px; }
+      .nav-links {
+        flex:1; min-width:0; overflow-x:auto; overflow-y:hidden;
+        white-space:nowrap; justify-content:flex-start; gap:14px;
+        padding:6px 0; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+      }
+      .nav-links::-webkit-scrollbar { display:none; }
+      .nav-links a { flex:0 0 auto; min-height:36px; display:inline-flex; align-items:center; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto; }
+      *, *::before, *::after { scroll-behavior:auto !important; transition-duration:.01ms !important; }
+    }
   </style>
 </head>
 <body>
@@ -224,10 +242,10 @@
         <h1>Video to Text & Transcript Generator</h1>
         <p class="subtitle">Turn a public TikTok, YouTube, Facebook, or Instagram video into readable text. Paste one link, generate the spoken transcript, then copy or download it — no account or complicated setup.</p><form class="form-card" id="transcript-form">
           <div class="input-row">
-            <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Paste a public video link (TikTok, YouTube, Facebook, Instagram)..." aria-label="Public video URL" required />
+            <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Paste a public video link (TikTok, YouTube, Facebook, Instagram)..." aria-label="Public video URL" aria-describedby="url-help" required />
             <button id="submit-button" type="submit">Get Transcript <span aria-hidden="true">→</span></button>
           </div>
-          <p class="microcopy">Supports public TikTok, YouTube, Facebook, and Instagram video links. Private or unavailable videos cannot be processed.</p>
+          <p class="microcopy" id="url-help">Supports public TikTok, YouTube, Facebook, and Instagram video links. Private or unavailable videos cannot be processed.</p>
         </form>
         <div class="status" id="status" role="status" aria-live="polite"></div>
         <section class="transcript-result" id="transcript-result" aria-label="Video transcript">
