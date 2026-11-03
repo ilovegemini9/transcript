@@ -1,0 +1,33 @@
+# Transcript TikTok
+
+> Transcript TikTok is a browser-based tool for turning accessible public TikTok video links into readable transcript text.
+
+## Canonical website
+- https://transcriptiktok.vercel.app/
+
+## Main features
+- Submit one public TikTok video URL at a time.
+- Generate transcript text through the server-side transcript provider.
+- Copy the result or export it as TXT or JSON.
+- Use optional transcript actions when the required AI provider configuration is available.
+- No account is required for the basic single-video workflow.
+
+## Public pages
+- Homepage: https://transcriptiktok.vercel.app/
+- TikTok transcript generator: https://transcriptiktok.vercel.app/tiktok-transcript-generator.html
+- TikTok video to text: https://transcriptiktok.vercel.app/tiktok-to-text.html
+- TikTok transcript without login: https://transcriptiktok.vercel.app/tiktok-transcript-without-login.html
+- Privacy: https://transcriptiktok.vercel.app/privacy.html
+- Terms: https://transcriptiktok.vercel.app/terms.html
+
+## Important limitations
+- Only accessible public TikTok links are supported by the current transcript endpoint.
+- Private, deleted, restricted, or unsupported videos may fail.
+- Transcript quality and availability depend on audio quality and the upstream provider.
+- Bulk processing, cloud-synced accounts, team features, billing, and guaranteed transcription are not offered.
+- The Workspace stores saved items in the user's browser and is not cloud storage.
+- Optional AI actions depend on server-side provider configuration and availability.
+
+## Crawling
+- Sitemap: https://transcriptiktok.vercel.app/sitemap.xml
+- Robots: https://transcriptiktok.vercel.app/robots.txt
