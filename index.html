@@ -327,7 +327,7 @@
     function supportedPlatform(value) {
       try {
         const url = new URL(value);
-        return url.protocol === 'https:' && /(^|\\.)tiktok\\.com$/i.test(url.hostname) ? 'TikTok' : null;
+        return url.protocol === 'https:' && url.hostname.toLowerCase().split('.').slice(-2).join('.') === 'tiktok.com' ? 'TikTok' : null;
       } catch { return null; }
     }
 
