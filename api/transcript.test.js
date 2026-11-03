@@ -58,12 +58,12 @@ test('returns a safe configuration error when the provider key is missing', asyn
   assert.equal(res.body.code, 'CONFIG_MISSING');
 });
 
-test('rejects non-TikTok and unsafe URLs before calling the provider', async () => {
-  const res = await invoke({ url: 'https://tiktok.com.evil.example/video/1' }, {
-    fetch: async () => { throw new Error('fetch must not run'); }
-  });
-  assert.equal(res.statusCode, 400);
-  assert.equal(res.body.code, 'INVALID_URL');
+test('rejects non-TikTok, unsupported platforms, and unsafe URLs before calling the provider', async () => {
+  for (const url of ['https://tiktok.com.evil.example/video/1', 'https://www.instagram.com/reel/demo/', 'https://www.youtube.com/shorts/demo', 'https://youtu.be/demo']) {
+    const res = await invoke({ url }, { fetch: async () => { throw new Error('fetch must not run'); } });
+    assert.equal(res.statusCode, 400);
+    assert.equal(res.body.code, 'INVALID_URL');
+  }
 });
 
 test('returns transcript text and language from the provider', async () => {
@@ -100,12 +100,3 @@ test('returns a useful error when no transcript is available', async () => {
   assert.equal(res.body.code, 'TRANSCRIPT_UNAVAILABLE');
 });
 
-test('accepts supported Instagram Reels and YouTube Shorts hosts', async () => {
-  for (const url of ['https://www.instagram.com/reel/demo/', 'https://www.youtube.com/shorts/demo', 'https://youtu.be/demo']) {
-    const res = await invoke({ url }, {
-      fetch: providerResponse(200, { content: 'Short-form transcript', lang: 'en' })
-    });
-    assert.equal(res.statusCode, 200);
-    assert.equal(res.body.transcript, 'Short-form transcript');
-  }
-});
