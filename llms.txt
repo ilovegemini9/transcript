@@ -1,33 +1,43 @@
 # Transcript TikTok
 
-> Transcript TikTok is a browser-based tool for turning accessible public TikTok video links into readable transcript text.
+> Transcript TikTok is a browser-based tool for turning accessible public videos from TikTok, YouTube, Facebook, and Instagram into readable transcript text.
 
 ## Canonical website
 - https://transcriptiktok.vercel.app/
 
+## Supported platforms
+- TikTok public video links, including supported short links.
+- YouTube public videos and Shorts, including youtu.be links.
+- Facebook public video links, including supported fb.watch links.
+- Instagram public Reels and video posts.
+
 ## Main features
-- Submit one public TikTok video URL at a time.
+- Submit one public video URL at a time.
 - Generate transcript text through the server-side transcript provider.
-- Copy the result or export it as TXT or JSON.
-- Use optional transcript actions when the required AI provider configuration is available.
+- Copy the result or export it as TXT or JSON where available.
 - No account is required for the basic single-video workflow.
 
 ## Public pages
-- Features: https://transcriptiktok.vercel.app/features.html
-- Pricing: https://transcriptiktok.vercel.app/pricing.html
 - Homepage: https://transcriptiktok.vercel.app/
-- TikTok transcript generator: https://transcriptiktok.vercel.app/tiktok-transcript-generator.html
+- Video to text: https://transcriptiktok.vercel.app/video-to-text.html
+- TikTok transcript: https://transcriptiktok.vercel.app/tiktok-transcript.html
+- YouTube transcript: https://transcriptiktok.vercel.app/youtube-transcript.html
+- Facebook video transcript: https://transcriptiktok.vercel.app/facebook-video-transcript.html
+- Instagram Reels transcript: https://transcriptiktok.vercel.app/instagram-reels-transcript.html
+- TikTok transcript guide: https://transcriptiktok.vercel.app/tiktok-transcript-generator.html
 - TikTok video to text: https://transcriptiktok.vercel.app/tiktok-to-text.html
 - TikTok transcript without login: https://transcriptiktok.vercel.app/tiktok-transcript-without-login.html
+- Features: https://transcriptiktok.vercel.app/features.html
+- Pricing: https://transcriptiktok.vercel.app/pricing.html
 - Privacy: https://transcriptiktok.vercel.app/privacy.html
 - Terms: https://transcriptiktok.vercel.app/terms.html
 
 ## Important limitations
-- Only accessible public TikTok links are supported by the current transcript endpoint.
-- Private, deleted, restricted, or unsupported videos may fail.
-- Transcript quality and availability depend on audio quality and the upstream provider.
-- Bulk processing, cloud-synced accounts, team features, billing, and guaranteed transcription are not offered.
-- Optional AI actions depend on server-side provider configuration and availability.
+- Only accessible public links from the supported platforms are accepted.
+- Private, deleted, restricted, or inaccessible videos may fail.
+- Transcript quality and availability depend on audio quality and upstream provider capacity.
+- The tool processes one video per request; it does not promise unlimited usage, bulk processing, cloud-synced accounts, team features, or guaranteed transcription.
+- Review transcripts before quoting or publishing.
 
 ## Crawling
 - Sitemap: https://transcriptiktok.vercel.app/sitemap.xml
