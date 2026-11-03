@@ -1,0 +1,101 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+
+const handler = require('./transcript');
+
+function createResponse() {
+  return {
+    headers: {},
+    statusCode: 200,
+    body: null,
+    setHeader(name, value) { this.headers[name] = value; },
+    status(code) { this.statusCode = code; return this; },
+    json(body) { this.body = body; return this; }
+  };
+}
+
+async function invoke(body, options = {}) {
+  const previousKey = process.env.SUPADATA_API_KEY;
+  const previousFetch = global.fetch;
+  if (options.apiKey === null) delete process.env.SUPADATA_API_KEY;
+  else process.env.SUPADATA_API_KEY = options.apiKey || 'test-key';
+
+  if (options.fetch) global.fetch = options.fetch;
+  const req = { method: options.method || 'POST', body };
+  const res = createResponse();
+
+  try {
+    await handler(req, res);
+    return res;
+  } finally {
+    if (previousKey === undefined) delete process.env.SUPADATA_API_KEY;
+    else process.env.SUPADATA_API_KEY = previousKey;
+    global.fetch = previousFetch;
+  }
+}
+
+function providerResponse(status, payload) {
+  return async (url, options) => {
+    assert.match(String(url), /^https:\/\/api\.supadata\.ai\/v1\/transcript/);
+    assert.equal(options.headers['x-api-key'], 'test-key');
+    return {
+      status,
+      ok: status >= 200 && status < 300,
+      json: async () => payload
+    };
+  };
+}
+
+test('rejects methods other than POST', async () => {
+  const res = await invoke({}, { method: 'GET' });
+  assert.equal(res.statusCode, 405);
+  assert.equal(res.headers.Allow, 'POST');
+});
+
+test('returns a safe configuration error when the provider key is missing', async () => {
+  const res = await invoke({ url: 'https://www.tiktok.com/@demo/video/123' }, { apiKey: null });
+  assert.equal(res.statusCode, 503);
+  assert.equal(res.body.code, 'CONFIG_MISSING');
+});
+
+test('rejects non-TikTok and unsafe URLs before calling the provider', async () => {
+  const res = await invoke({ url: 'https://tiktok.com.evil.example/video/1' }, {
+    fetch: async () => { throw new Error('fetch must not run'); }
+  });
+  assert.equal(res.statusCode, 400);
+  assert.equal(res.body.code, 'INVALID_URL');
+});
+
+test('returns transcript text and language from the provider', async () => {
+  const res = await invoke({ url: 'https://www.tiktok.com/@demo/video/123' }, {
+    fetch: providerResponse(200, { content: [{ text: 'Hello' }, { text: 'world' }], lang: 'en' })
+  });
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.transcript, 'Hello world');
+  assert.equal(res.body.language, 'en');
+});
+
+test('returns a validated async job for polling', async () => {
+  const res = await invoke({ url: 'https://vm.tiktok.com/example/' }, {
+    fetch: providerResponse(202, { status: 'processing', jobId: 'job_12345' })
+  });
+  assert.equal(res.statusCode, 202);
+  assert.deepEqual(res.body, { status: 'processing', jobId: 'job_12345' });
+});
+
+test('does not expose provider authorization failures as video privacy errors', async () => {
+  const res = await invoke({ url: 'https://www.tiktok.com/@demo/video/123' }, {
+    fetch: providerResponse(401, { message: 'secret provider detail' })
+  });
+  assert.equal(res.statusCode, 503);
+  assert.equal(res.body.code, 'PROVIDER_AUTH_ERROR');
+  assert.doesNotMatch(res.body.error, /secret provider detail/);
+});
+
+test('returns a useful error when no transcript is available', async () => {
+  const res = await invoke({ url: 'https://www.tiktok.com/@demo/video/123' }, {
+    fetch: providerResponse(206, { error: 'transcript-unavailable' })
+  });
+  assert.equal(res.statusCode, 422);
+  assert.equal(res.body.code, 'TRANSCRIPT_UNAVAILABLE');
+});
