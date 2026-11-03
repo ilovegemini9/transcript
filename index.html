@@ -4,20 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#080808" />
-  <meta name="description" content="Free video transcript generator for TikTok, Instagram Reels, and YouTube Shorts. Paste a public video link to turn speech into readable text, then copy or download your transcript." />
+  <meta name="description" content="Free video transcript generator and downloader for TikTok, Instagram Reels, and YouTube Shorts. Extract readable transcripts, copy text, download TXT or JSON, and create hooks with optional AI." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="author" content="Transcript TikTok" />
   <link rel="canonical" href="https://transcriptiktok.vercel.app/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Transcript TikTok" />
   <meta property="og:url" content="https://transcriptiktok.vercel.app/" />
-  <meta property="og:title" content="Free Video Transcript Generator for TikTok, Reels & Shorts | Transcript TikTok" />
-  <meta property="og:description" content="Turn public TikTok, Instagram Reel, or YouTube Shorts videos into readable text. Copy or download with no signup." />
+  <meta property="og:title" content="TikTok, Reels & Shorts Transcript Generator | Transcript TikTok" />
+  <meta property="og:description" content="Extract transcripts from public TikTok, Instagram Reels, and YouTube Shorts. Copy text, download files, or repurpose it with optional AI." />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Free Video Transcript Generator for TikTok, Reels & Shorts | Transcript TikTok" />
-  <meta name="twitter:description" content="Turn public TikTok, Instagram Reel, or YouTube Shorts videos into readable text." />
-  <title>Free Video Transcript Generator for TikTok, Reels & Shorts | Transcript TikTok</title>
+  <meta name="twitter:title" content="TikTok, Reels & Shorts Transcript Generator | Transcript TikTok" />
+  <meta name="twitter:description" content="Extract public TikTok, Instagram Reel, or YouTube Shorts speech into readable text." />
+  <title>TikTok, Reels & Shorts Transcript Generator | Transcript TikTok</title>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -87,6 +87,9 @@
     .ai-output.show { display:block; }
     .transcript-text { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; color:#ddd; font:13px/1.7 "DM Sans",Arial,sans-serif; max-height:420px; overflow:auto; }
     .status strong { color:#fff; }
+    .platform-strip { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin:18px auto 0; }
+    .platform-pill { padding:6px 10px; border:1px solid #303030; border-radius:999px; color:#aaa; background:#0f0f0f; font-size:11px; }
+    .feature-kicker { display:inline-block; margin-bottom:10px; color:#777; font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
     .trust { display:flex; justify-content:center; gap:25px; flex-wrap:wrap; margin-top:28px; color:#888; font-size:12px; }
     .trust span { display:flex; align-items:center; gap:7px; }
     .trust b { color:#ddd; font-weight:500; }
@@ -203,8 +206,9 @@
     <div class="wrap nav">
       <a class="brand" href="#" aria-label="Transcript TikTok home"><span class="brand-mark">T</span>Transcript TikTok</a>
       <nav class="nav-links" aria-label="Main navigation">
-        <a href="#features">Features</a>
+        <a href="/features.html">Features</a>
         <a href="#how-it-works">How it works</a>
+        <a href="/pricing.html">Free pricing</a>
         <a href="#faq">FAQ</a>
         <a href="/tiktok-transcript-generator.html">Guide</a>
         <a href="/app.html">Workspace</a>
@@ -217,7 +221,7 @@
       <div class="wrap">
         <div class="eyebrow"><span class="dot"></span> Fast, clean short-form video transcripts</div>
         <h1>TikTok Transcript Generator</h1>
-        <p class="subtitle">Turn a public TikTok, Instagram Reel, or YouTube Short into readable text. Paste one link, generate the spoken transcript, then copy or download it — no account or complicated setup.</p>
+        <p class="subtitle">Turn a public TikTok, Instagram Reel, or YouTube Short into readable text. Paste one link, generate the spoken transcript, then copy or download it — no account or complicated setup.</p><div class="platform-strip" aria-label="Supported platforms"><span class="platform-pill">TikTok</span><span class="platform-pill">Instagram Reels</span><span class="platform-pill">YouTube Shorts</span></div>
 
         <form class="form-card" id="transcript-form">
           <div class="input-row">
@@ -246,12 +250,12 @@
       <div class="wrap">
         <div class="section-heading">
           <h2>Everything you need to capture the words</h2>
-          <p>A focused toolkit to turn public TikTok videos into useful text.</p>
+          <p>A focused toolkit to turn short-form video into searchable, reusable content.</p>
         </div>
         <div class="feature-grid">
-          <article class="feature"><div class="feature-icon">↗</div><h3>One-link workflow</h3><p>Paste a public TikTok link and get a readable transcript without onboarding or unnecessary steps.</p></article>
-          <article class="feature"><div class="feature-icon">✦</div><h3>Clear processing states</h3><p>Know whether a video is processing, restricted, unavailable, or ready. No fake success screens.</p></article>
-          <article class="feature"><div class="feature-icon">⌘</div><h3>Copy or download</h3><p>Copy your transcript in one click or save it as a plain TXT file for notes, research, and drafts.</p></article>
+          <article class="feature"><div class="feature-icon">↗</div><span class="feature-kicker">Extract</span><h3>One-link workflow</h3><p>Paste a public TikTok, Reel, or Short and get readable text without onboarding or unnecessary steps.</p></article>
+          <article class="feature"><div class="feature-icon">✦</div><span class="feature-kicker">Trust</span><h3>Clear processing states</h3><p>Know whether a video is processing, restricted, unavailable, or ready. No fake success screens.</p></article>
+          <article class="feature"><div class="feature-icon">⌘</div><span class="feature-kicker">Export</span><h3>Copy or download</h3><p>Copy your transcript or save TXT and JSON files for notes, research, captions, and drafts.</p></article><article class="feature"><div class="feature-icon">✦</div><span class="feature-kicker">Repurpose</span><h3>AI hooks and captions</h3><p>When Gemini is configured, turn a transcript into summaries, captions, and original hooks.</p></article><article class="feature"><div class="feature-icon">◫</div><span class="feature-kicker">Organize</span><h3>Local workspace</h3><p>Save links and completed transcripts in your browser, search them, and delete them whenever you want.</p></article><article class="feature"><div class="feature-icon">⌁</div><span class="feature-kicker">Free-first</span><h3>No forced bulk workflow</h3><p>Start with one video. No subscription wall and no distracting 50-link queue.</p></article>
         </div>
       </div>
     </section>
@@ -272,7 +276,7 @@
     <section class="section">
       <div class="wrap bottom-cta">
         <h2>Ready to turn a video into text?</h2>
-        <p>Paste a public TikTok link and get started in seconds.</p>
+        <p>Paste a public TikTok, Reel, or Short and get started in seconds.</p>
         <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Get started →</a>
       </div>
     </section>
@@ -284,7 +288,7 @@
           <p>Three simple steps. That's it.</p>
         </div>
         <div class="steps">
-          <article class="step"><div class="step-num">01</div><h3>Copy the TikTok link</h3><p>Open the TikTok video you want to transcribe and copy its share link.</p></article>
+          <article class="step"><div class="step-num">01</div><h3>Copy a video link</h3><p>Copy a public TikTok, Instagram Reel, or YouTube Shorts link.</p></article>
           <article class="step"><div class="step-num">02</div><h3>Paste it above</h3><p>Paste the video URL and Transcript TikTok asks the transcript service to process it.</p></article>
           <article class="step"><div class="step-num">03</div><h3>Copy your transcript</h3><p>Read the transcript and copy it for notes, captions, or content research.</p></article>
         </div>
@@ -297,14 +301,14 @@
         <div class="faq">
           <details><summary>Is Transcript TikTok free?</summary><p>Transcript TikTok is free to try and does not require an account. Transcript processing depends on provider capacity and usage limits, which may change.</p></details>
           <details><summary>Do I need to create an account?</summary><p>No account is needed to use this simple interface.</p></details>
-          <details><summary>Can I transcribe any TikTok video?</summary><p>No. The video must be public and accessible. Private, deleted, region-restricted, or otherwise unavailable videos may not be processed.</p></details>
+          <details><summary>Which platforms are supported?</summary><p>ClipText accepts public TikTok, Instagram Reel, and YouTube Shorts links when the transcript provider can access them.</p></details><details><summary>Can I transcribe any video?</summary><p>No. The video must be public and accessible. Private, deleted, region-restricted, or otherwise unavailable videos may not be processed.</p></details>
           <details><summary>Does Transcript TikTok work when a video has no captions?</summary><p>Transcript TikTok requests automatic speech-recognition fallback when supported by the transcript provider. Success depends on video access, audio quality, language, and provider availability.</p></details>
         </div>
       </div>
     </section>
   </main>
 
-  <footer><div class="wrap footer-inner"><span>© <span id="year"></span> Transcript TikTok</span><span><a href="/app.html">Workspace</a> · <a href="/tiktok-to-text.html">TikTok to text</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · Simple transcripts. No unnecessary steps.</span></div></footer>
+  <footer><div class="wrap footer-inner"><span>© <span id="year"></span> Transcript TikTok</span><span><a href="/app.html">Workspace</a> · <a href="/features.html">Features</a> · <a href="/pricing.html">Free pricing</a> · <a href="/tiktok-to-text.html">TikTok to text</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · Simple transcripts. No unnecessary steps.</span></div></footer>
 
     <script>
     const form = document.getElementById('transcript-form');
