@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/tiktok-transcript",
+      "destination": "/tiktok-transcript.html"
+    },
+    {
+      "source": "/youtube-transcript",
+      "destination": "/youtube-transcript.html"
+    },
+    {
+      "source": "/facebook-video-transcript",
+      "destination": "/facebook-video-transcript.html"
+    },
+    {
+      "source": "/instagram-reels-transcript",
+      "destination": "/instagram-reels-transcript.html"
+    },
+    {
+      "source": "/video-to-text",
+      "destination": "/video-to-text.html"
+    }
+  ]
+}
