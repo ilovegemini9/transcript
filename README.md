@@ -1,13 +1,15 @@
 # ClipText
 
-A dark, mobile-friendly single-link TikTok transcript generator.
+A dark, mobile-friendly TikTok transcript generator with a focused one-link workflow.
 
-## Current prototype features
+## Current product features
 
-- Single-link landing page.
-- Chrome Extension starter (Manifest V3) to save the current TikTok tab.
-
-## Open the workspace
+- Single-link public TikTok transcript flow through `/api/transcript`.
+- Clear validation, asynchronous processing states, provider errors, copy, and TXT download.
+- Local Workspace at `app.html` with saved links, search, remove, and delete-all controls.
+- Privacy and Terms pages for public-product trust and crawlable policy links.
+- Chrome Extension Manifest V3 that saves the current TikTok video and imports it into the Workspace.
+- Local Admin product shell at `admin.html` for content/SEO queue, ad placements, and feature flags.
 
 Open `index.html` in a browser for the frontend. Run with Vercel's development server to use the API endpoint.
 
@@ -17,24 +19,21 @@ Open `index.html` in a browser for the frontend. Run with Vercel's development s
 2. Enable **Developer mode**.
 3. Select **Load unpacked**.
 4. Choose the `extension` folder.
-5. Open a TikTok video and use the ClipText extension popup.
+5. Open a public TikTok video and use the ClipText extension popup.
+
+## Environment
+
+Set `SUPADATA_API_KEY` in Vercel Project Settings → Environment Variables. The key is read only by `api/transcript.js` and is never placed in browser code. Without the key, the UI intentionally shows a configuration error instead of pretending that a transcript was generated.
 
 ## Important limitations
 
-This is a frontend prototype. Bulk import currently validates and queues links; it does not process 50 transcripts. Collections and the workspace queue are stored locally in the browser, not synced to an account or cloud database. The extension has its own local queue using Chrome storage and is not yet synced with the website. A real transcript engine, backend job queue, durable database, and extension-to-site sync still need to be connected. No transcript extraction is claimed to work yet.
+Bulk processing, cloud accounts, team workspaces, AI repurposing, translations, billing, and multi-platform support are not enabled yet. The Workspace and Admin shell use browser local storage and are not production authentication or cloud persistence. The transcript provider can reject private, deleted, restricted, or unsupported videos.
 
+## Deployment checklist
 
-## Live transcript integration
-
-The homepage calls the Vercel serverless endpoint at `/api/transcript`. It uses Supadata's TikTok-compatible API in **auto mode**, which can use native captions and request AI speech-recognition fallback when supported by the provider.
-
-### Required setup
-
-1. Create a free Supadata account and generate an API key at https://supadata.ai.
-2. In Vercel, open **Project Settings → Environment Variables**.
-3. Add `SUPADATA_API_KEY` with your key for Production (and Preview if needed).
-4. Redeploy the project.
-
-The key is used only by the serverless function and is never sent to browser JavaScript. Supadata advertises a free monthly request allowance; limits and terms may change. Private, deleted, inaccessible, or restricted videos may not return a transcript. AI processing and monthly usage depend on Supadata's current plan and limits. ClipText does not bypass TikTok privacy or access controls.
-
-A static file preview cannot run the API endpoint. For local testing, use Vercel's development server and set `SUPADATA_API_KEY` in the local environment.
+- Add `SUPADATA_API_KEY` to Vercel.
+- Test public TikTok links from multiple regions and with/without native captions.
+- Verify private/deleted/no-speech/provider-error/rate-limit states.
+- Update canonical URLs in public pages, `robots.txt`, and `sitemap.xml` if the domain changes.
+- Keep public pages indexable and keep `/app.html` and `/admin.html` noindex.
+- Do not claim support for Instagram, YouTube, bulk processing, AI, or cloud sync until those backends are implemented.
