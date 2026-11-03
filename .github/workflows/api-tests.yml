@@ -16,5 +16,5 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Run transcript API tests
-        run: node --test api/transcript.test.js
+      - name: Run serverless API tests
+        run: node --test api/transcript.test.js api/ai.test.js
