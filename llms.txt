@@ -27,7 +27,6 @@
 - Private, deleted, restricted, or unsupported videos may fail.
 - Transcript quality and availability depend on audio quality and the upstream provider.
 - Bulk processing, cloud-synced accounts, team features, billing, and guaranteed transcription are not offered.
-- The Workspace stores saved items in the user's browser and is not cloud storage.
 - Optional AI actions depend on server-side provider configuration and availability.
 
 ## Crawling
