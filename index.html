@@ -168,6 +168,34 @@
       .nav-links { gap:12px; }
     }
 
+
+    /* Compact layout: keep the main tool visible immediately and reduce oversized gaps. */
+    header { height:64px; }
+    .hero { padding:42px 0 38px; background:radial-gradient(ellipse at 50% 0%,#1b1b1b 0%,#080808 58%); }
+    .eyebrow { margin-bottom:15px; padding:6px 10px; }
+    h1 { font-size:clamp(36px,5.5vw,60px); letter-spacing:-3px; }
+    .subtitle { margin:14px auto 22px; font-size:14px; line-height:1.55; }
+    .form-card { padding:8px; }
+    .form-card button, .input-row input { min-height:48px; }
+    .trust { margin-top:18px; gap:12px 20px; }
+    .section { padding:46px 0; }
+    .section-heading { margin-bottom:24px; }
+    .section-heading h2 { font-size:clamp(24px,3.5vw,32px); }
+    .feature { min-height:0; padding:19px; }
+    .feature-icon { margin-bottom:14px; }
+    .audience-card { padding:19px; }
+    .step { padding:19px; }
+    .step-num { margin-bottom:14px; }
+    .bottom-cta { padding:30px 20px; }
+    details { padding:14px 0; }
+    @media(max-width:650px) {
+      header { height:58px; }
+      .hero { padding:32px 0 30px; }
+      h1 { letter-spacing:-2px; }
+      .section { padding:36px 0; }
+      .section-heading { margin-bottom:20px; }
+      .feature { padding:16px; }
+    }
   </style>
 </head>
 <body>
