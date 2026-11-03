@@ -99,3 +99,13 @@ test('returns a useful error when no transcript is available', async () => {
   assert.equal(res.statusCode, 422);
   assert.equal(res.body.code, 'TRANSCRIPT_UNAVAILABLE');
 });
+
+test('accepts supported Instagram Reels and YouTube Shorts hosts', async () => {
+  for (const url of ['https://www.instagram.com/reel/demo/', 'https://www.youtube.com/shorts/demo', 'https://youtu.be/demo']) {
+    const res = await invoke({ url }, {
+      fetch: providerResponse(200, { content: 'Short-form transcript', lang: 'en' })
+    });
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.body.transcript, 'Short-form transcript');
+  }
+});

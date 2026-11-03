@@ -1,10 +1,19 @@
 // Vercel serverless function. Keep provider credentials on the server.
 const PROVIDER_TIMEOUT_MS = 20000;
-const TIKTOK_HOST = /(^|[.])tiktok[.]com$/i;
+const SUPPORTED_HOSTS = [
+  { platform: 'TikTok', test: /(^|[.])tiktok[.]com$/i },
+  { platform: 'Instagram Reels', test: /(^|[.])instagram[.]com$/i },
+  { platform: 'YouTube Shorts', test: /(^|[.])youtube[.]com$/i },
+  { platform: 'YouTube Shorts', test: /(^|[.])youtu[.]be$/i }
+];
 const JOB_ID = /^[a-zA-Z0-9_-]{5,128}$/;
 
 function jsonError(res, status, code, error) {
   return res.status(status).json({ code, error });
+}
+
+function getPlatform(hostname) {
+  return SUPPORTED_HOSTS.find((entry) => entry.test.test(hostname))?.platform || null;
 }
 
 function getTranscript(content) {
@@ -36,6 +45,7 @@ module.exports = async function handler(req, res) {
   const jobId = typeof req.body?.jobId === 'string' ? req.body.jobId.trim() : '';
   const videoUrl = typeof req.body?.url === 'string' ? req.body.url.trim() : '';
   let endpoint;
+  let platform = null;
 
   if (jobId) {
     if (!JOB_ID.test(jobId)) {
@@ -56,12 +66,12 @@ module.exports = async function handler(req, res) {
 
     if (
       parsed.protocol !== 'https:' ||
-      !TIKTOK_HOST.test(parsed.hostname) ||
+      !(platform = getPlatform(parsed.hostname)) ||
       parsed.username ||
       parsed.password ||
       parsed.port
     ) {
-      return jsonError(res, 400, 'INVALID_URL', 'Only public HTTPS TikTok links are supported.');
+      return jsonError(res, 400, 'INVALID_URL', 'Only public HTTPS TikTok, Instagram Reel, and YouTube Shorts links are supported.');
     }
 
     endpoint = new URL('https://api.supadata.ai/v1/transcript');
@@ -116,6 +126,7 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({
       transcript,
+      platform: platform || 'Video',
       language: typeof payload.lang === 'string' ? payload.lang : null
     });
   } catch (error) {

@@ -4,12 +4,12 @@ A dark, mobile-friendly TikTok transcript generator with a focused one-link work
 
 ## Current product features
 
-- Single-link public TikTok transcript flow through `/api/transcript`.
+- Single-link public TikTok, Instagram Reels, and YouTube Shorts transcript flow through `/api/transcript`.
 - Clear validation, asynchronous processing states, provider errors, copy, TXT download, and JSON export.
 - Save a completed transcript to the local Workspace.
 - Optional AI actions through `/api/ai`: summarize, generate captions, and generate hooks.
 - Local Workspace at `app.html` with saved links, search, remove, and delete-all controls.
-- SEO landing pages for TikTok transcript generator, TikTok to text, and transcript without login.
+- SEO landing pages for transcript generator, TikTok to text, transcript without login, Features, and free Pricing.
 - Privacy and Terms pages for public-product trust and crawlable policy links.
 - Chrome Extension Manifest V3 that saves the current TikTok video and imports it into the Workspace.
 - Local Admin product shell at `admin.html` for content/SEO queue, ad placements, and feature flags.
@@ -43,4 +43,4 @@ Bulk processing, cloud accounts, team workspaces, translation, billing, and mult
 - Verify AI-not-configured and AI-provider-error states.
 - Update canonical URLs in public pages, `robots.txt`, and `sitemap.xml` if the domain changes.
 - Keep public pages indexable and keep `/app.html` and `/admin.html` noindex.
-- Do not claim support for Instagram, YouTube, bulk processing, cloud sync, or translations until those backends are implemented.
+- Instagram Reels and YouTube Shorts are now accepted by the provider adapter, but source availability still depends on the provider. Bulk processing, cloud sync, and translations are not enabled yet.
