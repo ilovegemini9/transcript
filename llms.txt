@@ -19,11 +19,11 @@
 
 ## Public pages
 - Homepage: https://transcriptiktok.vercel.app/
-- Video to text: https://transcriptiktok.vercel.app/video-to-text.html
-- TikTok transcript: https://transcriptiktok.vercel.app/tiktok-transcript.html
-- YouTube transcript: https://transcriptiktok.vercel.app/youtube-transcript.html
-- Facebook video transcript: https://transcriptiktok.vercel.app/facebook-video-transcript.html
-- Instagram Reels transcript: https://transcriptiktok.vercel.app/instagram-reels-transcript.html
+- Video to text: https://transcriptiktok.vercel.app/video-to-text
+- TikTok transcript: https://transcriptiktok.vercel.app/tiktok-transcript
+- YouTube transcript: https://transcriptiktok.vercel.app/youtube-transcript
+- Facebook video transcript: https://transcriptiktok.vercel.app/facebook-video-transcript
+- Instagram Reels transcript: https://transcriptiktok.vercel.app/instagram-reels-transcript
 - TikTok transcript guide: https://transcriptiktok.vercel.app/tiktok-transcript-generator.html
 - TikTok video to text: https://transcriptiktok.vercel.app/tiktok-to-text.html
 - TikTok transcript without login: https://transcriptiktok.vercel.app/tiktok-transcript-without-login.html
