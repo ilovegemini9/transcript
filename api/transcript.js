@@ -1,6 +1,11 @@
 // Vercel serverless function. Keep provider credentials on the server.
 const PROVIDER_TIMEOUT_MS = 20000;
-const SUPPORTED_HOSTS = [{ platform: 'TikTok', test: /(^|[.])tiktok[.]com$/i }];
+const SUPPORTED_HOSTS = [
+  { platform: 'TikTok', test: /(^|\\.)tiktok\\.com$/i },
+  { platform: 'YouTube', test: /(^|\\.)(youtube\\.com|youtu\\.be)$/i },
+  { platform: 'Facebook', test: /(^|\\.)(facebook\\.com|fb\\.watch)$/i },
+  { platform: 'Instagram', test: /(^|\\.)instagram\\.com$/i }
+];
 const JOB_ID = /^[a-zA-Z0-9_-]{5,128}$/;
 
 function jsonError(res, status, code, error) {
@@ -49,14 +54,14 @@ module.exports = async function handler(req, res) {
     endpoint = new URL('https://api.supadata.ai/v1/transcript/' + encodeURIComponent(jobId));
   } else {
     if (!videoUrl || videoUrl.length > 2048) {
-      return jsonError(res, 400, 'INVALID_URL', 'Please provide a valid TikTok video URL.');
+      return jsonError(res, 400, 'INVALID_URL', 'Please provide a valid supported video URL.');
     }
 
     let parsed;
     try {
       parsed = new URL(videoUrl);
     } catch {
-      return jsonError(res, 400, 'INVALID_URL', 'Please provide a valid TikTok video URL.');
+      return jsonError(res, 400, 'INVALID_URL', 'Please provide a valid supported video URL.');
     }
 
     if (
@@ -66,7 +71,7 @@ module.exports = async function handler(req, res) {
       parsed.password ||
       parsed.port
     ) {
-      return jsonError(res, 400, 'INVALID_URL', 'Only public HTTPS TikTok links are supported.');
+      return jsonError(res, 400, 'INVALID_URL', 'Only public HTTPS TikTok, YouTube, Facebook, and Instagram links are supported.');
     }
 
     endpoint = new URL('https://api.supadata.ai/v1/transcript');
