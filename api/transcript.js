@@ -1,11 +1,6 @@
 // Vercel serverless function. Keep provider credentials on the server.
 const PROVIDER_TIMEOUT_MS = 20000;
-const SUPPORTED_HOSTS = [
-  { platform: 'TikTok', test: /(^|[.])tiktok[.]com$/i },
-  { platform: 'Instagram Reels', test: /(^|[.])instagram[.]com$/i },
-  { platform: 'YouTube Shorts', test: /(^|[.])youtube[.]com$/i },
-  { platform: 'YouTube Shorts', test: /(^|[.])youtu[.]be$/i }
-];
+const SUPPORTED_HOSTS = [{ platform: 'TikTok', test: /(^|[.])tiktok[.]com$/i }];
 const JOB_ID = /^[a-zA-Z0-9_-]{5,128}$/;
 
 function jsonError(res, status, code, error) {
@@ -71,7 +66,7 @@ module.exports = async function handler(req, res) {
       parsed.password ||
       parsed.port
     ) {
-      return jsonError(res, 400, 'INVALID_URL', 'Only public HTTPS TikTok, Instagram Reel, and YouTube Shorts links are supported.');
+      return jsonError(res, 400, 'INVALID_URL', 'Only public HTTPS TikTok links are supported.');
     }
 
     endpoint = new URL('https://api.supadata.ai/v1/transcript');
@@ -106,7 +101,7 @@ module.exports = async function handler(req, res) {
     }
 
     if (upstream.status === 401 || upstream.status === 403) {
-      console.error('ClipText provider authorization failed:', upstream.status);
+      console.error('Transcript TikTok provider authorization failed:', upstream.status);
       return jsonError(res, 503, 'PROVIDER_AUTH_ERROR', 'The transcript service is temporarily unavailable. Please try again later.');
     }
 
@@ -115,7 +110,7 @@ module.exports = async function handler(req, res) {
     }
 
     if (!upstream.ok) {
-      console.error('ClipText provider returned HTTP', upstream.status);
+      console.error('Transcript TikTok provider returned HTTP', upstream.status);
       return jsonError(res, 502, 'UPSTREAM_ERROR', 'The transcript provider could not process this video. Please try again.');
     }
 
@@ -133,7 +128,7 @@ module.exports = async function handler(req, res) {
     if (error && error.name === 'TimeoutError') {
       return jsonError(res, 504, 'PROVIDER_TIMEOUT', 'Transcript generation took too long. Please try again.');
     }
-    console.error('ClipText transcript request failed:', error);
+    console.error('Transcript TikTok transcript request failed:', error);
     return jsonError(res, 502, 'SERVICE_ERROR', 'Transcript service is temporarily unavailable. Please try again.');
   }
 };
