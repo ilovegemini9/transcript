@@ -102,7 +102,7 @@ module.exports = async function handler(req, res) {
     }
 
     if (upstream.status === 206 || payload.error === 'transcript-unavailable') {
-      return jsonError(res, 422, 'TRANSCRIPT_UNAVAILABLE', 'No transcript could be generated for this video. Try another public TikTok video with clear speech.');
+      return jsonError(res, 422, 'TRANSCRIPT_UNAVAILABLE', 'No transcript could be generated for this video. Try another accessible public video with clear speech.');
     }
 
     if (upstream.status === 401 || upstream.status === 403) {
