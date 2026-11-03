@@ -13,6 +13,8 @@
 - No account is required for the basic single-video workflow.
 
 ## Public pages
+- Features: https://transcriptiktok.vercel.app/features.html
+- Pricing: https://transcriptiktok.vercel.app/pricing.html
 - Homepage: https://transcriptiktok.vercel.app/
 - TikTok transcript generator: https://transcriptiktok.vercel.app/tiktok-transcript-generator.html
 - TikTok video to text: https://transcriptiktok.vercel.app/tiktok-to-text.html
