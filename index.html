@@ -413,7 +413,7 @@
 
 
     saveButton.addEventListener('click', () => {
-      const key = 'transcript_tiktok_library_v2';
+      const key = 'cliptext_library_v2';
       const items = JSON.parse(localStorage.getItem(key) || '[]');
       if (!items.some(item => item.url === input.value.trim())) {
         items.unshift({ id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()), url: input.value.trim(), transcript: transcriptText.textContent, createdAt: Date.now() });
