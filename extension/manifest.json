@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "ClipText — TikTok Transcript Workspace",
+  "name": "Transcript TikTok — TikTok Transcript Workspace",
   "version": "1.1.0",
-  "description": "Save the current public TikTok video link to your ClipText workspace.",
+  "description": "Save the current public TikTok video link to your Transcript TikTok workspace.",
   "permissions": ["activeTab", "storage"],
   "action": {
-    "default_title": "Save to ClipText",
+    "default_title": "Save to Transcript TikTok",
     "default_popup": "popup.html"
   }
 }
