@@ -212,7 +212,6 @@
         <a href="/pricing.html">Free pricing</a>
         <a href="#faq">FAQ</a>
         <a href="/tiktok-transcript-generator.html">Guide</a>
-        <a href="/app.html">Workspace</a>
       </nav>
     </div>
   </header>
@@ -231,7 +230,7 @@
         </form>
         <div class="status" id="status" role="status" aria-live="polite"></div>
         <section class="transcript-result" id="transcript-result" aria-label="Video transcript">
-          <div class="result-head"><div><h3>Your TikTok transcript</h3><p id="transcript-meta" class="result-meta">Ready to copy or download</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copy text</button><button class="copy-button secondary-action" id="download-button" type="button">Download TXT</button><button class="copy-button secondary-action" id="save-button" type="button">Save to Workspace</button><button class="copy-button secondary-action" id="json-button" type="button">JSON</button></div></div>
+          <div class="result-head"><div><h3>Your TikTok transcript</h3><p id="transcript-meta" class="result-meta">Ready to copy or download</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copy text</button><button class="copy-button secondary-action" id="download-button" type="button">Download TXT</button><button class="copy-button secondary-action" id="json-button" type="button">JSON</button></div></div>
           <pre class="transcript-text" id="transcript-text"></pre>
           <div class="ai-actions" aria-label="Optional AI tools"><button class="copy-button secondary-action ai-button" data-action="summarize" type="button">Summarize</button><button class="copy-button secondary-action ai-button" data-action="caption" type="button">Generate captions</button><button class="copy-button secondary-action ai-button" data-action="hooks" type="button">Generate hooks</button></div><div class="ai-output" id="ai-output" role="status" aria-live="polite"></div>
         </section>
@@ -254,7 +253,7 @@
         <div class="feature-grid">
           <article class="feature"><div class="feature-icon">↗</div><span class="feature-kicker">Extract</span><h3>One-link workflow</h3><p>Paste a public TikTok link and get readable text without onboarding or unnecessary steps.</p></article>
           <article class="feature"><div class="feature-icon">✦</div><span class="feature-kicker">Trust</span><h3>Clear processing states</h3><p>Know whether a video is processing, restricted, unavailable, or ready. No fake success screens.</p></article>
-          <article class="feature"><div class="feature-icon">⌘</div><span class="feature-kicker">Export</span><h3>Copy or download</h3><p>Copy your transcript or save TXT and JSON files for notes, research, captions, and drafts.</p></article><article class="feature"><div class="feature-icon">✦</div><span class="feature-kicker">Repurpose</span><h3>AI hooks and captions</h3><p>When the optional AI provider is configured, turn a transcript into summaries, captions, and original hooks.</p></article><article class="feature"><div class="feature-icon">◫</div><span class="feature-kicker">Organize</span><h3>Local workspace</h3><p>Save links and completed transcripts in your browser, search them, and delete them whenever you want.</p></article><article class="feature"><div class="feature-icon">⌁</div><span class="feature-kicker">Free-first</span><h3>No forced bulk workflow</h3><p>Start with one video. No subscription wall and no distracting 50-link queue.</p></article>
+          <article class="feature"><div class="feature-icon">⌘</div><span class="feature-kicker">Export</span><h3>Copy or download</h3><p>Copy your transcript or save TXT and JSON files for notes, research, captions, and drafts.</p></article><article class="feature"><div class="feature-icon">✦</div><span class="feature-kicker">Repurpose</span><h3>AI hooks and captions</h3><p>When the optional AI provider is configured, turn a transcript into summaries, captions, and original hooks.</p></article><article class="feature"><div class="feature-icon">⌁</div><span class="feature-kicker">Free-first</span><h3>No forced bulk workflow</h3><p>Start with one video. No subscription wall and no distracting 50-link queue.</p></article>
         </div>
       </div>
     </section>
@@ -321,7 +320,7 @@
     </section>
   </main>
 
-  <footer><div class="wrap footer-inner"><span>© <span id="year"></span> Transcript TikTok</span><span><a href="/app.html">Workspace</a> · <a href="/features.html">Features</a> · <a href="/pricing.html">Free pricing</a> · <a href="/tiktok-transcript-generator.html">Transcript guide</a> · <a href="/tiktok-to-text.html">TikTok to text</a> · <a href="/tiktok-transcript-without-login.html">No-login tool</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · Simple transcripts. No unnecessary steps.</span></div></footer>
+  <footer><div class="wrap footer-inner"><span>© <span id="year"></span> Transcript TikTok</span><span><a href="/features.html">Features</a> · <a href="/pricing.html">Free pricing</a> · <a href="/tiktok-transcript-generator.html">Transcript guide</a> · <a href="/tiktok-to-text.html">TikTok to text</a> · <a href="/tiktok-transcript-without-login.html">No-login tool</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · Simple transcripts. No unnecessary steps.</span></div></footer>
 
     <script>
     const form = document.getElementById('transcript-form');
@@ -332,7 +331,6 @@
     const transcriptText = document.getElementById('transcript-text');
     const copyButton = document.getElementById('copy-button');
     const downloadButton = document.getElementById('download-button');
-    const saveButton = document.getElementById('save-button');
     const jsonButton = document.getElementById('json-button');
     const aiOutput = document.getElementById('ai-output');
     const transcriptMeta = document.getElementById('transcript-meta');
@@ -425,17 +423,6 @@
       URL.revokeObjectURL(url);
     });
 
-
-    saveButton.addEventListener('click', () => {
-      const key = 'cliptext_library_v2';
-      const items = JSON.parse(localStorage.getItem(key) || '[]');
-      if (!items.some(item => item.url === input.value.trim())) {
-        items.unshift({ id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()), url: input.value.trim(), transcript: transcriptText.textContent, createdAt: Date.now() });
-        localStorage.setItem(key, JSON.stringify(items));
-      }
-      saveButton.textContent = 'Saved!';
-      setTimeout(() => { saveButton.textContent = 'Save to Workspace'; }, 1600);
-    });
 
     jsonButton.addEventListener('click', () => {
       const blob = new Blob([JSON.stringify({ source: input.value.trim(), transcript: transcriptText.textContent, language: transcriptMeta.textContent, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json;charset=utf-8' });
