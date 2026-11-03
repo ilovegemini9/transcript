@@ -6,12 +6,9 @@ A dark, mobile-friendly TikTok transcript generator with a focused one-link work
 
 - Single-link public TikTok transcript flow through `/api/transcript`.
 - Clear validation, asynchronous processing states, provider errors, copy, TXT download, and JSON export.
-- Save a completed transcript to the local Workspace.
 - Optional AI actions through `/api/ai`: summarize, generate captions, and generate hooks.
-- Local Workspace at `app.html` with saved links, search, remove, and delete-all controls.
 - SEO landing pages for transcript generator, TikTok to text, transcript without login, Features, and free Pricing.
 - Privacy and Terms pages for public-product trust and crawlable policy links.
-- Chrome Extension Manifest V3 that saves the current TikTok video and imports it into the Workspace.
 - Local Admin product shell at `admin.html` for content/SEO queue, ad placements, and feature flags.
 
 Open `index.html` in a browser for the frontend. Run with Vercel's development server to use the API endpoints.
@@ -32,7 +29,7 @@ To enable the free-tier AI actions, set `GEMINI_API_KEY`. The endpoint prefers G
 
 ## Important limitations
 
-Bulk processing, cloud accounts, team workspaces, translation, billing, and multi-platform support are not enabled yet. The Workspace and Admin shell use browser local storage and are not production authentication or cloud persistence. The AI endpoint requires an external model key and should receive server-side rate limiting before public high-volume use. The transcript provider can reject private, deleted, restricted, or unsupported videos.
+Bulk processing, cloud accounts, team workspaces, translation, billing, and multi-platform support are not enabled. The Admin shell uses browser local storage and is not production authentication or cloud persistence. The AI endpoint requires an external model key and should receive server-side rate limiting before public high-volume use. The transcript provider can reject private, deleted, restricted, or unsupported videos.
 
 ## Deployment checklist
 
@@ -42,5 +39,5 @@ Bulk processing, cloud accounts, team workspaces, translation, billing, and mult
 - Verify private/deleted/no-speech/provider-error/rate-limit states.
 - Verify AI-not-configured and AI-provider-error states.
 - Update canonical URLs in public pages, `robots.txt`, and `sitemap.xml` if the domain changes.
-- Keep public pages indexable and keep `/app.html` and `/admin.html` noindex.
+- Keep public pages indexable and keep `/admin.html` noindex.
 - Only TikTok is supported by the current public transcript workflow. Other platforms are not advertised or accepted. Bulk processing, cloud sync, and translations are not enabled yet.
