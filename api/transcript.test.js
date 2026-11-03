@@ -58,11 +58,26 @@ test('returns a safe configuration error when the provider key is missing', asyn
   assert.equal(res.body.code, 'CONFIG_MISSING');
 });
 
-test('rejects non-TikTok, unsupported platforms, and unsafe URLs before calling the provider', async () => {
-  for (const url of ['https://tiktok.com.evil.example/video/1', 'https://www.instagram.com/reel/demo/', 'https://www.youtube.com/shorts/demo', 'https://youtu.be/demo']) {
+test('rejects unsupported platforms and unsafe URLs before calling the provider', async () => {
+  for (const url of ['https://tiktok.com.evil.example/video/1', 'https://www.example.com/video/1', 'http://www.youtube.com/watch?v=demo', 'https://www.youtube.com.evil.example/watch?v=demo']) {
     const res = await invoke({ url }, { fetch: async () => { throw new Error('fetch must not run'); } });
     assert.equal(res.statusCode, 400);
     assert.equal(res.body.code, 'INVALID_URL');
+  }
+});
+
+test('accepts supported public links from all four platforms', async () => {
+  const urls = [
+    'https://www.tiktok.com/@demo/video/123',
+    'https://www.youtube.com/watch?v=demo',
+    'https://youtu.be/demo',
+    'https://www.facebook.com/watch/?v=123',
+    'https://fb.watch/demo/',
+    'https://www.instagram.com/reel/demo/'
+  ];
+  for (const url of urls) {
+    const res = await invoke({ url }, { fetch: providerResponse(200, { content: 'Hello world', lang: 'en' }) });
+    assert.equal(res.statusCode, 200, url);
   }
 });
 
