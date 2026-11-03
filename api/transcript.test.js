@@ -107,6 +107,14 @@ test('does not expose provider authorization failures as video privacy errors', 
   assert.doesNotMatch(res.body.error, /secret provider detail/);
 });
 
+test('explains when the source video is inaccessible', async () => {
+  const res = await invoke({ url: 'https://www.youtube.com/watch?v=restricted' }, {
+    fetch: providerResponse(403, { error: 'forbidden' })
+  });
+  assert.equal(res.statusCode, 422);
+  assert.equal(res.body.code, 'VIDEO_INACCESSIBLE');
+});
+
 test('returns a useful error when no transcript is available', async () => {
   const res = await invoke({ url: 'https://www.tiktok.com/@demo/video/123' }, {
     fetch: providerResponse(206, { error: 'transcript-unavailable' })
