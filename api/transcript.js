@@ -105,6 +105,10 @@ module.exports = async function handler(req, res) {
       return jsonError(res, 422, 'TRANSCRIPT_UNAVAILABLE', 'No transcript could be generated for this video. Try another accessible public video with clear speech.');
     }
 
+    if (upstream.status === 403 && payload.error === 'forbidden') {
+      return jsonError(res, 422, 'VIDEO_INACCESSIBLE', 'This video is private, restricted, or unavailable to the transcript provider. Try a public video link.');
+    }
+
     if (upstream.status === 401 || upstream.status === 403) {
       console.error('Transcript TikTok provider authorization failed:', upstream.status);
       return jsonError(res, 503, 'PROVIDER_AUTH_ERROR', 'The transcript service is temporarily unavailable. Please try again later.');
