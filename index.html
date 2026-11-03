@@ -4,19 +4,46 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#080808" />
-  <meta name="description" content="ClipText is a simple TikTok transcript tool. Paste a public TikTok video link and turn spoken video content into readable text when processing is available." />
-  <meta name="keywords" content="TikTok transcript, TikTok video transcript, TikTok transcript generator, transcribe TikTok, TikTok to text, video transcription" />
+  <meta name="description" content="Free TikTok transcript generator. Paste a public TikTok video link to turn speech into readable text, then copy or download your transcript. No signup required." />
+  <meta name="keywords" content="TikTok transcript generator, TikTok transcript, TikTok to text, transcribe TikTok video, TikTok video transcript, TikTok transcript downloader, convert TikTok to text" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="author" content="ClipText" />
+  <link rel="canonical" href="https://transcriptiktok.vercel.app/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="ClipText" />
-  <meta property="og:title" content="ClipText — TikTok Transcript Tool" />
-  <meta property="og:description" content="A simple way to turn public TikTok video links into readable text." />
+  <meta property="og:url" content="https://transcriptiktok.vercel.app/" />
+  <meta property="og:title" content="Free TikTok Transcript Generator | ClipText" />
+  <meta property="og:description" content="Turn a public TikTok video into readable text. Copy or download your transcript with no signup." />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="ClipText — TikTok Transcript Tool" />
-  <meta name="twitter:description" content="A simple way to turn public TikTok video links into readable text." />
-  <title>ClipText — TikTok Video Transcript Tool</title>
+  <meta name="twitter:title" content="Free TikTok Transcript Generator | ClipText" />
+  <meta name="twitter:description" content="Turn a public TikTok video into readable text. Copy or download your transcript with no signup." />
+  <title>Free TikTok Transcript Generator | ClipText</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ClipText",
+    "url": "https://transcriptiktok.vercel.app/",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any",
+    "description": "A browser-based TikTok transcript generator that turns public video speech into readable text.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": ["TikTok video transcription", "Copy transcript text", "Download transcript as TXT", "No account required"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Is ClipText free?","acceptedAnswer":{"@type":"Answer","text":"ClipText is free to try without an account. Transcript processing depends on available provider capacity and usage limits."}},
+      {"@type":"Question","name":"Do I need to create an account?","acceptedAnswer":{"@type":"Answer","text":"No. You can paste a public TikTok video link and use ClipText without creating an account."}},
+      {"@type":"Question","name":"Can ClipText transcribe any TikTok video?","acceptedAnswer":{"@type":"Answer","text":"No. Videos must be public and accessible. Private, deleted, restricted, or unsupported videos may not be processed."}},
+      {"@type":"Question","name":"Does ClipText work when a video has no captions?","acceptedAnswer":{"@type":"Answer","text":"ClipText requests automatic transcription fallback when supported by its transcript provider. Results depend on audio quality, video access, and provider availability."}}
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -53,6 +80,9 @@
     .transcript-result.show { display:block; }
     .result-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
     .result-head h3 { margin:0; font-size:15px; }
+    .result-meta { margin:5px 0 0; color:#858585; font-size:11px; }
+    .result-actions { display:flex; gap:7px; flex-wrap:wrap; }
+    .secondary-action { background:#202020; color:#eee; border:1px solid #3a3a3a; }
     .copy-button { min-height:36px; padding:0 13px; font-size:12px; }
     .transcript-text { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; color:#ddd; font:13px/1.7 "DM Sans",Arial,sans-serif; max-height:420px; overflow:auto; }
     .status strong { color:#fff; }
@@ -100,6 +130,7 @@
     .subtitle { max-width:620px; font-size:16px; }
     .form-card { border-color:#414141; border-radius:16px; padding:10px; }
     .form-card button { min-height:54px; padding:0 25px; }
+    h1 { max-width:850px; font-size:clamp(40px,6.5vw,72px); letter-spacing:-3.8px; }
     .input-row input { min-height:54px; }
     .trust { margin-top:30px; }
     .trust span:before { content:"✓"; color:#e8e8e8; font-weight:700; }
@@ -129,6 +160,9 @@
     }
     @media(max-width:480px) {
       .feature-grid { grid-template-columns:1fr; }
+      .result-head { align-items:flex-start; flex-direction:column; }
+      .result-actions { width:100%; }
+      .result-actions button { flex:1; }
       .feature { min-height:0; }
       .nav-links { gap:12px; }
     }
@@ -143,7 +177,6 @@
         <a href="#features">Features</a>
         <a href="#how-it-works">How it works</a>
         <a href="#faq">FAQ</a>
-        <a href="app.html">Workspace</a>
       </nav>
     </div>
   </header>
@@ -151,20 +184,20 @@
   <main id="top">
     <section class="hero">
       <div class="wrap">
-        <div class="eyebrow"><span class="dot"></span> Simple TikTok transcript tool</div>
-        <h1>Turn TikTok videos<br>into readable text.</h1>
-        <p class="subtitle">A simple TikTok video transcript workflow. Paste a public video link and get ready to turn spoken content into text — no account or complicated steps.</p>
+        <div class="eyebrow"><span class="dot"></span> Free online TikTok transcript tool</div>
+        <h1>Free TikTok Transcript Generator</h1>
+        <p class="subtitle">Turn a public TikTok video into readable text. Paste one link, generate the spoken transcript, then copy or download it — no account or complicated setup.</p>
 
         <form class="form-card" id="transcript-form">
           <div class="input-row">
-            <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Paste TikTok video link here..." aria-label="TikTok video URL" required />
+            <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Paste a public TikTok video URL..." aria-label="TikTok video URL" required />
             <button id="submit-button" type="submit">Get Transcript <span aria-hidden="true">→</span></button>
           </div>
-          <p class="microcopy">Paste a public TikTok video URL to get its available captions.</p>
+          <p class="microcopy">Supports public TikTok links, including vm.tiktok.com short links. Speech recognition availability may vary.</p>
         </form>
         <div class="status" id="status" role="status" aria-live="polite"></div>
         <section class="transcript-result" id="transcript-result" aria-label="Video transcript">
-          <div class="result-head"><h3>Your transcript</h3><button class="copy-button" id="copy-button" type="button">Copy text</button></div>
+          <div class="result-head"><div><h3>Your TikTok transcript</h3><p id="transcript-meta" class="result-meta">Ready to copy or download</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copy text</button><button class="copy-button secondary-action" id="download-button" type="button">Download TXT</button></div></div>
           <pre class="transcript-text" id="transcript-text"></pre>
         </section>
 
@@ -185,8 +218,8 @@
         </div>
         <div class="feature-grid">
           <article class="feature"><div class="feature-icon">↗</div><h3>Fast transcript workflow</h3><p>Drop in a public TikTok link and let ClipText retrieve or generate the available transcript.</p></article>
-          <article class="feature"><div class="feature-icon">▤</div><h3>Bulk workspace</h3><p>Organize multiple video links in one place and process your transcript tasks together.</p></article>
-          <article class="feature"><div class="feature-icon">⌘</div><h3>Copy-ready text</h3><p>Get clean, readable text you can copy into notes, research, captions, or your next draft.</p></article>
+          <article class="feature"><div class="feature-icon">✦</div><h3>Speech-to-text fallback</h3><p>When available, automatic speech recognition can help create a transcript even when native captions are missing.</p></article>
+          <article class="feature"><div class="feature-icon">⌘</div><h3>Copy or download</h3><p>Copy your transcript in one click or save it as a plain TXT file for notes, research, and drafts.</p></article>
         </div>
       </div>
     </section>
@@ -230,10 +263,10 @@
       <div class="wrap">
         <div class="section-heading"><h2>Frequently asked questions</h2><p>A few things to know before you start.</p></div>
         <div class="faq">
-          <details><summary>Is ClipText free?</summary><p>ClipText is being built around a free-to-use experience. Hosting and processing options will be kept within free service limits wherever possible.</p></details>
+          <details><summary>Is ClipText free?</summary><p>ClipText is free to try and does not require an account. Transcript processing depends on provider capacity and usage limits, which may change.</p></details>
           <details><summary>Do I need to create an account?</summary><p>No account is needed to use this simple interface.</p></details>
-          <details><summary>Can I transcribe any TikTok video?</summary><p>Not every video can be accessed. Availability can depend on the video's privacy settings, region, and TikTok's access restrictions.</p></details>
-          <details><summary>Which languages are supported?</summary><p>Language support depends on the transcript source and processing engine. We will publish confirmed language support after testing.</p></details>
+          <details><summary>Can I transcribe any TikTok video?</summary><p>No. The video must be public and accessible. Private, deleted, region-restricted, or otherwise unavailable videos may not be processed.</p></details>
+          <details><summary>Does ClipText work when a video has no captions?</summary><p>ClipText requests automatic speech-recognition fallback when supported by the transcript provider. Success depends on video access, audio quality, language, and provider availability.</p></details>
         </div>
       </div>
     </section>
@@ -249,6 +282,8 @@
     const result = document.getElementById('transcript-result');
     const transcriptText = document.getElementById('transcript-text');
     const copyButton = document.getElementById('copy-button');
+    const downloadButton = document.getElementById('download-button');
+    const transcriptMeta = document.getElementById('transcript-meta');
     document.getElementById('year').textContent = new Date().getFullYear();
 
     function isTikTokUrl(value) {
@@ -294,8 +329,8 @@
           };
           throw new Error(messages[data.code] || data.error || 'Could not get a transcript for this video.');
         }
-        for (let attempt = 0; data.status === 'processing' && data.jobId && attempt < 12; attempt++) {
-          showStatus('Processing transcript…');
+        for (let attempt = 0; data.status === 'processing' && data.jobId && attempt < 40; attempt++) {
+          showStatus('Generating your transcript… This can take up to a minute for some videos.');
           await new Promise(resolve => setTimeout(resolve, 1500));
           response = await fetch('/api/transcript', {
             method: 'POST',
@@ -306,20 +341,33 @@
           if (!response.ok) throw new Error(data.error || 'Transcript processing failed.');
         }
         if (data.status === 'processing') {
-          showStatus('This video is taking longer than expected. Please try again shortly.', true);
+          showStatus('This video is taking longer than expected. Please try again. No transcript was saved.', true);
           return;
         }
         const text = typeof data.transcript === 'string' ? data.transcript.trim() : '';
         if (!text) throw new Error('No transcript text was returned for this video.');
         transcriptText.textContent = text;
+        transcriptMeta.textContent = data.language ? 'Detected language: ' + data.language : 'Ready to copy or download';
         result.classList.add('show');
-        showStatus('Transcript ready.');
+        showStatus('Transcript ready. Review it before quoting or publishing.');
       } catch (error) {
         showStatus(error.message || 'Something went wrong. Please try again.', true);
       } finally {
         button.disabled = false;
         button.innerHTML = 'Get Transcript <span aria-hidden="true">→</span>';
       }
+    });
+
+    downloadButton.addEventListener('click', () => {
+      const blob = new Blob([transcriptText.textContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'cliptext-tiktok-transcript.txt';
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
     });
 
     copyButton.addEventListener('click', async () => {
