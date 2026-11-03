@@ -150,7 +150,7 @@
     function isTikTokUrl(value) {
       try {
         const url = new URL(value);
-        return /(^|\\.)tiktok\\.com$/i.test(url.hostname);
+        return /(^|\.)tiktok\.com$/i.test(url.hostname);
       } catch {
         return false;
       }
