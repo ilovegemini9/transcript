@@ -344,10 +344,10 @@
         const url = new URL(value);
         if (url.protocol !== 'https:' || url.username || url.password || url.port) return null;
         const host = url.hostname.toLowerCase();
-        if (/(^|\\.)tiktok\\.com$/.test(host)) return 'TikTok';
-        if (/(^|\\.)(youtube\\.com|youtu\\.be)$/.test(host)) return 'YouTube';
-        if (/(^|\\.)(facebook\\.com|fb\\.watch)$/.test(host)) return 'Facebook';
-        if (/(^|\\.)instagram\\.com$/.test(host)) return 'Instagram';
+        if (/(^|\.)tiktok\.com$/.test(host)) return 'TikTok';
+        if (/(^|\.)(youtube\.com|youtu\.be)$/.test(host)) return 'YouTube';
+        if (/(^|\.)(facebook\.com|fb\.watch)$/.test(host)) return 'Facebook';
+        if (/(^|\.)instagram\.com$/.test(host)) return 'Instagram';
         return null;
       } catch { return null; }
     }
