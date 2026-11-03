@@ -1,18 +1,15 @@
 # ClipText
 
-A dark, mobile-friendly TikTok transcript tool interface.
+A dark, mobile-friendly single-link TikTok transcript generator.
 
 ## Current prototype features
 
 - Single-link landing page.
-- Workspace with bulk TikTok URL validation (up to 50 links).
-- Local collections list.
 - Chrome Extension starter (Manifest V3) to save the current TikTok tab.
-- Local browser storage for the demo workspace and extension queue.
 
 ## Open the workspace
 
-Open `app.html` in a browser, or serve this folder with any static web server.
+Open `index.html` in a browser for the frontend. Run with Vercel's development server to use the API endpoint.
 
 ## Install the Chrome extension
 
@@ -29,7 +26,7 @@ This is a frontend prototype. Bulk import currently validates and queues links; 
 
 ## Live transcript integration
 
-The homepage calls the Vercel serverless endpoint at `/api/transcript`. It uses Supadata's TikTok-compatible API in **native captions mode**, which reads captions already available for a video and does not run AI speech generation.
+The homepage calls the Vercel serverless endpoint at `/api/transcript`. It uses Supadata's TikTok-compatible API in **auto mode**, which can use native captions and request AI speech-recognition fallback when supported by the provider.
 
 ### Required setup
 
@@ -38,6 +35,6 @@ The homepage calls the Vercel serverless endpoint at `/api/transcript`. It uses 
 3. Add `SUPADATA_API_KEY` with your key for Production (and Preview if needed).
 4. Redeploy the project.
 
-The key is used only by the serverless function and is never sent to browser JavaScript. Supadata advertises a free monthly request allowance; limits and terms may change. Videos without existing captions, private videos, and restricted videos may not return a transcript. ClipText does not bypass TikTok privacy or access controls.
+The key is used only by the serverless function and is never sent to browser JavaScript. Supadata advertises a free monthly request allowance; limits and terms may change. Private, deleted, inaccessible, or restricted videos may not return a transcript. AI processing and monthly usage depend on Supadata's current plan and limits. ClipText does not bypass TikTok privacy or access controls.
 
 A static file preview cannot run the API endpoint. For local testing, use Vercel's development server and set `SUPADATA_API_KEY` in the local environment.
