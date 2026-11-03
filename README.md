@@ -1,43 +1,60 @@
 # Transcript TikTok
 
-A dark, mobile-friendly TikTok transcript generator with a focused one-link workflow.
+Transcript TikTok is a browser-based video transcript tool for accessible public videos from TikTok, YouTube, Facebook, and Instagram.
 
-## Current product features
+Website: https://transcriptiktok.vercel.app/
 
-- Single-link public TikTok transcript flow through `/api/transcript`.
-- Clear validation, asynchronous processing states, provider errors, copy, TXT download, and JSON export.
-- Optional AI actions through `/api/ai`: summarize, generate captions, and generate hooks.
-- SEO landing pages for transcript generator, TikTok to text, transcript without login, Features, and free Pricing.
-- Privacy and Terms pages for public-product trust and crawlable policy links.
-- Local Admin product shell at `admin.html` for content/SEO queue, ad placements, and feature flags.
+## Supported platforms
 
-Open `index.html` in a browser for the frontend. Run with Vercel's development server to use the API endpoints.
+- TikTok public video links (including supported short links)
+- YouTube videos and Shorts, including youtu.be
+- Facebook public videos, including supported fb.watch links
+- Instagram public Reels and video posts
 
-## Environment
+The tool processes one video link per request. Private, deleted, age-restricted, region-restricted, login-only, or otherwise inaccessible videos may fail. The tool does not bypass platform privacy settings. Transcript quality depends on source audio, captions, language, and provider availability; review important text against the original video.
 
-Set `SUPADATA_API_KEY` in Vercel Project Settings → Environment Variables. The key is read only by `api/transcript.js` and is never placed in browser code. Without the key, the UI intentionally shows a configuration error instead of pretending that a transcript was generated.
+## Public pages
 
-To enable the free-tier AI actions, set `GEMINI_API_KEY`. The endpoint prefers Gemini with `GEMINI_MODEL` defaulting to `gemini-2.5-flash`. `OPENAI_API_KEY` remains an optional paid/provider fallback when Gemini is not configured; `OPENAI_API_BASE` and `OPENAI_MODEL` can customize it. AI requests are capped to 12,000 transcript characters and only allow the three actions exposed by the UI.
+- Homepage: https://transcriptiktok.vercel.app/
+- Video to text: https://transcriptiktok.vercel.app/video-to-text
+- TikTok transcript: https://transcriptiktok.vercel.app/tiktok-transcript
+- YouTube transcript: https://transcriptiktok.vercel.app/youtube-transcript
+- Facebook video transcript: https://transcriptiktok.vercel.app/facebook-video-transcript
+- Instagram Reels transcript: https://transcriptiktok.vercel.app/instagram-reels-transcript
+- Features: https://transcriptiktok.vercel.app/features.html
+- Pricing: https://transcriptiktok.vercel.app/pricing.html
+- Privacy: https://transcriptiktok.vercel.app/privacy.html
+- Terms: https://transcriptiktok.vercel.app/terms.html
 
-## Install the Chrome extension
+## Architecture
 
-1. Open `chrome://extensions`.
-2. Enable **Developer mode**.
-3. Select **Load unpacked**.
-4. Choose the `extension` folder.
-5. Open a public TikTok video and use the Transcript TikTok extension popup.
+- `index.html`: homepage, main transcript form, FAQ, and SEO metadata.
+- `api/transcript.js`: Vercel serverless endpoint; validates supported HTTPS hosts and calls Supadata server-side.
+- `api/transcript.test.js`: Node.js tests for URL validation, provider responses, and async jobs.
+- `platform-tool.js`: shared client workflow for platform-specific landing pages.
+- `tiktok-transcript.html`, `youtube-transcript.html`, `facebook-video-transcript.html`, `instagram-reels-transcript.html`, `video-to-text.html`: platform tools and SEO landing pages.
+- `vercel.json`: clean URL rewrites.
+- `robots.txt`, `sitemap.xml`, `llms.txt`: crawler and discovery files.
 
-## Important limitations
+## Local development
 
-Bulk processing, cloud accounts, team workspaces, translation, billing, and multi-platform support are not enabled. The Admin shell uses browser local storage and is not production authentication or cloud persistence. The AI endpoint requires an external model key and should receive server-side rate limiting before public high-volume use. The transcript provider can reject private, deleted, restricted, or unsupported videos.
+Requires Node.js 20 or newer.
 
-## Deployment checklist
+Run the API tests:
 
-- Add `SUPADATA_API_KEY` to Vercel.
-- Add `GEMINI_API_KEY` only if AI tools should be enabled. Do not add OpenAI unless you explicitly want that fallback.
-- Test public TikTok links from multiple regions and with/without native captions.
-- Verify private/deleted/no-speech/provider-error/rate-limit states.
-- Verify AI-not-configured and AI-provider-error states.
-- Update canonical URLs in public pages, `robots.txt`, and `sitemap.xml` if the domain changes.
-- Keep public pages indexable and keep `/admin.html` noindex.
-- Only TikTok is supported by the current public transcript workflow. Other platforms are not advertised or accepted. Bulk processing, cloud sync, and translations are not enabled yet.
+```bash
+node --test api/transcript.test.js
+```
+
+The API uses the `SUPADATA_API_KEY` environment variable. Add it to the Vercel project environment settings; never expose the key in client-side JavaScript or commit it to the repository. The current integration uses Supadata's universal transcript endpoint and its `auto` mode, which prefers available captions and may fall back to generated transcription when supported.
+
+## Deployment
+
+The project is connected to Vercel and deploys from the `main` branch when deployment limits allow. Check the latest Vercel deployment status before treating new GitHub commits as live.
+
+## Product boundaries
+
+- One public video per request; no bulk queue.
+- No user accounts, cloud transcript library, or cross-device sync.
+- No promise of unlimited use or guaranteed transcription.
+- No paid infrastructure or database is required by this repository.
