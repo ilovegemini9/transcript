@@ -32,8 +32,8 @@ module.exports = async function handler(req, res) {
     endpoint = new URL('https://api.supadata.ai/v1/transcript');
     endpoint.searchParams.set('url', videoUrl);
     endpoint.searchParams.set('text', 'true');
-    // Native mode reads existing captions only; it avoids paid AI transcription fallback.
-    endpoint.searchParams.set('mode', 'native');
+    // Auto mode uses native captions when available and AI transcription as a fallback.
+    endpoint.searchParams.set('mode', 'auto');
   }
 
   try {
@@ -46,7 +46,7 @@ module.exports = async function handler(req, res) {
       return res.status(202).json({ status: 'processing', jobId: payload.jobId || jobId });
     }
     if (upstream.status === 206 || payload.error === 'transcript-unavailable') {
-      return res.status(422).json({ code: 'TRANSCRIPT_UNAVAILABLE', error: 'No captions are available for this video.' });
+      return res.status(422).json({ code: 'TRANSCRIPT_UNAVAILABLE', error: 'No transcript could be generated for this video. Try another public video with clear speech.' });
     }
     if (upstream.status === 401 || upstream.status === 403) {
       return res.status(422).json({ code: 'PRIVATE_OR_RESTRICTED', error: 'The video is private or restricted.' });
