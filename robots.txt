@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /app.html
+Disallow: /admin.html
+Disallow: /api/
 
 Sitemap: https://transcriptiktok.vercel.app/sitemap.xml
