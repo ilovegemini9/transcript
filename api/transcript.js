@@ -1,10 +1,10 @@
 // Vercel serverless function. Keep provider credentials on the server.
 const PROVIDER_TIMEOUT_MS = 20000;
 const SUPPORTED_HOSTS = [
-  { platform: 'TikTok', test: /(^|\\.)tiktok\\.com$/i },
-  { platform: 'YouTube', test: /(^|\\.)(youtube\\.com|youtu\\.be)$/i },
-  { platform: 'Facebook', test: /(^|\\.)(facebook\\.com|fb\\.watch)$/i },
-  { platform: 'Instagram', test: /(^|\\.)instagram\\.com$/i }
+  { platform: 'TikTok', test: /(^|\.)tiktok\.com$/i },
+  { platform: 'YouTube', test: /(^|\.)(youtube\.com|youtu\.be)$/i },
+  { platform: 'Facebook', test: /(^|\.)(facebook\.com|fb\.watch)$/i },
+  { platform: 'Instagram', test: /(^|\.)instagram\.com$/i }
 ];
 const JOB_ID = /^[a-zA-Z0-9_-]{5,128}$/;
 
