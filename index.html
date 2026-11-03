@@ -199,12 +199,12 @@
       button.textContent = 'Getting transcript…';
       showStatus('Checking for available TikTok captions…');
       try {
-        const response = await fetch('/api/transcript', {
+        let response = await fetch('/api/transcript', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url: value })
         });
-        const data = await response.json().catch(() => ({}));
+        let data = await response.json().catch(() => ({}));
         if (!response.ok) {
           const messages = {
             CONFIG_MISSING: 'Transcript service is not configured yet. Add your Supadata API key in Vercel settings.',
@@ -214,8 +214,19 @@
           };
           throw new Error(messages[data.code] || data.error || 'Could not get a transcript for this video.');
         }
+        for (let attempt = 0; data.status === 'processing' && data.jobId && attempt < 12; attempt++) {
+          showStatus('Processing transcript…');
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          response = await fetch('/api/transcript', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ jobId: data.jobId })
+          });
+          data = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(data.error || 'Transcript processing failed.');
+        }
         if (data.status === 'processing') {
-          showStatus('This video is still processing. Please try again in a moment.');
+          showStatus('This video is taking longer than expected. Please try again shortly.', true);
           return;
         }
         const text = typeof data.transcript === 'string' ? data.transcript.trim() : '';
