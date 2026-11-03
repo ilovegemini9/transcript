@@ -1,25 +1,27 @@
 # ClipText
 
-A minimal, black-and-white TikTok transcript website.
+A dark, mobile-friendly TikTok transcript tool interface.
 
-## Current status
+## Current prototype features
 
-This repository currently contains the first frontend MVP:
-- Responsive black-and-white landing page
-- TikTok URL input and basic URL validation
-- Simple how-it-works and FAQ sections
-- No account or database required
+- Single-link landing page.
+- Workspace with bulk TikTok URL validation (up to 50 links).
+- Local collections list.
+- Chrome Extension starter (Manifest V3) to save the current TikTok tab.
+- Local browser storage for the demo workspace and extension queue.
 
-**Important:** Direct TikTok transcript extraction is not implemented yet. The form currently validates the URL and explains that the extraction service still needs to be connected. Do not advertise transcription as working until a compliant, reliable source has been integrated and tested.
+## Open the workspace
 
-## Run locally
+Open `app.html` in a browser, or serve this folder with any static web server.
 
-Open `index.html` in a browser, or serve this folder with any static web server.
+## Install the Chrome extension
 
-## Free hosting
+1. Open `chrome://extensions`.
+2. Enable **Developer mode**.
+3. Select **Load unpacked**.
+4. Choose the `extension` folder.
+5. Open a TikTok video and use the ClipText extension popup.
 
-The site is static and can be hosted on GitHub Pages at no charge within GitHub's applicable usage limits.
+## Important limitations
 
-## Next technical milestone
-
-Evaluate a permitted way to obtain captions/transcript data from a TikTok URL. If direct access is unavailable, show a clear error rather than inventing transcript text or silently uploading user content. Keep any processing within free tiers and disclose limitations.
+This is a frontend prototype. Bulk import currently validates and queues links; it does not process 50 transcripts. Collections and the workspace queue are stored locally in the browser, not synced to an account or cloud database. The extension has its own local queue using Chrome storage and is not yet synced with the website. A real transcript engine, backend job queue, durable database, and extension-to-site sync still need to be connected. No transcript extraction is claimed to work yet.
