@@ -1,4 +1,4 @@
-# ClipText
+# Transcript TikTok
 
 A dark, mobile-friendly TikTok transcript generator with a focused one-link workflow.
 
@@ -28,7 +28,7 @@ To enable the free-tier AI actions, set `GEMINI_API_KEY`. The endpoint prefers G
 2. Enable **Developer mode**.
 3. Select **Load unpacked**.
 4. Choose the `extension` folder.
-5. Open a public TikTok video and use the ClipText extension popup.
+5. Open a public TikTok video and use the Transcript TikTok extension popup.
 
 ## Important limitations
 
