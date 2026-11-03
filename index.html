@@ -49,6 +49,12 @@
     .microcopy { margin:13px 0 3px; color:#777; font-size:11px; }
     .status { display:none; width:min(690px,100%); margin:14px auto 0; padding:13px 15px; border:1px solid #393939; border-radius:10px; color:#c9c9c9; text-align:left; font-size:13px; line-height:1.6; }
     .status.show { display:block; }
+    .transcript-result { display:none; width:min(690px,100%); margin:14px auto 0; padding:18px; border:1px solid #343434; border-radius:12px; background:#101010; text-align:left; }
+    .transcript-result.show { display:block; }
+    .result-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+    .result-head h3 { margin:0; font-size:15px; }
+    .copy-button { min-height:36px; padding:0 13px; font-size:12px; }
+    .transcript-text { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; color:#ddd; font:13px/1.7 "DM Sans",Arial,sans-serif; max-height:420px; overflow:auto; }
     .status strong { color:#fff; }
     .trust { display:flex; justify-content:center; gap:25px; flex-wrap:wrap; margin-top:28px; color:#888; font-size:12px; }
     .trust span { display:flex; align-items:center; gap:7px; }
@@ -110,9 +116,13 @@
             <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Paste TikTok video link here..." aria-label="TikTok video URL" required />
             <button id="submit-button" type="submit">Get Transcript <span aria-hidden="true">→</span></button>
           </div>
-          <p class="microcopy">Paste a public TikTok video URL. Transcript processing is coming soon.</p>
+          <p class="microcopy">Paste a public TikTok video URL to get its available captions.</p>
         </form>
         <div class="status" id="status" role="status" aria-live="polite"></div>
+        <section class="transcript-result" id="transcript-result" aria-label="Video transcript">
+          <div class="result-head"><h3>Your transcript</h3><button class="copy-button" id="copy-button" type="button">Copy text</button></div>
+          <pre class="transcript-text" id="transcript-text"></pre>
+        </section>
 
         <div class="trust">
           <span><b>Free</b> to try</span>
@@ -130,8 +140,8 @@
         </div>
         <div class="steps">
           <article class="step"><div class="step-num">01</div><h3>Copy the TikTok link</h3><p>Open the TikTok video you want to transcribe and copy its share link.</p></article>
-          <article class="step"><div class="step-num">02</div><h3>Paste it above</h3><p>Paste the video URL into the box and start the transcript process.</p></article>
-          <article class="step"><div class="step-num">03</div><h3>Copy your transcript</h3><p>Read the generated text and copy it for notes, captions, or content research once processing is live.</p></article>
+          <article class="step"><div class="step-num">02</div><h3>Paste it above</h3><p>Paste the video URL and get the available captions.</p></article>
+          <article class="step"><div class="step-num">03</div><h3>Copy your transcript</h3><p>Read the transcript and copy it for notes, captions, or content research.</p></article>
         </div>
       </div>
     </section>
@@ -151,32 +161,84 @@
 
   <footer><div class="wrap footer-inner"><span>© <span id="year"></span> ClipText</span><span>Simple transcripts. No unnecessary steps.</span></div></footer>
 
-  <script>
+    <script>
     const form = document.getElementById('transcript-form');
     const input = document.getElementById('tiktok-url');
     const button = document.getElementById('submit-button');
     const status = document.getElementById('status');
+    const result = document.getElementById('transcript-result');
+    const transcriptText = document.getElementById('transcript-text');
+    const copyButton = document.getElementById('copy-button');
     document.getElementById('year').textContent = new Date().getFullYear();
 
     function isTikTokUrl(value) {
       try {
         const url = new URL(value);
-        return /(^|\.)tiktok\.com$/i.test(url.hostname);
-      } catch {
-        return false;
-      }
+        return url.protocol === 'https:' && /(^|\\.)tiktok\\.com$/i.test(url.hostname);
+      } catch { return false; }
     }
 
-    form.addEventListener('submit', (event) => {
+    function showStatus(message, isError = false) {
+      status.classList.add('show');
+      status.textContent = message;
+      status.style.borderColor = isError ? '#744040' : '#393939';
+    }
+
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const value = input.value.trim();
-      status.classList.add('show');
+      result.classList.remove('show');
+      transcriptText.textContent = '';
       if (!isTikTokUrl(value)) {
-        status.innerHTML = '<strong>Please enter a valid TikTok link.</strong> It should start with a TikTok domain such as tiktok.com.';
+        showStatus('Please enter a valid public TikTok link (https://www.tiktok.com/...).', true);
         input.focus();
         return;
       }
-      status.innerHTML = '<strong>Your TikTok link looks valid.</strong><br>The transcript extraction service is not connected yet. This first version sets up the website interface; the next step is integrating a reliable, permitted transcript source.';
+
+      button.disabled = true;
+      button.textContent = 'Getting transcript…';
+      showStatus('Checking for available TikTok captions…');
+      try {
+        const response = await fetch('/api/transcript', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: value })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          const messages = {
+            CONFIG_MISSING: 'Transcript service is not configured yet. Add your Supadata API key in Vercel settings.',
+            TRANSCRIPT_UNAVAILABLE: 'No captions were found for this video. Try another public TikTok video.',
+            PRIVATE_OR_RESTRICTED: 'This video is private or restricted and cannot be accessed.',
+            RATE_LIMITED: 'The free transcript request limit has been reached. Please try again later.'
+          };
+          throw new Error(messages[data.code] || data.error || 'Could not get a transcript for this video.');
+        }
+        if (data.status === 'processing') {
+          showStatus('This video is still processing. Please try again in a moment.');
+          return;
+        }
+        const text = typeof data.transcript === 'string' ? data.transcript.trim() : '';
+        if (!text) throw new Error('No transcript text was returned for this video.');
+        transcriptText.textContent = text;
+        result.classList.add('show');
+        showStatus('Transcript ready.');
+      } catch (error) {
+        showStatus(error.message || 'Something went wrong. Please try again.', true);
+      } finally {
+        button.disabled = false;
+        button.innerHTML = 'Get Transcript <span aria-hidden="true">→</span>';
+      }
+    });
+
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(transcriptText.textContent);
+        copyButton.textContent = 'Copied!';
+        setTimeout(() => { copyButton.textContent = 'Copy text'; }, 1600);
+      } catch {
+        showStatus('Copy is not available in this browser. Select the transcript text to copy it.', true);
+      }
     });
   </script>
 </body>
