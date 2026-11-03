@@ -20,7 +20,7 @@ Open `index.html` in a browser for the frontend. Run with Vercel's development s
 
 Set `SUPADATA_API_KEY` in Vercel Project Settings → Environment Variables. The key is read only by `api/transcript.js` and is never placed in browser code. Without the key, the UI intentionally shows a configuration error instead of pretending that a transcript was generated.
 
-To enable AI actions, set `OPENAI_API_KEY`. Optional variables are `OPENAI_API_BASE` for an OpenAI-compatible provider and `OPENAI_MODEL` (defaults to `gpt-4o-mini`). AI requests are capped to 12,000 transcript characters and only allow the three actions exposed by the UI.
+To enable the free-tier AI actions, set `GEMINI_API_KEY`. The endpoint prefers Gemini with `GEMINI_MODEL` defaulting to `gemini-2.5-flash`. `OPENAI_API_KEY` remains an optional paid/provider fallback when Gemini is not configured; `OPENAI_API_BASE` and `OPENAI_MODEL` can customize it. AI requests are capped to 12,000 transcript characters and only allow the three actions exposed by the UI.
 
 ## Install the Chrome extension
 
@@ -37,7 +37,7 @@ Bulk processing, cloud accounts, team workspaces, translation, billing, and mult
 ## Deployment checklist
 
 - Add `SUPADATA_API_KEY` to Vercel.
-- Add `OPENAI_API_KEY` only if AI tools should be enabled.
+- Add `GEMINI_API_KEY` only if AI tools should be enabled. Do not add OpenAI unless you explicitly want that fallback.
 - Test public TikTok links from multiple regions and with/without native captions.
 - Verify private/deleted/no-speech/provider-error/rate-limit states.
 - Verify AI-not-configured and AI-provider-error states.
