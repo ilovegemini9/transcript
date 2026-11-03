@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080808" />
+  <meta name="description" content="Get the text from a TikTok video with a simple link. Fast, easy and free to try." />
+  <title>ClipText — Free TikTok Transcript Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; --bg:#080808; --panel:#111; --line:#292929; --muted:#999; --white:#f7f7f7; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--bg); color:var(--white); font-family:"DM Sans",Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; text-decoration:none; }
+    .wrap { width:min(1080px, calc(100% - 40px)); margin:0 auto; }
+    header { height:76px; display:flex; align-items:center; border-bottom:1px solid #1d1d1d; }
+    .nav { display:flex; justify-content:space-between; align-items:center; width:100%; }
+    .brand { font-size:22px; font-weight:700; letter-spacing:-1px; }
+    .brand-mark { display:inline-grid; place-items:center; width:27px; height:27px; margin-right:8px; border:1px solid #555; border-radius:8px; font-size:14px; vertical-align:1px; }
+    .nav-links { display:flex; gap:28px; color:#b5b5b5; font-size:13px; }
+    .nav-links a:hover { color:#fff; }
+    .hero { padding:100px 0 76px; text-align:center; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; border:1px solid #303030; border-radius:999px; padding:7px 12px; color:#c9c9c9; font-size:12px; margin-bottom:25px; }
+    .dot { width:6px; height:6px; border-radius:50%; background:#fff; box-shadow:0 0 12px #fff; }
+    h1 { max-width:760px; margin:0 auto; font-size:clamp(38px,6vw,66px); line-height:1.04; letter-spacing:-3.8px; font-weight:700; }
+    .subtitle { max-width:570px; margin:22px auto 34px; color:#a4a4a4; font-size:16px; line-height:1.7; }
+    .form-card { width:min(690px,100%); margin:0 auto; padding:9px; border:1px solid #343434; border-radius:14px; background:#101010; box-shadow:0 18px 70px #0009; }
+    .input-row { display:flex; gap:9px; }
+    input { min-width:0; flex:1; padding:17px 16px; border:1px solid transparent; border-radius:9px; outline:none; background:#191919; color:#fff; font:inherit; font-size:14px; }
+    input::placeholder { color:#777; }
+    input:focus { border-color:#666; }
+    button { border:0; border-radius:9px; background:#f5f5f5; color:#080808; padding:0 22px; font:600 14px "DM Sans",Arial,sans-serif; cursor:pointer; transition:background .2s, transform .2s; white-space:nowrap; }
+    button:hover { background:#dcdcdc; transform:translateY(-1px); }
+    button:disabled { opacity:.55; cursor:not-allowed; transform:none; }
+    .microcopy { margin:13px 0 3px; color:#777; font-size:11px; }
+    .status { display:none; width:min(690px,100%); margin:14px auto 0; padding:13px 15px; border:1px solid #393939; border-radius:10px; color:#c9c9c9; text-align:left; font-size:13px; line-height:1.6; }
+    .status.show { display:block; }
+    .status strong { color:#fff; }
+    .trust { display:flex; justify-content:center; gap:25px; flex-wrap:wrap; margin-top:28px; color:#888; font-size:12px; }
+    .trust span { display:flex; align-items:center; gap:7px; }
+    .trust b { color:#ddd; font-weight:500; }
+    .section { padding:65px 0; border-top:1px solid #1d1d1d; }
+    .section-heading { text-align:center; margin:0 auto 38px; }
+    h2 { margin:0 0 10px; font-size:30px; letter-spacing:-1.2px; }
+    .section-heading p { margin:0; color:#888; font-size:14px; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
+    .step { padding:23px; border:1px solid #262626; border-radius:12px; background:linear-gradient(145deg,#111,#0b0b0b); }
+    .step-num { display:grid; place-items:center; width:32px; height:32px; border:1px solid #444; border-radius:9px; color:#fff; font-size:12px; margin-bottom:22px; }
+    .step h3 { margin:0 0 8px; font-size:15px; }
+    .step p { margin:0; color:#888; font-size:13px; line-height:1.65; }
+    .faq { max-width:720px; margin:0 auto; }
+    details { border-bottom:1px solid #292929; padding:18px 0; }
+    summary { cursor:pointer; list-style:none; font-size:14px; font-weight:600; }
+    summary::-webkit-details-marker { display:none; }
+    summary:after { content:"+"; float:right; color:#999; font-size:18px; font-weight:400; }
+    details[open] summary:after { content:"−"; }
+    details p { color:#999; font-size:13px; line-height:1.7; margin:13px 25px 0 0; }
+    footer { border-top:1px solid #1d1d1d; padding:25px 0; color:#777; font-size:12px; }
+    .footer-inner { display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; }
+    @media(max-width:650px) {
+      header { height:65px; }
+      .nav-links { gap:16px; font-size:12px; }
+      .hero { padding:76px 0 60px; }
+      h1 { letter-spacing:-2.2px; }
+      .subtitle { font-size:14px; }
+      .input-row { flex-direction:column; }
+      input { min-height:52px; }
+      button { min-height:50px; }
+      .trust { gap:13px 18px; }
+      .steps { grid-template-columns:1fr; }
+      .step { padding:19px; }
+      .section { padding:52px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#" aria-label="ClipText home"><span class="brand-mark">C</span>cliptext</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#how-it-works">How it works</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow"><span class="dot"></span> Simple TikTok transcription</div>
+        <h1>Turn TikTok videos<br>into text.</h1>
+        <p class="subtitle">Get a readable transcript from a TikTok video using just its link. No complicated steps.</p>
+
+        <form class="form-card" id="transcript-form">
+          <div class="input-row">
+            <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Paste TikTok video link here..." aria-label="TikTok video URL" required />
+            <button id="submit-button" type="submit">Get Transcript <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="microcopy">Paste a public TikTok video URL to get started.</p>
+        </form>
+        <div class="status" id="status" role="status" aria-live="polite"></div>
+
+        <div class="trust">
+          <span><b>Free</b> to try</span>
+          <span><b>No account</b> required</span>
+          <span><b>Easy</b> to use</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>How it works</h2>
+          <p>Three simple steps. That's it.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><div class="step-num">01</div><h3>Copy the TikTok link</h3><p>Open the TikTok video you want to transcribe and copy its share link.</p></article>
+          <article class="step"><div class="step-num">02</div><h3>Paste it above</h3><p>Paste the video URL into the box and start the transcript process.</p></article>
+          <article class="step"><div class="step-num">03</div><h3>Get your text</h3><p>View your transcript and copy or download it when processing is available.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="section-heading"><h2>Frequently asked questions</h2><p>A few things to know before you start.</p></div>
+        <div class="faq">
+          <details><summary>Is ClipText free?</summary><p>ClipText is being built around a free-to-use experience. Hosting and processing options will be kept within free service limits wherever possible.</p></details>
+          <details><summary>Do I need to create an account?</summary><p>No account is needed to use this simple interface.</p></details>
+          <details><summary>Can I transcribe any TikTok video?</summary><p>Not every video can be accessed. Availability can depend on the video's privacy settings, region, and TikTok's access restrictions.</p></details>
+          <details><summary>Which languages are supported?</summary><p>Language support depends on the transcript source and processing engine. We will publish confirmed language support after testing.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer-inner"><span>© <span id="year"></span> ClipText</span><span>Simple transcripts. No unnecessary steps.</span></div></footer>
+
+  <script>
+    const form = document.getElementById('transcript-form');
+    const input = document.getElementById('tiktok-url');
+    const button = document.getElementById('submit-button');
+    const status = document.getElementById('status');
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function isTikTokUrl(value) {
+      try {
+        const url = new URL(value);
+        return /(^|\\.)tiktok\\.com$/i.test(url.hostname);
+      } catch {
+        return false;
+      }
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const value = input.value.trim();
+      status.classList.add('show');
+      if (!isTikTokUrl(value)) {
+        status.innerHTML = '<strong>Please enter a valid TikTok link.</strong> It should start with a TikTok domain such as tiktok.com.';
+        input.focus();
+        return;
+      }
+      status.innerHTML = '<strong>Your TikTok link looks valid.</strong><br>The transcript extraction service is not connected yet. This first version sets up the website interface; the next step is integrating a reliable, permitted transcript source.';
+    });
+  </script>
+</body>
+</html>
