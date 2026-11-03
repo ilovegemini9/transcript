@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#080808" />
   <meta name="google-site-verification" content="WkXRsZNaG77qk0yXebhvc_3VAHqFVP7NsvdVhtFSO5A" />
-  <meta name="description" content="Free TikTok transcript generator. Turn a public TikTok video into readable text, then copy or download your transcript. No signup required." />
+  <meta name="description" content="Free TikTok transcript generator. Turn a public video into readable text, then copy or download your transcript. No signup required." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="author" content="Transcript TikTok" />
   <link rel="canonical" href="https://transcriptiktok.vercel.app/" />
@@ -219,18 +219,18 @@
   <main id="top">
     <section class="hero">
       <div class="wrap">
-        <div class="eyebrow"><span class="dot"></span> Fast, clean TikTok video transcripts</div>
-        <h1>TikTok Transcript Generator</h1>
-        <p class="subtitle">Turn a public TikTok video into readable text. Paste one link, generate the spoken transcript, then copy or download it — no account or complicated setup.</p><form class="form-card" id="transcript-form">
+        <div class="eyebrow"><span class="dot"></span> Fast, clean video transcripts</div>
+        <h1>Video to Text & Transcript Generator</h1>
+        <p class="subtitle">Turn a public TikTok, YouTube, Facebook, or Instagram video into readable text. Paste one link, generate the spoken transcript, then copy or download it — no account or complicated setup.</p><form class="form-card" id="transcript-form">
           <div class="input-row">
-            <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Paste a public TikTok video URL..." aria-label="TikTok video URL" required />
+            <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Paste a public video link (TikTok, YouTube, Facebook, Instagram)..." aria-label="Public video URL" required />
             <button id="submit-button" type="submit">Get Transcript <span aria-hidden="true">→</span></button>
           </div>
-          <p class="microcopy">Supports public TikTok links, including vm.tiktok.com short links. Private or deleted videos cannot be processed.</p>
+          <p class="microcopy">Supports public TikTok, YouTube, Facebook, and Instagram video links. Private or unavailable videos cannot be processed.</p>
         </form>
         <div class="status" id="status" role="status" aria-live="polite"></div>
         <section class="transcript-result" id="transcript-result" aria-label="Video transcript">
-          <div class="result-head"><div><h3>Your TikTok transcript</h3><p id="transcript-meta" class="result-meta">Ready to copy or download</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copy text</button><button class="copy-button secondary-action" id="download-button" type="button">Download TXT</button><button class="copy-button secondary-action" id="json-button" type="button">JSON</button></div></div>
+          <div class="result-head"><div><h3>Your video transcript</h3><p id="transcript-meta" class="result-meta">Ready to copy or download</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copy text</button><button class="copy-button secondary-action" id="download-button" type="button">Download TXT</button><button class="copy-button secondary-action" id="json-button" type="button">JSON</button></div></div>
           <pre class="transcript-text" id="transcript-text"></pre>
           <div class="ai-actions" aria-label="Optional AI tools"><button class="copy-button secondary-action ai-button" data-action="summarize" type="button">Summarize</button><button class="copy-button secondary-action ai-button" data-action="caption" type="button">Generate captions</button><button class="copy-button secondary-action ai-button" data-action="hooks" type="button">Generate hooks</button></div><div class="ai-output" id="ai-output" role="status" aria-live="polite"></div>
         </section>
@@ -248,10 +248,10 @@
       <div class="wrap">
         <div class="section-heading">
           <h2>Everything you need to capture the words</h2>
-          <p>A focused toolkit to turn public TikTok videos into useful text.</p>
+          <p>A focused toolkit to turn public social videos into useful text.</p>
         </div>
         <div class="feature-grid">
-          <article class="feature"><div class="feature-icon">↗</div><span class="feature-kicker">Extract</span><h3>One-link workflow</h3><p>Paste a public TikTok link and get readable text without onboarding or unnecessary steps.</p></article>
+          <article class="feature"><div class="feature-icon">↗</div><span class="feature-kicker">Extract</span><h3>One-link workflow</h3><p>Paste a public video link and get readable text without onboarding or unnecessary steps.</p></article>
           <article class="feature"><div class="feature-icon">✦</div><span class="feature-kicker">Trust</span><h3>Clear processing states</h3><p>Know whether a video is processing, restricted, unavailable, or ready. No fake success screens.</p></article>
           <article class="feature"><div class="feature-icon">⌘</div><span class="feature-kicker">Export</span><h3>Copy or download</h3><p>Copy your transcript or save TXT and JSON files for notes, research, captions, and drafts.</p></article><article class="feature"><div class="feature-icon">✦</div><span class="feature-kicker">Repurpose</span><h3>AI hooks and captions</h3><p>When the optional AI provider is configured, turn a transcript into summaries, captions, and original hooks.</p></article><article class="feature"><div class="feature-icon">⌁</div><span class="feature-kicker">Free-first</span><h3>No forced bulk workflow</h3><p>Start with one video. No subscription wall and no distracting 50-link queue.</p></article>
         </div>
@@ -286,7 +286,7 @@
           <p>A searchable text version of the spoken words in a TikTok video.</p>
         </div>
         <div class="audience">
-          <article class="audience-card"><h3>Turn TikTok speech into text</h3><p>A TikTok transcript makes spoken information easier to read, search, quote, study, and organize. Paste one public video link into the tool above to request its transcript.</p></article>
+          <article class="audience-card"><h3>Turn video speech into text</h3><p>A TikTok transcript makes spoken information easier to read, search, quote, study, and organize. Paste one public video link into the tool above to request its transcript.</p></article>
           <article class="audience-card"><h3>Use transcripts responsibly</h3><p>Check the text against the original video before sharing it. Speech recognition can mishear names, accents, background audio, and technical terms. Only process videos you are allowed to use.</p></article>
         </div>
         <p style="text-align:center;color:#999;font-size:13px;margin-top:22px">Learn more: <a href="/tiktok-transcript-generator.html" style="text-decoration:underline">how to get a TikTok transcript</a> · <a href="/tiktok-to-text.html" style="text-decoration:underline">convert TikTok video to text</a> · <a href="/tiktok-transcript-without-login.html" style="text-decoration:underline">use a TikTok transcript tool without login</a>.</p>
@@ -339,7 +339,13 @@
     function supportedPlatform(value) {
       try {
         const url = new URL(value);
-        return url.protocol === 'https:' && url.hostname.toLowerCase().split('.').slice(-2).join('.') === 'tiktok.com' ? 'TikTok' : null;
+        if (url.protocol !== 'https:' || url.username || url.password || url.port) return null;
+        const host = url.hostname.toLowerCase();
+        if (/(^|\\.)tiktok\\.com$/.test(host)) return 'TikTok';
+        if (/(^|\\.)(youtube\\.com|youtu\\.be)$/.test(host)) return 'YouTube';
+        if (/(^|\\.)(facebook\\.com|fb\\.watch)$/.test(host)) return 'Facebook';
+        if (/(^|\\.)instagram\\.com$/.test(host)) return 'Instagram';
+        return null;
       } catch { return null; }
     }
 
@@ -358,7 +364,7 @@
       aiOutput.textContent = '';
       const selectedPlatform = supportedPlatform(value);
       if (!selectedPlatform) {
-        showStatus('Please enter a valid public TikTok link (https://www.tiktok.com/...).', true);
+        showStatus('Please enter a valid public TikTok, YouTube, Facebook, or Instagram video link.', true);
         input.focus();
         return;
       }
@@ -416,7 +422,7 @@
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = url;
-      anchor.download = 'transcript-tiktok.txt';
+      anchor.download = 'video-transcript.txt';
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
@@ -426,7 +432,7 @@
 
     jsonButton.addEventListener('click', () => {
       const blob = new Blob([JSON.stringify({ source: input.value.trim(), transcript: transcriptText.textContent, language: transcriptMeta.textContent, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json;charset=utf-8' });
-      const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'transcript-tiktok.json'; document.body.appendChild(anchor); anchor.click(); anchor.remove(); URL.revokeObjectURL(url);
+      const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'video-transcript.json'; document.body.appendChild(anchor); anchor.click(); anchor.remove(); URL.revokeObjectURL(url);
     });
 
     document.querySelectorAll('.ai-button').forEach((aiButton) => aiButton.addEventListener('click', async () => {
