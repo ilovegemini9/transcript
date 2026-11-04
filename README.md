@@ -58,3 +58,19 @@ The project is connected to Vercel and deploys from the `main` branch when deplo
 - No user accounts, cloud transcript library, or cross-device sync.
 - No promise of unlimited use or guaranteed transcription.
 - No paid infrastructure or database is required by this repository.
+
+## Optional free-tier AI tools
+
+The homepage includes three transcript repurposing actions: **Summarize**, **Generate captions**, and **Generate hooks**.
+
+To enable them with Google's Gemini Developer API free tier:
+
+1. Create a free API key in [Google AI Studio](https://aistudio.google.com/app/apikey).
+2. In Vercel, open the `transcript` project → **Settings** → **Environment Variables**.
+3. Add `GEMINI_API_KEY` with the key from AI Studio. Keep it server-side; never put it in HTML or client JavaScript.
+4. Apply it to Production (and Preview if desired), then redeploy the project.
+5. The API uses `gemini-3.8-flash` by default. You can optionally override it with `GEMINI_MODEL`.
+
+Gemini's free tier has model-specific request and token quotas; it is not unlimited. Free-tier prompts and outputs may be used by Google to improve its products, so visitors should not submit sensitive transcript content. See the [official pricing](https://ai.google.dev/gemini-api/docs/pricing) and [rate limits](https://ai.google.dev/gemini-api/docs/rate-limits).
+
+If the key is missing, transcript generation still works; only the optional AI actions remain unavailable. The API key is read only by the serverless endpoint and is never exposed to the browser.
