@@ -3,8 +3,8 @@
 ## Architecture
 - English default stays at `/` and `/blog/`.
 - Localized languages use a locale prefix and translated page slugs, for example `/fr/blog/`, `/it/blog/`, and `/ar/المدونة/`.
-- The registry in `locales.json` defines 50 language entries, directions, and localized blog/article slug dictionaries.
-- Localized routes are not live yet. All locales remain planned until their complete static HTML pages pass QA.
+- The registry in `locales.json` defines 75 language entries, directions, and localized blog/article slug dictionaries.
+- Localized routes are not live yet. Only English and the current French preview have homepage files today; all other entries are roadmap locales and must remain unavailable in the selector until translated pages, routes and QA are complete.
 
 ## Non-negotiable release rules
 1. Translate every visible string: navigation, headings, body copy, form labels, placeholders, validation, processing states, errors, AI states, buttons, footer, accessibility labels, metadata, FAQ and structured data.
