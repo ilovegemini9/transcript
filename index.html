@@ -329,6 +329,30 @@
       .step:hover,.audience-card:hover,.bottom-cta a:hover { transform:none; }
     }
 
+  
+    /* AI Creator Studio: accessible, consistent card controls. */
+    .ai-panel{margin-top:18px;padding:17px;border:1px solid rgba(185,163,255,.28);border-radius:15px;background:linear-gradient(145deg,rgba(28,23,42,.94),rgba(13,13,19,.98));}
+    .ai-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+    .ai-kicker{display:block;margin-bottom:5px;color:#c8b7ff;font-size:9px;font-weight:700;letter-spacing:.16em}
+    .ai-panel-head h4{margin:0;color:#f5f0ff;font-size:16px;letter-spacing:-.3px}
+    .ai-panel-head p{margin:5px 0 0;color:#a9a1b7;font-size:11px;line-height:1.55}
+    .ai-spark{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border:1px solid rgba(195,174,255,.32);border-radius:11px;background:rgba(167,139,250,.12);color:#d8caff;font-size:20px}
+    .ai-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0;padding:0;border:0}
+    .ai-tool{display:flex;align-items:center;gap:9px;min-width:0;min-height:65px;padding:10px;border:1px solid #393249;border-radius:11px;background:rgba(255,255,255,.025);color:#eee8fb;text-align:left;white-space:normal}
+    .ai-tool:hover{border-color:#a78bfa;background:rgba(167,139,250,.10);transform:translateY(-1px)}
+    .ai-tool:disabled{opacity:.55;cursor:wait;transform:none}
+    .ai-tool-icon{display:grid;place-items:center;width:31px;height:31px;flex:0 0 31px;border-radius:9px;background:rgba(167,139,250,.13);color:#d9cbff;font-size:16px}
+    .ai-tool b,.ai-tool small{display:block}
+    .ai-tool b{font-size:11px;line-height:1.35}
+    .ai-tool small{margin-top:3px;color:#a69eb5;font-size:9px;line-height:1.3}
+    .ai-tool-arrow{margin-left:auto;color:#b9a3ff;font-size:13px}
+    .ai-output-wrap{margin-top:12px}
+    .ai-output-head{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#d8caff;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .ai-output{margin-top:7px;border-color:#393249;background:rgba(6,6,10,.65);color:#eee9f7}
+    .ai-footnote{margin:10px 0 0;color:#91899e;font-size:10px;line-height:1.5}
+    @media(max-width:600px){.ai-panel{padding:13px}.ai-actions{grid-template-columns:1fr}.ai-tool{min-height:56px}.ai-tool small{font-size:10px}}
+    @media(prefers-reduced-motion:reduce){.ai-tool:hover{transform:none}}
+
   </style>
 </head>
 <body>
@@ -362,7 +386,7 @@
         <section class="transcript-result" id="transcript-result" aria-label="Video transcript">
           <div class="result-head"><div><h3>Your video transcript</h3><p id="transcript-meta" class="result-meta">Ready to copy or download</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copy text</button><button class="copy-button secondary-action" id="download-button" type="button">Download TXT</button><button class="copy-button secondary-action" id="json-button" type="button">JSON</button></div></div>
           <pre class="transcript-text" id="transcript-text"></pre>
-          <div class="ai-actions" aria-label="Optional AI tools"><button class="copy-button secondary-action ai-button" data-action="summarize" type="button">Summarize</button><button class="copy-button secondary-action ai-button" data-action="caption" type="button">Generate captions</button><button class="copy-button secondary-action ai-button" data-action="hooks" type="button">Generate hooks</button></div><div class="ai-output" id="ai-output" role="status" aria-live="polite"></div>
+          <div class="ai-panel"><div class="ai-panel-head"><div><span class="ai-kicker">AI CREATOR STUDIO</span><h4>Turn your transcript into content</h4><p>Quick ideas for your next post. Choose one tool to get started.</p></div><span class="ai-spark" aria-hidden="true">✦</span></div><div class="ai-actions" aria-label="AI content tools"><button class="ai-tool ai-button" data-action="summarize" type="button"><span class="ai-tool-icon" aria-hidden="true">▤</span><span><b>Summarize</b><small>Key points in seconds</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button><button class="ai-tool ai-button" data-action="caption" type="button"><span class="ai-tool-icon" aria-hidden="true">✎</span><span><b>Generate captions</b><small>Ready-to-edit post captions</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button><button class="ai-tool ai-button" data-action="hooks" type="button"><span class="ai-tool-icon" aria-hidden="true">⚡</span><span><b>Generate hooks</b><small>Attention-grabbing openers</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button></div><div class="ai-output-wrap"><div class="ai-output-head"><span>AI result</span><button class="copy-button secondary-action" id="copy-ai-button" type="button" hidden>Copy result</button></div><div class="ai-output" id="ai-output" role="status" aria-live="polite"></div></div><p class="ai-footnote">AI suggestions can be imperfect — review and edit before posting.</p></div>
         </section>
 
         <div class="trust">
@@ -493,6 +517,7 @@
     const downloadButton = document.getElementById('download-button');
     const jsonButton = document.getElementById('json-button');
     const aiOutput = document.getElementById('ai-output');
+    const copyAiButton = document.getElementById('copy-ai-button');
     const transcriptMeta = document.getElementById('transcript-meta');
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -604,9 +629,15 @@
         const data = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(data.error || 'AI tool unavailable.');
         aiOutput.textContent = data.output;
-      } catch (error) { aiOutput.textContent = error.message || 'AI tool unavailable.'; }
+        copyAiButton.hidden = false;
+      } catch (error) { aiOutput.textContent = error.message || 'AI tool unavailable.'; copyAiButton.hidden = true; }
       finally { aiButton.disabled = false; }
     }));
+
+    copyAiButton.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(aiOutput.textContent); copyAiButton.textContent = 'Copied!'; setTimeout(() => { copyAiButton.textContent = 'Copy result'; }, 1600); }
+      catch { copyAiButton.textContent = 'Copy unavailable'; }
+    });
 
     copyButton.addEventListener('click', async () => {
       try {
