@@ -493,13 +493,13 @@
       "path": "/fil/"
     },
     {
-      "code": "en-US",
-      "name": "English (United States)",
-      "nativeName": "English (US)",
+      "code": "en-CA",
+      "name": "English (Canada)",
+      "nativeName": "English (Canada)",
       "direction": "ltr",
       "status": "planned",
-      "path": "/us/",
-      "region": "US",
+      "path": "/en-ca/",
+      "region": "CA",
       "localizedSlugs": {
         "blog": "blog",
         "articles": {
@@ -526,10 +526,10 @@
   "routing": {
     "localePrefix": "always-for-non-default",
     "englishDefault": "/",
-    "unitedStatesEnglish": "/us/",
     "blogIndexPattern": "/{locale}/{localizedSlugs.blog}/",
     "articlePattern": "/{locale}/{localizedSlugs.blog}/{localizedSlugs.articles[englishArticleKey]}/",
     "slugPolicy": "Use translated human-readable slugs; never expose untranslated English slugs on localized pages.",
-    "hreflangPolicy": "Emit only when every alternate page in the cluster exists, is indexable, self-canonical, and reciprocally links to all others."
+    "hreflangPolicy": "Emit only when every alternate page in the cluster exists, is indexable, self-canonical, and reciprocally links to all others.",
+    "canadaEnglish": "/en-ca/"
   }
 }
