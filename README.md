@@ -46,7 +46,7 @@ Run the API tests:
 node --test api/transcript.test.js
 ```
 
-The API uses the `SUPADATA_API_KEY` environment variable. Add it to the Vercel project environment settings; never expose the key in client-side JavaScript or commit it to the repository. The current integration uses Supadata's universal transcript endpoint and its `auto` mode, which prefers available captions and may fall back to generated transcription when supported.
+The transcript API uses the `SUPADATA_API_KEY` environment variable. Add it to the Vercel project environment settings; never expose the key in client-side JavaScript or commit it to the repository. The current integration uses Supadata's universal transcript endpoint and its `auto` mode, which prefers available captions and may fall back to generated transcription when supported.
 
 ## Deployment
 
@@ -59,18 +59,18 @@ The project is connected to Vercel and deploys from the `main` branch when deplo
 - No promise of unlimited use or guaranteed transcription.
 - No paid infrastructure or database is required by this repository.
 
-## Optional free-tier AI tools
+## Optional AI Creator Studio
 
-The homepage includes three transcript repurposing actions: **Summarize**, **Generate captions**, and **Generate hooks**.
+The homepage includes three transcript repurposing actions: **Summarize**, **Generate captions**, and **Generate hooks**. OpenRouter is the preferred provider and the default model selector is `openrouter/free`, which routes requests to an available free model.
 
-To enable them with Google's Gemini Developer API free tier:
+To enable the AI tools:
 
-1. Create a free API key in [Google AI Studio](https://aistudio.google.com/app/apikey).
+1. Create an API key in the [OpenRouter dashboard](https://openrouter.ai/keys).
 2. In Vercel, open the `transcript` project → **Settings** → **Environment Variables**.
-3. Add `GEMINI_API_KEY` with the key from AI Studio. Keep it server-side; never put it in HTML or client JavaScript.
-4. Apply it to Production (and Preview if desired), then redeploy the project.
-5. The API uses `gemini-3.8-flash` by default. You can optionally override it with `GEMINI_MODEL`.
+3. Add `OPENROUTER_API_KEY` with your key. Keep it server-side; never put it in HTML or client JavaScript.
+4. Apply it to Production (and Preview if desired), then redeploy.
+5. Optionally set `OPENROUTER_MODEL` to a specific model ID ending in `:free`; otherwise the endpoint uses `openrouter/free`.
 
-Gemini's free tier has model-specific request and token quotas; it is not unlimited. Free-tier prompts and outputs may be used by Google to improve its products, so visitors should not submit sensitive transcript content. See the [official pricing](https://ai.google.dev/gemini-api/docs/pricing) and [rate limits](https://ai.google.dev/gemini-api/docs/rate-limits).
+OpenRouter's free models have low rate limits and availability can vary. Its published free-tier allowance currently includes up to 50 free-model requests per day for accounts that have not purchased credits; model/provider-specific limits may also apply. Free models are intended for testing and low-volume projects, not guaranteed high-volume production use. See [free models](https://openrouter.ai/collections/free-models), [rate limits](https://openrouter.ai/docs/api-reference/limits), and [pricing](https://openrouter.ai/pricing/).
 
-If the key is missing, transcript generation still works; only the optional AI actions remain unavailable. The API key is read only by the serverless endpoint and is never exposed to the browser.
+For backwards compatibility, the endpoint can still use `GEMINI_API_KEY` or `OPENAI_API_KEY` if no OpenRouter key is configured. When `OPENROUTER_API_KEY` is present, it takes priority. If no provider key is set, transcript generation still works; only the optional AI actions remain unavailable. API keys are read only by the serverless endpoint and are never exposed to the browser.
