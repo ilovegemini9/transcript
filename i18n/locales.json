@@ -130,7 +130,7 @@
       "name": "Italian",
       "nativeName": "Italiano",
       "direction": "ltr",
-      "status": "planned",
+      "status": "preview",
       "path": "/it/",
       "localizedSlugs": {
         "blog": "blog",
