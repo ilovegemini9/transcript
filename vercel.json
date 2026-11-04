@@ -1,6 +1,54 @@
 {
   "rewrites": [
     {
+      "source": "/fr/blog",
+      "destination": "/locales/fr/blog/index.html"
+    },
+    {
+      "source": "/fr/blog/",
+      "destination": "/locales/fr/blog/index.html"
+    },
+    {
+      "source": "/fr/blog/guide-transcription-tiktok",
+      "destination": "/locales/fr/blog/guide-transcription-tiktok.html"
+    },
+    {
+      "source": "/fr/blog/telecharger-transcription-youtube",
+      "destination": "/locales/fr/blog/telecharger-transcription-youtube.html"
+    },
+    {
+      "source": "/fr/blog/transcription-reels-instagram",
+      "destination": "/locales/fr/blog/transcription-reels-instagram.html"
+    },
+    {
+      "source": "/fr/blog/transcription-video-facebook",
+      "destination": "/locales/fr/blog/transcription-video-facebook.html"
+    },
+    {
+      "source": "/fr/blog/convertir-video-en-texte",
+      "destination": "/locales/fr/blog/convertir-video-en-texte.html"
+    },
+    {
+      "source": "/fr/blog/transcription-sous-titres-legendes",
+      "destination": "/locales/fr/blog/transcription-sous-titres-legendes.html"
+    },
+    {
+      "source": "/fr/blog/reutiliser-transcription-video",
+      "destination": "/locales/fr/blog/reutiliser-transcription-video.html"
+    },
+    {
+      "source": "/fr/blog/transcriptions-video-accessibilite",
+      "destination": "/locales/fr/blog/transcriptions-video-accessibilite.html"
+    },
+    {
+      "source": "/fr/blog/modifier-transcription-automatique",
+      "destination": "/locales/fr/blog/modifier-transcription-automatique.html"
+    },
+    {
+      "source": "/fr/blog/transcrire-video-autre-langue",
+      "destination": "/locales/fr/blog/transcrire-video-autre-langue.html"
+    },
+    {
       "source": "/blog",
       "destination": "/blog/index.html"
     },
