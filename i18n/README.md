@@ -1,26 +1,23 @@
 # Internationalization rollout
 
-This directory is the source of truth for locale rollout.
+## Architecture
+- English default stays at `/` and `/blog/`.
+- Localized languages use a locale prefix and translated page slugs, for example `/fr/blog/`, `/it/blog/`, and `/ar/المدونة/`.
+- US English is a regional variant at `/us/` with hreflang `en-US`; `us` is a URL namespace, not a language code.
+- The registry in `locales.json` defines 50 language entries plus the optional US-English regional variant, directions, and localized blog/article slug dictionaries.
+- Localized routes are not live yet. All locales remain planned until their complete static HTML pages pass QA.
 
-## Current state
-- English (`en`) is the only published locale.
-- The other 49 entries are planned only. They are not public routes and must not be added to the sitemap or hreflang tags yet.
-- Locale URL convention: lowercase language prefix (for example `/fr/`); region-specific codes retain a normalized URL slug (for example `zh-CN` -> `/zh-cn/`).
-- English remains at the root URL.
-
-## Release checklist for each locale
-1. Translate all visible UI strings, errors, loading states, accessibility labels, metadata, FAQ and structured data.
-2. Review translations with a fluent speaker; machine translation alone is not a quality sign-off.
+## Non-negotiable release rules
+1. Translate every visible string: navigation, headings, body copy, form labels, placeholders, validation, processing states, errors, AI states, buttons, footer, accessibility labels, metadata, FAQ and structured data.
+2. Keep internal links in the current locale and use translated human-readable slugs. Never leak an English slug into a localized URL.
 3. Keep transcript/source language separate from interface language. Never rewrite transcript content to match the UI locale.
-4. Set the document `lang` and `dir` correctly. RTL locales: ar, ur, he, fa.
-5. Give every translated page a self-referencing canonical URL and unique localized title/description.
-6. Add reciprocal `hreflang` alternates only among equivalent pages that are actually published; include `x-default` to the English page.
-7. Add only live, indexable locale URLs to the sitemap.
-8. Test navigation, form validation, API errors, AI states, downloads, mobile layout, keyboard access and no mixed-language strings.
-9. Confirm routes resolve to static HTML before publishing.
+4. Set document `lang` and `dir` correctly. RTL locales: ar, ur, he, fa.
+5. Give every translated page a unique localized title/description and self-referencing canonical URL.
+6. Add reciprocal `hreflang` alternates only among equivalent pages that are actually published, indexable and self-canonical. Include `x-default` to the default English equivalent.
+7. Add only live, indexable localized URLs to the sitemap, using translated slugs.
+8. Test navigation, form validation, API errors, AI states, downloads, mobile layout, keyboard access, canonical/hreflang reciprocity and absence of mixed-language UI.
+9. Have fluent speakers review translations before publication; machine translation alone is not final QA.
+10. Do not redirect a visitor to an untranslated locale. Browser language selection must only choose a supported published locale on the first root visit; manual selection takes precedence.
 
-## Browser language behavior
-Do not redirect visitors to an untranslated or planned locale. Once translated routes exist, browser language may select a supported published locale on the first root visit only. A manual locale selection must take precedence over browser preferences. Unsupported languages fall back to English.
-
-## Adding a locale
-Change its status to `published` only after the checklist passes. Never treat a locale as published merely because a route or language code exists.
+## Transcript language
+The selected website language controls only the interface. The language detected in a video transcript is independent and must remain as returned by the transcript provider.
