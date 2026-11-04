@@ -3,7 +3,6 @@
 ## URL structure
 - Default English stays at `/` and `/blog/`.
 - Every other language uses a language prefix: `/fr/`, `/es/`, `/ar/`, `/it/`, etc.
-- Canadian English is an English regional variant at `/en-ca/` and uses `hreflang="en-CA"`; the URL prefix is not the language tag.
 - Localized blog indexes use the locale's translated blog slug, e.g. `/fr/blog/`, `/it/blog/`, and `/ar/المدونة/`.
 - Localized article slugs are translated too. The English source slug is only an internal content key and must never leak into a localized public URL.
 - Use UTF-8 percent-encoded URLs for non-Latin slugs in generated links and sitemap XML. Browsers display the decoded localized slug.
