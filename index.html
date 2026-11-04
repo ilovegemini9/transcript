@@ -28,7 +28,7 @@
     "applicationCategory": "MultimediaApplication",
     "operatingSystem": "Any",
     "description": "A browser-based video transcript generator for accessible public TikTok, YouTube, Facebook, and Instagram videos.",
-    "featureList": ["TikTok, YouTube, Facebook, and Instagram video transcription", "Copy transcript text", "Download transcript as TXT", "No account required"]
+    "featureList": ["TikTok, YouTube, Facebook, and Instagram video transcription", "Transcript summaries when AI is configured", "Social media caption ideas when AI is configured", "Video hook ideas when AI is configured", "Copy transcript text", "Download transcript as TXT or JSON", "No account required"]
   }
   </script>
   <script type="application/ld+json">
@@ -40,7 +40,8 @@
       {"@type":"Question","name":"Do I need to create an account?","acceptedAnswer":{"@type":"Answer","text":"No account is needed to use this simple interface."}},
       {"@type":"Question","name":"Can I transcribe any video?","acceptedAnswer":{"@type":"Answer","text":"No. The video must be public and accessible. Private, deleted, region-restricted, or otherwise unavailable videos may not be processed."}},
       {"@type":"Question","name":"Does Transcript TikTok work when a video has no captions?","acceptedAnswer":{"@type":"Answer","text":"Transcript TikTok requests automatic transcription fallback when supported by its transcript provider. Results depend on audio quality, video access, and provider availability."}},
-      {"@type":"Question","name":"Which video platforms are supported?","acceptedAnswer":{"@type":"Answer","text":"The tool accepts accessible public video links from TikTok, YouTube, Facebook, and Instagram."}}
+      {"@type":"Question","name":"Which video platforms are supported?","acceptedAnswer":{"@type":"Answer","text":"The tool accepts accessible public video links from TikTok, YouTube, Facebook, and Instagram."}},
+      {"@type":"Question","name":"Can I create summaries, captions, and hooks from a transcript?","acceptedAnswer":{"@type":"Answer","text":"Optional AI tools can summarize a transcript and suggest social captions or video hooks when the site owner has configured an AI provider. Availability may depend on free-tier quotas."}}
     ]
   }
   </script>
@@ -448,6 +449,22 @@
       </div>
     </section>
 
+
+    <section class="section" id="ai-creator-tools">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>AI tools to repurpose your video transcript</h2>
+          <p>Once you have the transcript, turn the main ideas into useful content for your next post.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature"><div class="feature-icon">▤</div><span class="feature-kicker">Understand faster</span><h3>Summarize a video transcript</h3><p>Get a short overview and the key points from a long explanation, tutorial, interview, or social video.</p></article>
+          <article class="feature"><div class="feature-icon">✎</div><span class="feature-kicker">Write faster</span><h3>Generate social media captions</h3><p>Turn the transcript's main message into caption ideas you can review, edit, and adapt to your audience.</p></article>
+          <article class="feature"><div class="feature-icon">⚡</div><span class="feature-kicker">Create stronger openings</span><h3>Generate video hooks</h3><p>Find alternative opening lines and angles inspired by the transcript without copying the original wording.</p></article>
+        </div>
+        <p class="microcopy" style="text-align:center;margin-top:16px">AI features are optional and appear when the site owner has configured an AI provider. Free-tier quotas and provider availability apply.</p>
+      </div>
+    </section>
+
     <section class="section" id="transcript-help">
       <div class="wrap">
         <div class="section-heading">
@@ -499,6 +516,7 @@
           <details><summary>Can I transcribe any video?</summary><p>No. The video must be public and accessible. Private, deleted, region-restricted, or otherwise unavailable videos may not be processed.</p></details>
           <details><summary>Does Transcript TikTok work when a video has no captions?</summary><p>Transcript TikTok requests automatic speech-recognition fallback when supported by the transcript provider. Success depends on video access, audio quality, language, and provider availability.</p></details>
           <details><summary>Which video platforms are supported?</summary><p>The tool accepts accessible public video links from TikTok, YouTube, Facebook, and Instagram. Private or restricted videos may not work.</p></details>
+          <details><summary>Can I create summaries, captions, and hooks?</summary><p>Optional AI tools can summarize a transcript and suggest social captions or video hooks when the site owner has configured an AI provider. Free-tier usage limits may apply.</p></details>
         </div>
       </div>
     </section>
