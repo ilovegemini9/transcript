@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/de",
+      "destination": "/locales/de/index.html"
+    },
+    {
+      "source": "/de/",
+      "destination": "/locales/de/index.html"
+    },
+    {
       "source": "/pt",
       "destination": "/locales/pt/index.html"
     },
