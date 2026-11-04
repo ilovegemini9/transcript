@@ -66,10 +66,10 @@ async function callOpenRouter(transcript, instruction) {
 
 async function callGemini(transcript, instruction) {
   const model = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
-  const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + encodeURIComponent(model) + ':generateContent?key=' + encodeURIComponent(process.env.GEMINI_API_KEY);
-  const upstream = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ systemInstruction: { parts: [{ text: instruction }] }, contents: [{ role: 'user', parts: [{ text: transcript }] }], generationConfig: { temperature: 0.5, maxOutputTokens: 700 } }), signal: AbortSignal.timeout(25000) });
+  const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + encodeURIComponent(model) + ':generateContent';
+  const upstream = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': process.env.GEMINI_API_KEY }, body: JSON.stringify({ systemInstruction: { parts: [{ text: instruction }] }, contents: [{ role: 'user', parts: [{ text: transcript }] }], generationConfig: { temperature: 0.5, maxOutputTokens: 700 } }), signal: AbortSignal.timeout(25000) });
   const data = await upstream.json().catch(() => ({}));
-  if (!upstream.ok) throw new Error('Gemini provider error ' + upstream.status);
+  if (!upstream.ok) { const error = new Error('Gemini provider error ' + upstream.status); error.status = upstream.status; throw error; }
   return data.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('').trim() || '';
 }
 
@@ -77,7 +77,7 @@ async function callOpenAI(transcript, instruction) {
   const base = (process.env.OPENAI_API_BASE || 'https://api.openai.com/v1').replace(/\/$/, '');
   const upstream = await fetch(base + '/chat/completions', { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.OPENAI_API_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ model: process.env.OPENAI_MODEL || 'gpt-4o-mini', temperature: 0.5, max_tokens: 700, messages: [{ role: 'system', content: instruction }, { role: 'user', content: transcript }] }), signal: AbortSignal.timeout(25000) });
   const data = await upstream.json().catch(() => ({}));
-  if (!upstream.ok) throw new Error('OpenAI provider error ' + upstream.status);
+  if (!upstream.ok) { const error = new Error('OpenAI provider error ' + upstream.status); error.status = upstream.status; throw error; }
   return data.choices?.[0]?.message?.content?.trim() || '';
 }
 
@@ -92,23 +92,35 @@ module.exports = async function handler(req, res) {
   if (!ACTIONS[action]) return respond(res, 400, { code: 'INVALID_ACTION', error: 'Choose summarize, caption, or hooks.' });
   if (!transcript || transcript.length > 12000) return respond(res, 400, { code: 'INVALID_TRANSCRIPT', error: 'Transcript is required and must be under 12,000 characters.' });
   try {
-    let output;
-    let provider;
+    let output = '';
+    let provider = '';
     let usedModel = null;
-    if (process.env.OPENROUTER_API_KEY) {
+    let lastError = null;
+    // Try independent providers in order; Gemini is the backup for exhausted OpenRouter free quota.
+    const providers = [];
+    if (process.env.OPENROUTER_API_KEY) providers.push(['openrouter', async () => {
       const result = await callOpenRouter(transcript, ACTIONS[action]);
-      output = result.output;
       usedModel = result.model;
-      provider = 'openrouter';
-    } else if (process.env.GEMINI_API_KEY) {
-      output = await callGemini(transcript, ACTIONS[action]);
-      provider = 'gemini';
-    } else {
-      output = await callOpenAI(transcript, ACTIONS[action]);
-      provider = 'openai';
+      return result.output;
+    }]);
+    if (process.env.GEMINI_API_KEY) providers.push(['gemini', () => callGemini(transcript, ACTIONS[action])]);
+    if (process.env.OPENAI_API_KEY) providers.push(['openai', () => callOpenAI(transcript, ACTIONS[action])]);
+
+    for (const [name, run] of providers) {
+      try {
+        const candidate = await run();
+        if (candidate) { output = candidate; provider = name; break; }
+        lastError = new Error(name + ' provider error 502');
+        lastError.status = 502;
+      } catch (providerError) {
+        lastError = providerError;
+        console.error('AI provider failed:', name, providerError.message);
+      }
     }
-    if (!output) return respond(res, 502, { code: 'AI_EMPTY_RESPONSE', error: 'The AI tool returned no text.' });
-    return respond(res, 200, { action, output, provider, model: usedModel });
+
+    if (!output) throw (lastError || new Error('No AI provider is configured.'));
+    const usedProviderModel = provider === 'openrouter' ? usedModel : (provider === 'gemini' ? (process.env.GEMINI_MODEL || 'gemini-3.8-flash') : (process.env.OPENAI_MODEL || 'gpt-4o-mini'));
+    return respond(res, 200, { action, output, provider, model: usedProviderModel });
   } catch (error) {
     console.error('AI request failed', error.message);
     const status = Number(error.status) || Number(error.message.match(/provider error (\d+)/)?.[1]) || 0;
