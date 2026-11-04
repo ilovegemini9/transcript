@@ -665,7 +665,9 @@
             AI_NOT_CONFIGURED: 'AI tools are not connected yet. Please try again later.',
             AI_RATE_LIMIT: 'The free AI limit has been reached or the models are busy. Please try again later.',
             AI_SERVICE_ERROR: 'The AI service could not complete this request. Please try again.',
-            AI_MODEL_UNAVAILABLE: 'The selected free AI model is unavailable right now. Please try again.',
+            AI_AUTH_ERROR: 'The AI provider configuration needs attention. Please contact the site owner.',
+            AI_MODEL_UNAVAILABLE: 'Free AI models are temporarily unavailable. Please try again in a moment.',
+            AI_EMPTY_RESPONSE: 'The AI service returned an empty result. Please try again.',
             INVALID_TRANSCRIPT: 'This transcript is too long for the AI tools. Try a shorter video.'
           };
           throw new Error(messages[data.code] || data.error || 'The AI tool is temporarily unavailable. Please try again.');
