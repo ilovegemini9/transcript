@@ -38,7 +38,7 @@
       "name": "Spanish",
       "nativeName": "Español",
       "direction": "ltr",
-      "status": "planned",
+      "status": "preview",
       "path": "/es/",
       "localizedSlugs": {
         "blog": "blog",
