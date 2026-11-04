@@ -1,6 +1,30 @@
 {
   "rewrites": [
     {
+      "source": "/es/blog",
+      "destination": "/locales/es/blog/index.html"
+    },
+    {
+      "source": "/es/blog/",
+      "destination": "/locales/es/blog/index.html"
+    },
+    {
+      "source": "/es/blog/transcripcion-tiktok-guia-completa",
+      "destination": "/locales/es/blog/transcripcion-tiktok-guia-completa.html"
+    },
+    {
+      "source": "/es/blog/transcripcion-youtube-descargar-texto",
+      "destination": "/locales/es/blog/transcripcion-youtube-descargar-texto.html"
+    },
+    {
+      "source": "/es/blog/transcripcion-instagram-reels",
+      "destination": "/locales/es/blog/transcripcion-instagram-reels.html"
+    },
+    {
+      "source": "/es/blog/convertir-video-a-texto-guia",
+      "destination": "/locales/es/blog/convertir-video-a-texto-guia.html"
+    },
+    {
       "source": "/it",
       "destination": "/locales/it/index.html"
     },
