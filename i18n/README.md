@@ -3,8 +3,7 @@
 ## Architecture
 - English default stays at `/` and `/blog/`.
 - Localized languages use a locale prefix and translated page slugs, for example `/fr/blog/`, `/it/blog/`, and `/ar/المدونة/`.
-- Canadian English is an English regional variant at `/en-ca/` with hreflang `en-CA`; the region is expressed in the SEO language tag, not as a separate language.
-- The registry in `locales.json` defines 50 language entries plus the optional Canadian-English regional variant, directions, and localized blog/article slug dictionaries.
+- The registry in `locales.json` defines 50 language entries, directions, and localized blog/article slug dictionaries.
 - Localized routes are not live yet. All locales remain planned until their complete static HTML pages pass QA.
 
 ## Non-negotiable release rules
