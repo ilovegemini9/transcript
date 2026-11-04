@@ -56,7 +56,7 @@ async function callOpenRouter(transcript, instruction) {
 
     lastStatus = upstream.status;
     // Authentication and quota errors affect the whole account; trying other models won't help.
-    if ([401, 402, 403, 429].includes(upstream.status)) break;
+    if ([401, 402, 403].includes(upstream.status)) break;
   }
 
   const error = new Error('OpenRouter provider error ' + lastStatus);
