@@ -491,6 +491,206 @@
       "direction": "ltr",
       "status": "planned",
       "path": "/fil/"
+    },
+    {
+      "code": "az",
+      "name": "Azerbaijani",
+      "nativeName": "Azərbaycanca",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/az/"
+    },
+    {
+      "code": "hy",
+      "name": "Armenian",
+      "nativeName": "Հայերեն",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/hy/"
+    },
+    {
+      "code": "ka",
+      "name": "Georgian",
+      "nativeName": "ქართული",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ka/"
+    },
+    {
+      "code": "kk",
+      "name": "Kazakh",
+      "nativeName": "Қазақша",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/kk/"
+    },
+    {
+      "code": "uz",
+      "name": "Uzbek",
+      "nativeName": "Oʻzbekcha",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/uz/"
+    },
+    {
+      "code": "ps",
+      "name": "Pashto",
+      "nativeName": "پښتو",
+      "direction": "rtl",
+      "status": "planned",
+      "path": "/ps/"
+    },
+    {
+      "code": "ne",
+      "name": "Nepali",
+      "nativeName": "नेपाली",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ne/"
+    },
+    {
+      "code": "si",
+      "name": "Sinhala",
+      "nativeName": "සිංහල",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/si/"
+    },
+    {
+      "code": "my",
+      "name": "Burmese",
+      "nativeName": "မြန်မာ",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/my/"
+    },
+    {
+      "code": "km",
+      "name": "Khmer",
+      "nativeName": "ខ្មែរ",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/km/"
+    },
+    {
+      "code": "lo",
+      "name": "Lao",
+      "nativeName": "ລາວ",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/lo/"
+    },
+    {
+      "code": "am",
+      "name": "Amharic",
+      "nativeName": "አማርኛ",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/am/"
+    },
+    {
+      "code": "yo",
+      "name": "Yoruba",
+      "nativeName": "Yorùbá",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/yo/"
+    },
+    {
+      "code": "ha",
+      "name": "Hausa",
+      "nativeName": "Hausa",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ha/"
+    },
+    {
+      "code": "ig",
+      "name": "Igbo",
+      "nativeName": "Asụsụ Igbo",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ig/"
+    },
+    {
+      "code": "zu",
+      "name": "Zulu",
+      "nativeName": "isiZulu",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/zu/"
+    },
+    {
+      "code": "xh",
+      "name": "Xhosa",
+      "nativeName": "isiXhosa",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/xh/"
+    },
+    {
+      "code": "is",
+      "name": "Icelandic",
+      "nativeName": "Íslenska",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/is/"
+    },
+    {
+      "code": "ga",
+      "name": "Irish",
+      "nativeName": "Gaeilge",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ga/"
+    },
+    {
+      "code": "sq",
+      "name": "Albanian",
+      "nativeName": "Shqip",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/sq/"
+    },
+    {
+      "code": "mk",
+      "name": "Macedonian",
+      "nativeName": "Македонски",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/mk/"
+    },
+    {
+      "code": "bs",
+      "name": "Bosnian",
+      "nativeName": "Bosanski",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/bs/"
+    },
+    {
+      "code": "be",
+      "name": "Belarusian",
+      "nativeName": "Беларуская",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/be/"
+    },
+    {
+      "code": "ps-AF",
+      "name": "Pashto (Afghanistan)",
+      "nativeName": "پښتو (افغانستان)",
+      "direction": "rtl",
+      "status": "planned",
+      "path": "/ps-af/"
+    },
+    {
+      "code": "jv",
+      "name": "Javanese",
+      "nativeName": "Basa Jawa",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/jv/"
     }
   ],
   "seoRules": {
