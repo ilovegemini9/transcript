@@ -18,4 +18,4 @@
 - Transcript language is independent of UI locale.
 
 ## Current release status
-The locale registry and slug dictionary are planning metadata only. No localized routes are published yet. Do not expose these planned URLs in navigation, sitemap, canonical or hreflang until their translated HTML pages and route rewrites pass QA.
+English is the published default. French, Spanish and Arabic currently have homepage preview routes; these previews are noindex and are not included in the sitemap or hreflang clusters. All remaining locales are planning metadata only. Do not expose planned URLs in navigation, sitemap, canonical or hreflang until their translated pages and route rewrites pass QA.
