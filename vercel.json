@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/es/blog/transcripciones-video-accesibilidad",
+      "destination": "/locales/es/blog/transcripciones-video-accesibilidad.html"
+    },
+    {
       "source": "/es/blog/transcripcion-facebook-video",
       "destination": "/locales/es/blog/transcripcion-facebook-video.html"
     },
