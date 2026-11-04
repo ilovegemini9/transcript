@@ -16,7 +16,22 @@
       "nativeName": "Français",
       "direction": "ltr",
       "status": "planned",
-      "path": "/fr/"
+      "path": "/fr/",
+      "localizedSlugs": {
+        "blog": "blog",
+        "articles": {
+          "tiktok-transcript-guide": "guide-transcription-tiktok",
+          "youtube-transcript-download": "telecharger-transcription-youtube",
+          "instagram-reels-transcript": "transcription-reels-instagram",
+          "facebook-video-transcript": "transcription-video-facebook",
+          "convert-video-to-text": "convertir-video-en-texte",
+          "transcript-vs-subtitles-vs-captions": "transcription-sous-titres-legendes",
+          "repurpose-video-transcript-into-content": "reutiliser-transcription-video",
+          "video-transcripts-for-accessibility": "transcriptions-video-accessibilite",
+          "how-to-edit-an-automatic-transcript": "modifier-transcription-automatique",
+          "transcribe-video-in-another-language": "transcrire-video-autre-langue"
+        }
+      }
     },
     {
       "code": "es",
@@ -24,7 +39,22 @@
       "nativeName": "Español",
       "direction": "ltr",
       "status": "planned",
-      "path": "/es/"
+      "path": "/es/",
+      "localizedSlugs": {
+        "blog": "blog",
+        "articles": {
+          "tiktok-transcript-guide": "guia-transcripcion-tiktok",
+          "youtube-transcript-download": "descargar-transcripcion-youtube",
+          "instagram-reels-transcript": "transcripcion-reels-instagram",
+          "facebook-video-transcript": "transcripcion-video-facebook",
+          "convert-video-to-text": "convertir-video-a-texto",
+          "transcript-vs-subtitles-vs-captions": "transcripcion-vs-subtitulos",
+          "repurpose-video-transcript-into-content": "reutilizar-transcripcion-video",
+          "video-transcripts-for-accessibility": "transcripciones-video-accesibilidad",
+          "how-to-edit-an-automatic-transcript": "editar-transcripcion-automatica",
+          "transcribe-video-in-another-language": "transcribir-video-otro-idioma"
+        }
+      }
     },
     {
       "code": "ar",
@@ -32,7 +62,22 @@
       "nativeName": "العربية",
       "direction": "rtl",
       "status": "planned",
-      "path": "/ar/"
+      "path": "/ar/",
+      "localizedSlugs": {
+        "blog": "المدونة",
+        "articles": {
+          "tiktok-transcript-guide": "دليل-تفريغ-تيك-توك",
+          "youtube-transcript-download": "تنزيل-تفريغ-يوتيوب",
+          "instagram-reels-transcript": "تفريغ-ريلز-انستغرام",
+          "facebook-video-transcript": "تفريغ-فيديو-فيسبوك",
+          "convert-video-to-text": "تحويل-الفيديو-إلى-نص",
+          "transcript-vs-subtitles-vs-captions": "التفريغ-والترجمة-والتسميات",
+          "repurpose-video-transcript-into-content": "إعادة-استخدام-نص-الفيديو",
+          "video-transcripts-for-accessibility": "تفريغ-الفيديو-لإمكانية-الوصول",
+          "how-to-edit-an-automatic-transcript": "تعديل-التفريغ-التلقائي",
+          "transcribe-video-in-another-language": "تفريغ-فيديو-بلغة-أخرى"
+        }
+      }
     },
     {
       "code": "pt",
@@ -40,7 +85,22 @@
       "nativeName": "Português",
       "direction": "ltr",
       "status": "planned",
-      "path": "/pt/"
+      "path": "/pt/",
+      "localizedSlugs": {
+        "blog": "blog",
+        "articles": {
+          "tiktok-transcript-guide": "guia-transcricao-tiktok",
+          "youtube-transcript-download": "baixar-transcricao-youtube",
+          "instagram-reels-transcript": "transcricao-reels-instagram",
+          "facebook-video-transcript": "transcricao-video-facebook",
+          "convert-video-to-text": "converter-video-em-texto",
+          "transcript-vs-subtitles-vs-captions": "transcricao-vs-legendas",
+          "repurpose-video-transcript-into-content": "reaproveitar-transcricao-video",
+          "video-transcripts-for-accessibility": "transcricoes-video-acessibilidade",
+          "how-to-edit-an-automatic-transcript": "editar-transcricao-automatica",
+          "transcribe-video-in-another-language": "transcrever-video-outro-idioma"
+        }
+      }
     },
     {
       "code": "de",
@@ -48,7 +108,22 @@
       "nativeName": "Deutsch",
       "direction": "ltr",
       "status": "planned",
-      "path": "/de/"
+      "path": "/de/",
+      "localizedSlugs": {
+        "blog": "blog",
+        "articles": {
+          "tiktok-transcript-guide": "tiktok-transkript-anleitung",
+          "youtube-transcript-download": "youtube-transkript-herunterladen",
+          "instagram-reels-transcript": "instagram-reels-transkript",
+          "facebook-video-transcript": "facebook-video-transkript",
+          "convert-video-to-text": "video-in-text-umwandeln",
+          "transcript-vs-subtitles-vs-captions": "transkript-untertitel-bildunterschriften",
+          "repurpose-video-transcript-into-content": "video-transkript-weiterverwenden",
+          "video-transcripts-for-accessibility": "video-transkripte-barrierefreiheit",
+          "how-to-edit-an-automatic-transcript": "automatisches-transkript-bearbeiten",
+          "transcribe-video-in-another-language": "video-in-anderer-sprache-transkribieren"
+        }
+      }
     },
     {
       "code": "it",
@@ -56,7 +131,22 @@
       "nativeName": "Italiano",
       "direction": "ltr",
       "status": "planned",
-      "path": "/it/"
+      "path": "/it/",
+      "localizedSlugs": {
+        "blog": "blog",
+        "articles": {
+          "tiktok-transcript-guide": "guida-trascrizione-tiktok",
+          "youtube-transcript-download": "scaricare-trascrizione-youtube",
+          "instagram-reels-transcript": "trascrizione-reels-instagram",
+          "facebook-video-transcript": "trascrizione-video-facebook",
+          "convert-video-to-text": "convertire-video-in-testo",
+          "transcript-vs-subtitles-vs-captions": "trascrizione-sottotitoli-didascalie",
+          "repurpose-video-transcript-into-content": "riutilizzare-trascrizione-video",
+          "video-transcripts-for-accessibility": "trascrizioni-video-accessibilita",
+          "how-to-edit-an-automatic-transcript": "modificare-trascrizione-automatica",
+          "transcribe-video-in-another-language": "trascrivere-video-altra-lingua"
+        }
+      }
     },
     {
       "code": "nl",
@@ -401,6 +491,30 @@
       "direction": "ltr",
       "status": "planned",
       "path": "/fil/"
+    },
+    {
+      "code": "en-US",
+      "name": "English (United States)",
+      "nativeName": "English (US)",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/us/",
+      "region": "US",
+      "localizedSlugs": {
+        "blog": "blog",
+        "articles": {
+          "tiktok-transcript-guide": "tiktok-transcript-guide",
+          "youtube-transcript-download": "youtube-transcript-download",
+          "instagram-reels-transcript": "instagram-reels-transcript",
+          "facebook-video-transcript": "facebook-video-transcript",
+          "convert-video-to-text": "convert-video-to-text",
+          "transcript-vs-subtitles-vs-captions": "transcript-vs-subtitles-vs-captions",
+          "repurpose-video-transcript-into-content": "repurpose-video-transcript-into-content",
+          "video-transcripts-for-accessibility": "video-transcripts-for-accessibility",
+          "how-to-edit-an-automatic-transcript": "how-to-edit-an-automatic-transcript",
+          "transcribe-video-in-another-language": "transcribe-video-in-another-language"
+        }
+      }
     }
   ],
   "seoRules": {
@@ -408,5 +522,14 @@
     "includeXDefault": true,
     "canonicalMustBeSelfReferential": true,
     "requireReciprocalAlternates": true
+  },
+  "routing": {
+    "localePrefix": "always-for-non-default",
+    "englishDefault": "/",
+    "unitedStatesEnglish": "/us/",
+    "blogIndexPattern": "/{locale}/{localizedSlugs.blog}/",
+    "articlePattern": "/{locale}/{localizedSlugs.blog}/{localizedSlugs.articles[englishArticleKey]}/",
+    "slugPolicy": "Use translated human-readable slugs; never expose untranslated English slugs on localized pages.",
+    "hreflangPolicy": "Emit only when every alternate page in the cluster exists, is indexable, self-canonical, and reciprocally links to all others."
   }
 }
