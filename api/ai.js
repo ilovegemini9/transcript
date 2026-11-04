@@ -16,37 +16,52 @@ const FREE_MODELS = [
 function respond(res, status, body) { return res.status(status).json(body); }
 
 async function callOpenRouter(transcript, instruction) {
-  // Optional override is accepted only if it remains explicitly free.
+  // Prefer OpenRouter's free-model router so model availability can change without a code update.
+  // If it is unavailable, retry with the explicitly free, ordered model list below.
   const preferred = process.env.OPENROUTER_MODEL;
   const models = preferred && preferred.endsWith(':free')
     ? [preferred, ...FREE_MODELS.filter(model => model !== preferred)]
     : FREE_MODELS;
+  const attempts = ['openrouter/free', ...models];
+  let lastStatus = 0;
 
-  const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + process.env.OPENROUTER_API_KEY,
-      'Content-Type': 'application/json',
-      'HTTP-Referer': 'https://transcriptiktok.vercel.app',
-      'X-Title': 'Transcript TikTok'
-    },
-    body: JSON.stringify({
-      models,
-      temperature: 0.5,
-      max_tokens: 700,
-      messages: [
-        { role: 'system', content: instruction },
-        { role: 'user', content: transcript }
-      ]
-    }),
-    signal: AbortSignal.timeout(30000)
-  });
-  const data = await upstream.json().catch(() => ({}));
-  if (!upstream.ok) throw new Error('OpenRouter provider error ' + upstream.status);
-  return {
-    output: data.choices?.[0]?.message?.content?.trim() || '',
-    model: data.model || null
-  };
+  for (const model of attempts) {
+    const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + process.env.OPENROUTER_API_KEY,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://transcriptiktok.vercel.app',
+        'X-Title': 'Transcript TikTok'
+      },
+      body: JSON.stringify({
+        model,
+        temperature: 0.5,
+        max_tokens: 700,
+        messages: [
+          { role: 'system', content: instruction },
+          { role: 'user', content: transcript }
+        ]
+      }),
+      signal: AbortSignal.timeout(18000)
+    });
+
+    const data = await upstream.json().catch(() => ({}));
+    if (upstream.ok) {
+      const output = data.choices?.[0]?.message?.content?.trim() || '';
+      if (output) return { output, model: data.model || model };
+      lastStatus = 502;
+      continue;
+    }
+
+    lastStatus = upstream.status;
+    // Authentication and quota errors affect the whole account; trying other models won't help.
+    if ([401, 402, 403, 429].includes(upstream.status)) break;
+  }
+
+  const error = new Error('OpenRouter provider error ' + lastStatus);
+  error.status = lastStatus;
+  throw error;
 }
 
 async function callGemini(transcript, instruction) {
@@ -96,7 +111,16 @@ module.exports = async function handler(req, res) {
     return respond(res, 200, { action, output, provider, model: usedModel });
   } catch (error) {
     console.error('AI request failed', error.message);
-    const limited = /provider error (402|429|503)/.test(error.message);
-    return respond(res, limited ? 429 : 502, { code: limited ? 'AI_RATE_LIMIT' : 'AI_SERVICE_ERROR', error: limited ? 'The free AI models are busy, unavailable, or their quota has been reached. Please try again later.' : 'The AI tool is temporarily unavailable. Please try again.' });
+    const status = Number(error.status) || Number(error.message.match(/provider error (\\d+)/)?.[1]) || 0;
+    if ([402, 429].includes(status)) {
+      return respond(res, 429, { code: 'AI_RATE_LIMIT', error: 'The free AI quota or rate limit has been reached. Please try again later.' });
+    }
+    if ([401, 403].includes(status)) {
+      return respond(res, 503, { code: 'AI_AUTH_ERROR', error: 'The AI provider rejected its server configuration. Please contact the site owner.' });
+    }
+    if (status === 502 || status === 503 || status === 504) {
+      return respond(res, 503, { code: 'AI_MODEL_UNAVAILABLE', error: 'Free AI models are temporarily unavailable. Please try again in a moment.' });
+    }
+    return respond(res, 502, { code: 'AI_SERVICE_ERROR', error: 'The AI service could not complete this request. Please try again.' });
   }
 };
