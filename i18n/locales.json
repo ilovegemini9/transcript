@@ -1,0 +1,412 @@
+{
+  "defaultLocale": "en",
+  "strategy": "static-prefix",
+  "supportedLocales": [
+    {
+      "code": "en",
+      "name": "English",
+      "nativeName": "English",
+      "direction": "ltr",
+      "status": "published",
+      "path": "/"
+    },
+    {
+      "code": "fr",
+      "name": "French",
+      "nativeName": "Français",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/fr/"
+    },
+    {
+      "code": "es",
+      "name": "Spanish",
+      "nativeName": "Español",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/es/"
+    },
+    {
+      "code": "ar",
+      "name": "Arabic",
+      "nativeName": "العربية",
+      "direction": "rtl",
+      "status": "planned",
+      "path": "/ar/"
+    },
+    {
+      "code": "pt",
+      "name": "Portuguese",
+      "nativeName": "Português",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/pt/"
+    },
+    {
+      "code": "de",
+      "name": "German",
+      "nativeName": "Deutsch",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/de/"
+    },
+    {
+      "code": "it",
+      "name": "Italian",
+      "nativeName": "Italiano",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/it/"
+    },
+    {
+      "code": "nl",
+      "name": "Dutch",
+      "nativeName": "Nederlands",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/nl/"
+    },
+    {
+      "code": "pl",
+      "name": "Polish",
+      "nativeName": "Polski",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/pl/"
+    },
+    {
+      "code": "tr",
+      "name": "Turkish",
+      "nativeName": "Türkçe",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/tr/"
+    },
+    {
+      "code": "ru",
+      "name": "Russian",
+      "nativeName": "Русский",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ru/"
+    },
+    {
+      "code": "uk",
+      "name": "Ukrainian",
+      "nativeName": "Українська",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/uk/"
+    },
+    {
+      "code": "hi",
+      "name": "Hindi",
+      "nativeName": "हिन्दी",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/hi/"
+    },
+    {
+      "code": "bn",
+      "name": "Bengali",
+      "nativeName": "বাংলা",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/bn/"
+    },
+    {
+      "code": "ur",
+      "name": "Urdu",
+      "nativeName": "اردو",
+      "direction": "rtl",
+      "status": "planned",
+      "path": "/ur/"
+    },
+    {
+      "code": "id",
+      "name": "Indonesian",
+      "nativeName": "Bahasa Indonesia",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/id/"
+    },
+    {
+      "code": "ms",
+      "name": "Malay",
+      "nativeName": "Bahasa Melayu",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ms/"
+    },
+    {
+      "code": "vi",
+      "name": "Vietnamese",
+      "nativeName": "Tiếng Việt",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/vi/"
+    },
+    {
+      "code": "th",
+      "name": "Thai",
+      "nativeName": "ไทย",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/th/"
+    },
+    {
+      "code": "ja",
+      "name": "Japanese",
+      "nativeName": "日本語",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ja/"
+    },
+    {
+      "code": "ko",
+      "name": "Korean",
+      "nativeName": "한국어",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ko/"
+    },
+    {
+      "code": "zh-CN",
+      "name": "Chinese (Simplified)",
+      "nativeName": "简体中文",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/zh-cn/"
+    },
+    {
+      "code": "zh-TW",
+      "name": "Chinese (Traditional)",
+      "nativeName": "繁體中文",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/zh-tw/"
+    },
+    {
+      "code": "sv",
+      "name": "Swedish",
+      "nativeName": "Svenska",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/sv/"
+    },
+    {
+      "code": "no",
+      "name": "Norwegian",
+      "nativeName": "Norsk",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/no/"
+    },
+    {
+      "code": "da",
+      "name": "Danish",
+      "nativeName": "Dansk",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/da/"
+    },
+    {
+      "code": "fi",
+      "name": "Finnish",
+      "nativeName": "Suomi",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/fi/"
+    },
+    {
+      "code": "el",
+      "name": "Greek",
+      "nativeName": "Ελληνικά",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/el/"
+    },
+    {
+      "code": "he",
+      "name": "Hebrew",
+      "nativeName": "עברית",
+      "direction": "rtl",
+      "status": "planned",
+      "path": "/he/"
+    },
+    {
+      "code": "fa",
+      "name": "Persian",
+      "nativeName": "فارسی",
+      "direction": "rtl",
+      "status": "planned",
+      "path": "/fa/"
+    },
+    {
+      "code": "ro",
+      "name": "Romanian",
+      "nativeName": "Română",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ro/"
+    },
+    {
+      "code": "hu",
+      "name": "Hungarian",
+      "nativeName": "Magyar",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/hu/"
+    },
+    {
+      "code": "cs",
+      "name": "Czech",
+      "nativeName": "Čeština",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/cs/"
+    },
+    {
+      "code": "sk",
+      "name": "Slovak",
+      "nativeName": "Slovenčina",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/sk/"
+    },
+    {
+      "code": "bg",
+      "name": "Bulgarian",
+      "nativeName": "Български",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/bg/"
+    },
+    {
+      "code": "hr",
+      "name": "Croatian",
+      "nativeName": "Hrvatski",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/hr/"
+    },
+    {
+      "code": "sr",
+      "name": "Serbian",
+      "nativeName": "Српски",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/sr/"
+    },
+    {
+      "code": "sl",
+      "name": "Slovenian",
+      "nativeName": "Slovenščina",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/sl/"
+    },
+    {
+      "code": "et",
+      "name": "Estonian",
+      "nativeName": "Eesti",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/et/"
+    },
+    {
+      "code": "lv",
+      "name": "Latvian",
+      "nativeName": "Latviešu",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/lv/"
+    },
+    {
+      "code": "lt",
+      "name": "Lithuanian",
+      "nativeName": "Lietuvių",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/lt/"
+    },
+    {
+      "code": "ca",
+      "name": "Catalan",
+      "nativeName": "Català",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ca/"
+    },
+    {
+      "code": "eu",
+      "name": "Basque",
+      "nativeName": "Euskara",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/eu/"
+    },
+    {
+      "code": "gl",
+      "name": "Galician",
+      "nativeName": "Galego",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/gl/"
+    },
+    {
+      "code": "af",
+      "name": "Afrikaans",
+      "nativeName": "Afrikaans",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/af/"
+    },
+    {
+      "code": "sw",
+      "name": "Swahili",
+      "nativeName": "Kiswahili",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/sw/"
+    },
+    {
+      "code": "ta",
+      "name": "Tamil",
+      "nativeName": "தமிழ்",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/ta/"
+    },
+    {
+      "code": "te",
+      "name": "Telugu",
+      "nativeName": "తెలుగు",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/te/"
+    },
+    {
+      "code": "mr",
+      "name": "Marathi",
+      "nativeName": "मराठी",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/mr/"
+    },
+    {
+      "code": "fil",
+      "name": "Filipino",
+      "nativeName": "Filipino",
+      "direction": "ltr",
+      "status": "planned",
+      "path": "/fil/"
+    }
+  ],
+  "seoRules": {
+    "emitHreflangOnlyFor": "published",
+    "includeXDefault": true,
+    "canonicalMustBeSelfReferential": true,
+    "requireReciprocalAlternates": true
+  }
+}
