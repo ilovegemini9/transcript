@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080808" />
+  <meta name="google-site-verification" content="WkXRsZNaG77qk0yXebhvc_3VAHqFVP7NsvdVhtFSO5A" />
+  <meta name="description" content="Convertissez les vidéos publiques TikTok, YouTube, Instagram Reels et Facebook en texte. Générez une transcription, puis copiez-la ou téléchargez-la gratuitement, sans compte." />
+  <meta name="robots" content="noindex,follow" />
+  <meta name="author" content="Transcript TikTok" />
+  <link rel="canonical" href="https://transcriptiktok.vercel.app/fr/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Transcript TikTok" />
+  <meta property="og:url" content="https://transcriptiktok.vercel.app/fr/" />
+  <meta property="og:title" content="Générateur de transcription vidéo | Transcript TikTok" />
+  <meta property="og:description" content="Convertissez les vidéos publiques TikTok, YouTube, Instagram Reels et Facebook en texte. Copiez ou téléchargez votre transcription en ligne." />
+  <meta property="og:locale" content="fr_FR" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Générateur de transcription vidéo | Transcript TikTok" />
+  <meta name="twitter:description" content="Convertissez les vidéos publiques TikTok, YouTube, Instagram Reels et Facebook en texte. Copiez ou téléchargez votre transcription en ligne." />
+  <title>Générateur de transcription vidéo | Transcript TikTok</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Transcript TikTok",
+    "url": "https://transcriptiktok.vercel.app/",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any",
+    "description": "Un outil en ligne pour transcrire les vidéos publiques accessibles de TikTok, YouTube, Facebook et Instagram.",
+    "featureList": ["Transcription de vidéos TikTok, YouTube, Facebook et Instagram", "Résumés de transcription si l’IA est configurée", "Idées de légendes pour les réseaux sociaux", "Idées d’accroches vidéo", "Copie du texte", "Téléchargement TXT ou JSON", "Aucun compte requis"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Transcript TikTok est-il gratuit ?","acceptedAnswer":{"@type":"Answer","text":"Transcript TikTok est gratuit à essayer sans compte. Le traitement dépend de la capacité du fournisseur et des limites d’utilisation."}},
+      {"@type":"Question","name":"Dois-je créer un compte ?","acceptedAnswer":{"@type":"Answer","text":"Aucun compte n’est nécessaire pour utiliser cet outil."}},
+      {"@type":"Question","name":"Puis-je transcrire n’importe quelle vidéo ?","acceptedAnswer":{"@type":"Answer","text":"Non. La vidéo doit être publique et accessible. Les vidéos privées, supprimées, limitées par région ou indisponibles peuvent ne pas être traitées."}},
+      {"@type":"Question","name":"L’outil fonctionne-t-il sans sous-titres ?","acceptedAnswer":{"@type":"Answer","text":"L’outil demande une reconnaissance vocale automatique lorsque le fournisseur la prend en charge. Le résultat dépend de la qualité audio, de l’accès à la vidéo et de la disponibilité du fournisseur."}},
+      {"@type":"Question","name":"Quelles plateformes vidéo sont prises en charge ?","acceptedAnswer":{"@type":"Answer","text":"L’outil accepte les liens publics accessibles de TikTok, YouTube, Facebook et Instagram."}},
+      {"@type":"Question","name":"Puis-je créer des résumés, légendes et accroches à partir d’une transcription ?","acceptedAnswer":{"@type":"Answer","text":"Les outils d’IA facultatifs peuvent résumer une transcription et proposer des légendes ou des accroches si un fournisseur d’IA est configuré. Des quotas gratuits peuvent s’appliquer."}}
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; --bg:#080808; --panel:#111; --line:#292929; --muted:#999; --white:#f7f7f7; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--bg); color:var(--white); font-family:"DM Sans",Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; text-decoration:none; }
+    .wrap { width:min(1080px, calc(100% - 40px)); margin:0 auto; }
+    header { height:76px; display:flex; align-items:center; border-bottom:1px solid #1d1d1d; }
+    .nav { display:flex; justify-content:space-between; align-items:center; width:100%; }
+    .brand { font-size:22px; font-weight:700; letter-spacing:-1px; }
+    .brand-mark { display:inline-grid; place-items:center; width:27px; height:27px; margin-right:8px; border:1px solid #555; border-radius:8px; font-size:14px; vertical-align:1px; }
+    .nav-links { display:flex; gap:28px; color:#b5b5b5; font-size:13px; }
+    .nav-links a:hover { color:#fff; }
+    .hero { padding:100px 0 76px; text-align:center; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; border:1px solid #303030; border-radius:999px; padding:7px 12px; color:#c9c9c9; font-size:12px; margin-bottom:25px; }
+    .dot { width:6px; height:6px; border-radius:50%; background:#fff; box-shadow:0 0 12px #fff; }
+    h1 { max-width:760px; margin:0 auto; font-size:clamp(38px,6vw,66px); line-height:1.04; letter-spacing:-3.8px; font-weight:700; }
+    .subtitle { max-width:570px; margin:22px auto 34px; color:#a4a4a4; font-size:16px; line-height:1.7; }
+    .form-card { width:min(690px,100%); margin:0 auto; padding:9px; border:1px solid #343434; border-radius:14px; background:#101010; box-shadow:0 18px 70px #0009; }
+    .input-row { display:flex; gap:9px; }
+    input { min-width:0; flex:1; padding:17px 16px; border:1px solid transparent; border-radius:9px; outline:none; background:#191919; color:#fff; font:inherit; font-size:14px; }
+    input::placeholder { color:#777; }
+    input:focus { border-color:#666; }
+    button { border:0; border-radius:9px; background:#f5f5f5; color:#080808; padding:0 22px; font:600 14px "DM Sans",Arial,sans-serif; cursor:pointer; transition:background .2s, transform .2s; white-space:nowrap; }
+    button:hover { background:#dcdcdc; transform:translateY(-1px); }
+    button:disabled { opacity:.55; cursor:not-allowed; transform:none; }
+    .microcopy { margin:13px 0 3px; color:#777; font-size:11px; }
+    .status { display:none; width:min(690px,100%); margin:14px auto 0; padding:13px 15px; border:1px solid #393939; border-radius:10px; color:#c9c9c9; text-align:left; font-size:13px; line-height:1.6; }
+    .status.show { display:block; }
+    .transcript-result { display:none; width:min(690px,100%); margin:14px auto 0; padding:18px; border:1px solid #343434; border-radius:12px; background:#101010; text-align:left; }
+    .transcript-result.show { display:block; }
+    .result-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+    .result-head h3 { margin:0; font-size:15px; }
+    .result-meta { margin:5px 0 0; color:#858585; font-size:11px; }
+    .result-actions { display:flex; gap:7px; flex-wrap:wrap; }
+    .secondary-action { background:#202020; color:#eee; border:1px solid #3a3a3a; }
+    .copy-button { min-height:36px; padding:0 13px; font-size:12px; }
+    .ai-actions { display:flex; gap:7px; flex-wrap:wrap; margin-top:14px; padding-top:14px; border-top:1px solid #252525; }
+    .ai-output { display:none; margin-top:12px; padding:13px; border:1px solid #303030; border-radius:9px; background:#0b0b0b; white-space:pre-wrap; color:#ccc; font-size:13px; line-height:1.7; }
+    .ai-output.show { display:block; }
+    .transcript-text { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; color:#ddd; font:13px/1.7 "DM Sans",Arial,sans-serif; max-height:420px; overflow:auto; }
+    .status strong { color:#fff; }
+    .platform-strip { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin:18px auto 0; }
+    .platform-pill { padding:6px 10px; border:1px solid #303030; border-radius:999px; color:#aaa; background:#0f0f0f; font-size:11px; }
+    .feature-kicker { display:inline-block; margin-bottom:10px; color:#777; font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
+    .trust { display:flex; justify-content:center; gap:25px; flex-wrap:wrap; margin-top:28px; color:#888; font-size:12px; }
+    .trust span { display:flex; align-items:center; gap:7px; }
+    .trust b { color:#ddd; font-weight:500; }
+    .section { padding:65px 0; border-top:1px solid #1d1d1d; }
+    .section-heading { text-align:center; margin:0 auto 38px; }
+    h2 { margin:0 0 10px; font-size:30px; letter-spacing:-1.2px; }
+    .section-heading p { margin:0; color:#888; font-size:14px; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
+    .step { padding:23px; border:1px solid #262626; border-radius:12px; background:linear-gradient(145deg,#111,#0b0b0b); }
+    .step-num { display:grid; place-items:center; width:32px; height:32px; border:1px solid #444; border-radius:9px; color:#fff; font-size:12px; margin-bottom:22px; }
+    .step h3 { margin:0 0 8px; font-size:15px; }
+    .step p { margin:0; color:#888; font-size:13px; line-height:1.65; }
+    .faq { max-width:720px; margin:0 auto; }
+    details { border-bottom:1px solid #292929; padding:18px 0; }
+    summary { cursor:pointer; list-style:none; font-size:14px; font-weight:600; }
+    summary::-webkit-details-marker { display:none; }
+    summary:after { content:"+"; float:right; color:#999; font-size:18px; font-weight:400; }
+    details[open] summary:after { content:"−"; }
+    details p { color:#999; font-size:13px; line-height:1.7; margin:13px 25px 0 0; }
+    footer { border-top:1px solid #1d1d1d; padding:25px 0; color:#777; font-size:12px; }
+    .footer-inner { display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; }
+    @media(max-width:650px) {
+      header { height:65px; }
+      .nav-links { gap:16px; font-size:12px; }
+      .hero { padding:76px 0 60px; }
+      h1 { letter-spacing:-2.2px; }
+      .subtitle { font-size:14px; }
+      .input-row { flex-direction:column; }
+      input { min-height:52px; }
+      button { min-height:50px; }
+      .trust { gap:13px 18px; }
+      .steps { grid-template-columns:1fr; }
+      .step { padding:19px; }
+      .section { padding:52px 0; }
+    }
+
+    /* TokScript-inspired refinement: stronger hierarchy, feature cards, and clearer product storytelling. */
+    .nav-links a:last-child { padding:9px 13px; border:1px solid #383838; border-radius:8px; color:#f5f5f5; }
+    .hero { padding:112px 0 86px; background:radial-gradient(ellipse at 50% 0%,#202020 0%,#080808 58%); }
+    .eyebrow { background:#111; border-color:#3b3b3b; }
+    h1 { max-width:850px; font-size:clamp(42px,7vw,76px); letter-spacing:-4.5px; }
+    .subtitle { max-width:620px; font-size:16px; }
+    .form-card { border-color:#414141; border-radius:16px; padding:10px; }
+    .form-card button { min-height:54px; padding:0 25px; }
+    h1 { max-width:850px; font-size:clamp(40px,6.5vw,72px); letter-spacing:-3.8px; }
+    .input-row input { min-height:54px; }
+    .trust { margin-top:30px; }
+    .trust span:before { content:"✓"; color:#e8e8e8; font-weight:700; }
+    .section { padding:82px 0; }
+    .section-heading { margin-bottom:42px; }
+    .section-heading h2 { font-size:clamp(27px,4vw,38px); letter-spacing:-1.6px; }
+    .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .feature { min-height:190px; padding:25px; border:1px solid #292929; border-radius:14px; background:linear-gradient(145deg,#151515,#0c0c0c); transition:border-color .2s,transform .2s; }
+    .feature:hover { border-color:#555; transform:translateY(-3px); }
+    .feature-icon { display:grid; place-items:center; width:39px; height:39px; margin-bottom:24px; border:1px solid #414141; border-radius:11px; color:#fff; font-size:17px; }
+    .feature h3 { margin:0 0 9px; font-size:16px; }
+    .feature p { margin:0; color:#929292; font-size:13px; line-height:1.7; }
+    .audience { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .audience-card { padding:25px; border:1px solid #292929; border-radius:14px; background:#101010; }
+    .audience-card h3 { margin:0 0 8px; font-size:16px; }
+    .audience-card p { margin:0; color:#929292; font-size:13px; line-height:1.7; }
+    .bottom-cta { padding:45px 25px; border:1px solid #343434; border-radius:17px; text-align:center; background:radial-gradient(ellipse at 50% 0%,#222,#101010 70%); }
+    .bottom-cta h2 { margin-bottom:10px; }
+    .bottom-cta p { margin:0 auto 22px; color:#999; font-size:14px; }
+    .bottom-cta a { display:inline-flex; align-items:center; justify-content:center; min-height:46px; padding:0 20px; border-radius:9px; background:#f5f5f5; color:#080808; font-size:13px; font-weight:700; }
+    @media(max-width:700px) {
+      .hero { padding:82px 0 65px; }
+      h1 { letter-spacing:-2.7px; }
+      .feature-grid { grid-template-columns:1fr 1fr; }
+      .feature { min-height:175px; padding:19px; }
+      .audience { grid-template-columns:1fr; }
+    }
+    @media(max-width:480px) {
+      .feature-grid { grid-template-columns:1fr; }
+      .result-head { align-items:flex-start; flex-direction:column; }
+      .result-actions { width:100%; }
+      .result-actions button { flex:1; }
+      .feature { min-height:0; }
+      .nav-links { gap:12px; }
+    }
+
+
+    /* Compact layout: keep the main tool visible immediately and reduce oversized gaps. */
+    header { height:64px; }
+    .hero { padding:42px 0 38px; background:radial-gradient(ellipse at 50% 0%,#1b1b1b 0%,#080808 58%); }
+    .eyebrow { margin-bottom:15px; padding:6px 10px; }
+    h1 { font-size:clamp(36px,5.5vw,60px); letter-spacing:-3px; }
+    .subtitle { margin:14px auto 22px; font-size:14px; line-height:1.55; }
+    .form-card { padding:8px; }
+    .form-card button, .input-row input { min-height:48px; }
+    .trust { margin-top:18px; gap:12px 20px; }
+    .section { padding:46px 0; }
+    .section-heading { margin-bottom:24px; }
+    .section-heading h2 { font-size:clamp(24px,3.5vw,32px); }
+    .feature { min-height:0; padding:19px; }
+    .feature-icon { margin-bottom:14px; }
+    .audience-card { padding:19px; }
+    .step { padding:19px; }
+    .step-num { margin-bottom:14px; }
+    .bottom-cta { padding:30px 20px; }
+    details { padding:14px 0; }
+    @media(max-width:650px) {
+      header { height:58px; }
+      .hero { padding:32px 0 30px; }
+      h1 { letter-spacing:-2px; }
+      .section { padding:36px 0; }
+      .section-heading { margin-bottom:20px; }
+      .feature { padding:16px; }
+    }
+
+    /* Mobile navigation and keyboard accessibility */
+    :focus-visible { outline:2px solid #f5f5f5; outline-offset:3px; }
+    @media(max-width:650px) {
+      .nav { gap:12px; min-width:0; }
+      .brand { flex-shrink:0; font-size:16px; letter-spacing:-.6px; }
+      .nav-links {
+        flex:1; min-width:0; overflow-x:auto; overflow-y:hidden;
+        white-space:nowrap; justify-content:flex-start; gap:14px;
+        padding:6px 0; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+      }
+      .nav-links::-webkit-scrollbar { display:none; }
+      .nav-links a { flex:0 0 auto; min-height:36px; display:inline-flex; align-items:center; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto; }
+      *, *::before, *::after { scroll-behavior:auto !important; transition-duration:.01ms !important; }
+    }
+  
+    /* Visual refresh: clear brand accent, depth, and calmer responsive spacing. */
+    :root {
+      --accent: #a78bfa;
+      --accent-strong: #c4b5fd;
+      --surface: #111018;
+      --line: #302b3d;
+    }
+    body {
+      background:
+        radial-gradient(ellipse at 12% 12%, rgba(124,58,237,.10), transparent 32rem),
+        radial-gradient(ellipse at 88% 38%, rgba(59,130,246,.07), transparent 30rem),
+        #08080c;
+    }
+    .skip-link {
+      position:absolute; left:14px; top:-60px; z-index:20;
+      padding:10px 14px; border-radius:9px; background:#fff; color:#111;
+      font-size:13px; font-weight:700;
+    }
+    .skip-link:focus { top:12px; }
+    header {
+      position:sticky; top:0; z-index:10;
+      background:rgba(8,8,12,.86); backdrop-filter:blur(16px);
+      border-bottom-color:rgba(167,139,250,.16);
+    }
+    .brand-mark {
+      border-color:rgba(196,181,253,.55);
+      background:linear-gradient(145deg,rgba(167,139,250,.22),rgba(59,130,246,.12));
+      color:var(--accent-strong);
+    }
+    .nav-links a { transition:color .18s ease,border-color .18s ease,background .18s ease; }
+    .nav-links a:hover { color:var(--accent-strong); }
+    .nav-links a:last-child {
+      border-color:rgba(167,139,250,.38);
+      background:rgba(167,139,250,.08);
+    }
+    .hero {
+      background:
+        radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.17),transparent 55%),
+        radial-gradient(ellipse at 50% 12%,#191522 0%,#08080c 65%);
+    }
+    .eyebrow {
+      border-color:rgba(167,139,250,.35);
+      background:rgba(167,139,250,.08);
+      color:#ddd2ff;
+    }
+    .dot { background:#c4b5fd; box-shadow:0 0 14px rgba(196,181,253,.8); }
+    h1 {
+      background:linear-gradient(100deg,#fff 12%,#e9ddff 52%,#c4d8ff 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .subtitle { color:#b6b0c2; }
+    .form-card {
+      border-color:rgba(167,139,250,.42);
+      background:rgba(17,16,24,.92);
+      box-shadow:0 22px 80px rgba(0,0,0,.45),0 0 0 1px rgba(167,139,250,.06);
+    }
+    input { background:#171521; border-color:#292536; }
+    input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(167,139,250,.13); }
+    button:not(.secondary-action) {
+      background:linear-gradient(110deg,#e9ddff,#c4d8ff);
+      color:#171020;
+    }
+    button:not(.secondary-action):hover { background:linear-gradient(110deg,#fff,#dbeafe); }
+    .platform-pill {
+      border-color:#393249; background:rgba(167,139,250,.06); color:#c8bfd8;
+    }
+    .trust b { color:#e4d9ff; }
+    .section { border-top-color:rgba(167,139,250,.12); }
+    .step,.feature,.audience-card {
+      border-color:#302b3d;
+      background:linear-gradient(145deg,rgba(24,21,34,.94),rgba(13,13,19,.96));
+      box-shadow:0 12px 35px rgba(0,0,0,.12);
+    }
+    .step:hover,.audience-card:hover {
+      border-color:rgba(167,139,250,.55);
+      transform:translateY(-2px);
+      transition:transform .2s ease,border-color .2s ease;
+    }
+    .feature:hover { border-color:rgba(167,139,250,.62); }
+    .feature-icon,.step-num {
+      border-color:rgba(167,139,250,.42);
+      background:rgba(167,139,250,.09);
+      color:#ddd2ff;
+    }
+    .audience-card a { text-decoration-color:rgba(196,181,253,.5); text-underline-offset:4px; }
+    .audience-card a:hover { color:var(--accent-strong); }
+    .bottom-cta {
+      border-color:rgba(167,139,250,.36);
+      background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.22),#111018 72%);
+    }
+    .bottom-cta a {
+      background:linear-gradient(110deg,#e9ddff,#c4d8ff);
+      transition:transform .18s ease,filter .18s ease;
+    }
+    .bottom-cta a:hover { transform:translateY(-2px); filter:brightness(1.08); }
+    details[open] summary { color:#e3d8ff; }
+    summary:after { color:var(--accent-strong); }
+    footer { border-top-color:rgba(167,139,250,.16); }
+    footer a:hover { color:var(--accent-strong); }
+    @media(max-width:650px) {
+      header { backdrop-filter:blur(12px); }
+      .hero { background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.16),transparent 62%),#08080c; }
+      .nav-links a:last-child { padding:7px 10px; }
+      .form-card { box-shadow:0 14px 42px rgba(0,0,0,.32); }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .step:hover,.audience-card:hover,.bottom-cta a:hover { transform:none; }
+    }
+
+  
+    /* AI Creator Studio: accessible, consistent card controls. */
+    .ai-panel{margin-top:18px;padding:17px;border:1px solid rgba(185,163,255,.28);border-radius:15px;background:linear-gradient(145deg,rgba(28,23,42,.94),rgba(13,13,19,.98));}
+    .ai-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+    .ai-kicker{display:block;margin-bottom:5px;color:#c8b7ff;font-size:9px;font-weight:700;letter-spacing:.16em}
+    .ai-panel-head h4{margin:0;color:#f5f0ff;font-size:16px;letter-spacing:-.3px}
+    .ai-panel-head p{margin:5px 0 0;color:#a9a1b7;font-size:11px;line-height:1.55}
+    .ai-spark{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border:1px solid rgba(195,174,255,.32);border-radius:11px;background:rgba(167,139,250,.12);color:#d8caff;font-size:20px}
+    .ai-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0;padding:0;border:0}
+    .ai-tool{display:flex;align-items:center;gap:9px;min-width:0;min-height:65px;padding:10px;border:1px solid #393249;border-radius:11px;background:rgba(255,255,255,.025);color:#eee8fb;text-align:left;white-space:normal}
+    .ai-tool:hover{border-color:#a78bfa;background:rgba(167,139,250,.10);transform:translateY(-1px)}
+    .ai-tool:disabled{opacity:.55;cursor:wait;transform:none}
+    .ai-tool-icon{display:grid;place-items:center;width:31px;height:31px;flex:0 0 31px;border-radius:9px;background:rgba(167,139,250,.13);color:#d9cbff;font-size:16px}
+    .ai-tool b,.ai-tool small{display:block}
+    .ai-tool b{font-size:11px;line-height:1.35}
+    .ai-tool small{margin-top:3px;color:#a69eb5;font-size:9px;line-height:1.3}
+    .ai-tool-arrow{margin-left:auto;color:#b9a3ff;font-size:13px}
+    .ai-output-wrap{margin-top:12px}
+    .ai-output-head{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#d8caff;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .ai-output{margin-top:7px;border-color:#393249;background:rgba(6,6,10,.65);color:#eee9f7}
+    .ai-footnote{margin:10px 0 0;color:#91899e;font-size:10px;line-height:1.5}
+    @media(max-width:600px){.ai-panel{padding:13px}.ai-actions{grid-template-columns:1fr}.ai-tool{min-height:56px}.ai-tool small{font-size:10px}}
+    @media(prefers-reduced-motion:reduce){.ai-tool:hover{transform:none}}
+
+  
+    /* Phase 1 visual polish: richer iconography, layered surfaces, and clearer content rhythm. */
+    :root {
+      --accent: #b69cff;
+      --accent-cool: #91c8ff;
+      --surface-glass: rgba(20, 17, 30, .82);
+    }
+    body {
+      background:
+        radial-gradient(ellipse at 8% 18%, rgba(124,58,237,.12), transparent 31rem),
+        radial-gradient(ellipse at 92% 42%, rgba(56,189,248,.07), transparent 28rem),
+        #08080c;
+    }
+    .brand-mark {
+      border: 1px solid rgba(197,177,255,.55);
+      background: linear-gradient(145deg, rgba(167,139,250,.32), rgba(96,165,250,.14));
+      box-shadow: 0 0 22px rgba(167,139,250,.16), inset 0 1px rgba(255,255,255,.12);
+    }
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% -12%, rgba(167,139,250,.19), transparent 54%),
+        radial-gradient(ellipse at 86% 25%, rgba(96,165,250,.08), transparent 30%),
+        transparent;
+    }
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 230px;
+      height: 230px;
+      border: 1px solid rgba(196,181,253,.09);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::before { top: 8%; left: -170px; box-shadow: 0 0 0 24px rgba(196,181,253,.018), 0 0 0 48px rgba(196,181,253,.014); }
+    .hero::after { right: -180px; bottom: 5%; box-shadow: 0 0 0 24px rgba(147,197,253,.018), 0 0 0 48px rgba(147,197,253,.014); }
+    .eyebrow {
+      border-color: rgba(196,181,253,.3);
+      background: rgba(24,20,36,.72);
+      box-shadow: 0 5px 24px rgba(0,0,0,.18);
+    }
+    .dot { background: #c4b5fd; box-shadow: 0 0 13px rgba(196,181,253,.9); }
+    .form-card {
+      background: linear-gradient(145deg, rgba(25,22,37,.96), rgba(12,12,18,.98));
+      border-color: rgba(196,181,253,.38);
+      box-shadow: 0 22px 75px rgba(0,0,0,.34), 0 0 38px rgba(124,58,237,.08);
+    }
+    .form-card button, .bottom-cta a {
+      background: linear-gradient(115deg, #e9ddff, #c7dcff);
+      box-shadow: 0 5px 20px rgba(167,139,250,.15);
+    }
+    .feature, .audience-card, .step {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(167,139,250,.09), transparent 45%),
+        linear-gradient(145deg, rgba(24,21,34,.96), rgba(12,12,18,.98));
+      border-color: rgba(196,181,253,.18);
+      box-shadow: inset 0 1px rgba(255,255,255,.025), 0 12px 30px rgba(0,0,0,.12);
+    }
+    .feature:hover, .audience-card:hover, .step:hover {
+      border-color: rgba(196,181,253,.48);
+      box-shadow: 0 16px 36px rgba(0,0,0,.22), 0 0 24px rgba(124,58,237,.07);
+    }
+    .feature-icon, .step-num {
+      border-color: rgba(196,181,253,.42);
+      background: linear-gradient(145deg, rgba(167,139,250,.22), rgba(96,165,250,.11));
+      color: #e6ddff;
+      box-shadow: inset 0 1px rgba(255,255,255,.1), 0 5px 18px rgba(124,58,237,.12);
+    }
+    .feature-kicker { color: #bba9ed; }
+    .platform-pill {
+      border-color: rgba(196,181,253,.24);
+      background: rgba(25,21,36,.76);
+      color: #d3c8ed;
+    }
+    .ai-panel {
+      background:
+        radial-gradient(ellipse at 100% 0%, rgba(167,139,250,.16), transparent 48%),
+        linear-gradient(145deg, rgba(28,23,42,.98), rgba(10,10,16,.98));
+      box-shadow: inset 0 1px rgba(255,255,255,.045), 0 12px 32px rgba(0,0,0,.2);
+    }
+    .ai-spark, .ai-tool-icon {
+      background: linear-gradient(145deg, rgba(167,139,250,.24), rgba(96,165,250,.15));
+      border-color: rgba(196,181,253,.38);
+      box-shadow: inset 0 1px rgba(255,255,255,.08);
+    }
+    .ai-tool {
+      background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+    }
+    .ai-tool:hover { box-shadow: 0 7px 20px rgba(124,58,237,.12); }
+    .ai-output {
+      border-color: rgba(196,181,253,.25);
+      background: rgba(7,7,12,.78);
+    }
+    .bottom-cta {
+      border-color: rgba(196,181,253,.32);
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(167,139,250,.17), transparent 68%),
+        linear-gradient(145deg, #171321, #0d0d13);
+      box-shadow: 0 18px 55px rgba(0,0,0,.2);
+    }
+    footer { border-top-color: rgba(196,181,253,.16); }
+    @media (max-width: 600px) {
+      .hero::before, .hero::after { width: 150px; height: 150px; opacity: .55; }
+      .feature-grid { gap: 10px; }
+      .feature, .audience-card, .step { border-radius: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .feature:hover, .audience-card:hover, .step:hover { transform: none; }
+    }
+
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Aller au contenu</a>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="/fr/" aria-label="Accueil Transcript TikTok"><span class="brand-mark">T</span>Transcript TikTok</a>
+      <nav class="nav-links" aria-label="Navigation principale">
+        <a href="/fr/#features">Fonctionnalités</a>
+        <a href="/fr/blog">Blog</a>
+        <a href="#how-it-works">Fonctionnement</a>
+        <a href="/fr/#faq">Tarifs gratuits</a>
+        <a href="#faq">FAQ</a>
+        <a href="/fr/blog/guide-transcription-tiktok">Guide</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow"><span class="dot"></span> Des transcriptions vidéo rapides et claires</div>
+        <h1>Convertisseur vidéo en texte et générateur de transcription</h1>
+        <p class="subtitle">Convertissez une vidéo publique TikTok, YouTube, Facebook ou Instagram en texte facile à lire. Collez un lien, générez la transcription, puis copiez-la ou téléchargez-la — sans compte ni configuration compliquée.</p><form class="form-card" id="transcript-form">
+          <div class="input-row">
+            <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Collez le lien d’une vidéo publique (TikTok, YouTube, Facebook, Instagram)…" aria-label="URL de la vidéo publique" aria-describedby="url-help" required />
+            <button id="submit-button" type="submit">Obtenir la transcription <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="microcopy" id="url-help">Liens publics TikTok, YouTube, Facebook et Instagram acceptés. Les vidéos privées ou indisponibles ne peuvent pas être traitées.</p>
+        </form>
+        <div class="status" id="status" role="status" aria-live="polite"></div>
+        <section class="transcript-result" id="transcript-result" aria-label="Transcription vidéo">
+          <div class="result-head"><div><h3>Votre transcription vidéo</h3><p id="transcript-meta" class="result-meta">Prête à copier ou télécharger</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copier le texte</button><button class="copy-button secondary-action" id="download-button" type="button">Télécharger TXT</button><button class="copy-button secondary-action" id="json-button" type="button">JSON</button></div></div>
+          <pre class="transcript-text" id="transcript-text"></pre>
+          <div class="ai-panel"><div class="ai-panel-head"><div><span class="ai-kicker">STUDIO DE CRÉATION IA</span><h4>Transformez votre transcription en contenu</h4><p>Des idées rapides pour votre prochaine publication. Choisissez un outil pour commencer.</p></div><span class="ai-spark" aria-hidden="true">✦</span></div><div class="ai-actions" aria-label="Outils de création IA"><button class="ai-tool ai-button" data-action="summarize" type="button"><span class="ai-tool-icon" aria-hidden="true">▤</span><span><b>Résumer</b><small>Les points clés en quelques secondes</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button><button class="ai-tool ai-button" data-action="caption" type="button"><span class="ai-tool-icon" aria-hidden="true">✎</span><span><b>Créer des légendes</b><small>Des légendes à modifier et publier</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button><button class="ai-tool ai-button" data-action="hooks" type="button"><span class="ai-tool-icon" aria-hidden="true">⚡</span><span><b>Créer des accroches</b><small>Des introductions qui captent l’attention</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button></div><div class="ai-output-wrap"><div class="ai-output-head"><span>Résultat de l’IA</span><button class="copy-button secondary-action" id="copy-ai-button" type="button" hidden>Copier le résultat</button></div><div class="ai-output" id="ai-output" role="status" aria-live="polite"></div></div><p class="ai-footnote">Les suggestions de l’IA peuvent être imparfaites : relisez-les et modifiez-les avant publication.</p></div>
+        </section>
+
+        <div class="trust">
+          <span><b>Gratuit</b> à essayer</span>
+          <span><b>Sans compte</b> nécessaire</span>
+          <span><b>Facile</b> à utiliser</span>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section" id="platforms"><div class="wrap"><div class="section-heading"><h2>Choisissez une plateforme vidéo</h2><p>Utilisez l’outil de transcription adapté à votre lien.</p></div><div class="audience"><article class="audience-card"><h3><a href="/fr/#transcript-form">Transcription TikTok</a></h3><p>Convertissez les vidéos TikTok publiques en texte.</p></article><article class="audience-card"><h3><a href="/fr/#transcript-form">Transcription YouTube</a></h3><p>Transcrivez les vidéos et Shorts YouTube publics.</p></article><article class="audience-card"><h3><a href="/fr/#transcript-form">Transcription vidéo Facebook</a></h3><p>Obtenez le texte des vidéos Facebook publiques accessibles.</p></article><article class="audience-card"><h3><a href="/fr/#transcript-form">Transcription Instagram Reels</a></h3><p>Convertissez les Reels et vidéos publics en texte lisible.</p></article><article class="audience-card"><h3><a href="/fr/#transcript-form">Vidéo en texte</a></h3><p>Commencez avec un lien pris en charge parmi ces quatre plateformes.</p></article></div></div></section>
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>Tout le nécessaire pour extraire les paroles</h2>
+          <p>Des outils simples pour transformer les vidéos sociales publiques en texte utile.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature"><div class="feature-icon">↗</div><span class="feature-kicker">Extraire</span><h3>Un processus en un lien</h3><p>Collez le lien d’une vidéo publique et obtenez un texte lisible, sans inscription ni étapes superflues.</p></article>
+          <article class="feature"><div class="feature-icon">✦</div><span class="feature-kicker">Fiabilité</span><h3>Un traitement transparent</h3><p>Sachez si une vidéo est en cours de traitement, restreinte, indisponible ou prête. Aucun faux message de réussite.</p></article>
+          <article class="feature"><div class="feature-icon">⌘</div><span class="feature-kicker">Exporter</span><h3>Copier ou télécharger</h3><p>Copiez votre transcription ou enregistrez-la en TXT ou JSON pour vos notes, recherches, légendes et brouillons.</p></article><article class="feature"><div class="feature-icon">✦</div><span class="feature-kicker">Réutiliser</span><h3>Accroches et légendes IA</h3><p>Si le fournisseur d’IA facultatif est configuré, transformez une transcription en résumés, légendes et accroches originales.</p></article><article class="feature"><div class="feature-icon">⌁</div><span class="feature-kicker">Gratuit en priorité</span><h3>Pas de traitement groupé imposé</h3><p>Commencez avec une seule vidéo. Pas d’abonnement obligatoire ni de file d’attente de 50 liens.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>Pensé pour votre façon de créer</h2>
+          <p>Passez moins de temps à revoir les vidéos et plus de temps à exploiter leurs idées.</p>
+        </div>
+        <div class="audience">
+          <article class="audience-card"><h3>Créateurs de contenu</h3><p>Conservez les idées exprimées dans les vidéos et utilisez-les comme point de départ pour vos propres créations.</p></article>
+          <article class="audience-card"><h3>Chercheurs et spécialistes du marketing</h3><p>Analysez les messages de vidéos publiques, recueillez des citations utiles et conservez vos recherches sous forme de texte lisible.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap bottom-cta">
+        <h2>Prêt à convertir une vidéo en texte ?</h2>
+        <p>Collez le lien public d’une plateforme prise en charge pour commencer.</p>
+        <a href="/fr/#main-content" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Commencer →</a>
+      </div>
+    </section>
+
+    <section class="section" id="tiktok-transcript-guide">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>Qu’est-ce qu’une transcription vidéo ?</h2>
+          <p>Une version textuelle consultable des paroles prononcées dans une vidéo TikTok, YouTube, Facebook ou Instagram.</p>
+        </div>
+        <div class="audience">
+          <article class="audience-card"><h3>Convertir la parole d’une vidéo en texte</h3><p>Une transcription facilite la lecture, la recherche, la citation, l’étude et l’organisation des informations orales. Collez ci-dessus le lien d’une vidéo publique pour demander sa transcription.</p></article>
+          <article class="audience-card"><h3>Utilisez les transcriptions de manière responsable</h3><p>Vérifiez le texte à partir de la vidéo originale avant de le partager. La reconnaissance vocale peut mal interpréter les noms, les accents, les bruits de fond et les termes techniques. Ne traitez que les vidéos que vous êtes autorisé à utiliser.</p></article>
+        </div>
+        <p style="text-align:center;color:#999;font-size:13px;margin-top:22px">En savoir plus : <a href="/tiktok-transcript-generator.html" style="text-decoration:underline">how to get a Transcription TikTok</a> · <a href="/fr/blog/convertir-video-en-texte" style="text-decoration:underline">convertir une vidéo TikTok en texte</a> · <a href="/fr/blog/guide-transcription-tiktok" style="text-decoration:underline">use a Transcription TikTok tool without login</a>.</p>
+      </div>
+    </section>
+
+
+    <section class="section" id="ai-creator-tools">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>Outils IA pour réutiliser votre transcription vidéo</h2>
+          <p>Une fois la transcription obtenue, transformez les idées principales en contenu utile pour votre prochaine publication.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature"><div class="feature-icon">▤</div><span class="feature-kicker">Comprendre plus vite</span><h3>Résumer a video transcript</h3><p>Obtenez un aperçu concis et les points clés d’une longue explication, d’un tutoriel, d’une interview ou d’une vidéo sociale.</p></article>
+          <article class="feature"><div class="feature-icon">✎</div><span class="feature-kicker">Écrire plus vite</span><h3>Créer des légendes pour les réseaux sociaux</h3><p>Transformez le message principal de la transcription en idées de légendes à relire, modifier et adapter à votre public.</p></article>
+          <article class="feature"><div class="feature-icon">⚡</div><span class="feature-kicker">Créer de meilleures introductions</span><h3>Créer des accroches vidéo</h3><p>Trouvez d’autres phrases d’ouverture et angles inspirés de la transcription, sans reprendre les mots originaux.</p></article>
+        </div>
+        <p class="microcopy" style="text-align:center;margin-top:16px">Les fonctions IA sont facultatives et disponibles lorsque le propriétaire du site a configuré un fournisseur d’IA. Les quotas gratuits et la disponibilité du fournisseur s’appliquent.</p>
+      </div>
+    </section>
+
+    <section class="section" id="transcript-help">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>À quoi s’attendre d’une transcription vidéo</h2>
+          <p>Un guide pratique pour obtenir un texte lisible à partir d’une vidéo publique.</p>
+        </div>
+        <div class="audience">
+          <article class="audience-card">
+            <h3>Sous-titres et reconnaissance vocale automatique</h3>
+            <p>Certaines vidéos disposent déjà de sous-titres. Lorsque le fournisseur de transcription peut y accéder, ils peuvent servir de source au texte. Sinon, une reconnaissance vocale automatique peut être utilisée si elle est prise en charge. La disponibilité varie selon la vidéo et le fournisseur : chaque lien ne garantit donc pas une transcription.</p>
+          </article>
+          <article class="audience-card">
+            <h3>Qu’est-ce qui influence la précision ?</h3>
+            <p>Une parole claire produit généralement un texte plus utile. La musique de fond, les voix qui se chevauchent, les accents, le débit rapide, les termes spécialisés et le bruit peuvent provoquer des erreurs. Vérifiez les noms, dates, chiffres et citations avec la vidéo originale.</p>
+          </article>
+          <article class="audience-card">
+            <h3>Utilisation et accessibilité</h3>
+            <p>Un texte lisible permet de rechercher des informations orales, de prendre des notes, de revoir un tutoriel ou de consulter un contenu lorsque l’écoute est peu pratique. Une transcription générée est une aide, pas un compte rendu officiel ou vérifié des propos tenus.</p>
+          </article>
+          <article class="audience-card">
+            <h3>Liens publics et confidentialité</h3>
+            <p>Envoyez uniquement des vidéos que vous êtes autorisé à traiter. L’outil ne contourne ni les comptes privés, ni les connexions, ni les restrictions d’âge ou de région. Même une URL publique peut être inaccessible au fournisseur. Conservez votre propre copie des transcriptions importantes.</p>
+          </article>
+        </div>
+        <p style="text-align:center;color:#999;font-size:13px;margin-top:22px">Consultez un guide dédié à <a href="/tiktok-transcript" style="text-decoration:underline">TikTok</a>, <a href="/youtube-transcript" style="text-decoration:underline">YouTube</a>, <a href="/facebook-video-transcript" style="text-decoration:underline">Facebook</a>, or <a href="/instagram-reels-transcript" style="text-decoration:underline">Instagram Reels</a>.</p>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>Comment ça marche</h2>
+          <p>Trois étapes simples. C’est tout.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><div class="step-num">01</div><h3>Copiez le lien d’une vidéo</h3><p>Copiez le lien public d’une vidéo TikTok, YouTube, Facebook ou Instagram.</p></article>
+          <article class="step"><div class="step-num">02</div><h3>Collez-le ci-dessus</h3><p>Collez l’URL et Transcript TikTok demande au service de générer la transcription.</p></article>
+          <article class="step"><div class="step-num">03</div><h3>Copiez votre transcription</h3><p>Lisez la transcription et copiez-la pour vos notes, légendes ou recherches de contenu.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="section-heading"><h2>Questions fréquentes</h2><p>Quelques informations utiles avant de commencer.</p></div>
+        <div class="faq">
+          <details><summary>Transcript TikTok est-il gratuit ?</summary><p>Transcript TikTok est gratuit à essayer et ne nécessite aucun compte. Le traitement dépend de la capacité du fournisseur et des limites d’utilisation, qui peuvent évoluer.</p></details>
+          <details><summary>Dois-je créer un compte ?</summary><p>Aucun compte n’est nécessaire pour utiliser cet outil.</p></details>
+          <details><summary>Puis-je transcrire n’importe quelle vidéo ?</summary><p>Non. La vidéo doit être publique et accessible. Les vidéos privées, supprimées, limitées par région ou autrement indisponibles peuvent ne pas être traitées.</p></details>
+          <details><summary>L’outil fonctionne-t-il sans sous-titres ?</summary><p>Transcript TikTok demande une reconnaissance vocale automatique lorsque le fournisseur la prend en charge. Le résultat dépend de l’accès à la vidéo, de la qualité audio, de la langue et de la disponibilité du fournisseur.</p></details>
+          <details><summary>Quelles plateformes vidéo sont prises en charge ?</summary><p>L’outil accepte les liens publics accessibles de TikTok, YouTube, Facebook et Instagram. Les vidéos privées ou restreintes peuvent ne pas fonctionner.</p></details>
+          <details><summary>Puis-je créer des résumés, légendes et accroches ?</summary><p>Les outils IA facultatifs peuvent résumer une transcription et proposer des légendes ou des accroches si un fournisseur d’IA est configuré. Des limites d’utilisation gratuite peuvent s’appliquer.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer-inner"><span>© <span id="year"></span> Transcript TikTok</span><span><a href="/features.html">Fonctionnalités</a> · <a href="/blog">Blog</a> · <a href="/pricing.html">Tarifs gratuits</a> · <a href="/tiktok-transcript-generator.html">Guide de transcription</a> · <a href="/youtube-transcript">YouTube</a> · <a href="/facebook-video-transcript">Facebook</a> · <a href="/instagram-reels-transcript">Instagram</a> · <a href="/video-to-text">Vidéo en texte</a> · <a href="/tiktok-to-text.html">TikTok to text</a> · <a href="/tiktok-transcript-without-login.html">No-login tool</a> · <a href="/fr/#faq">Confidentialité</a> · <a href="/fr/#faq">Conditions</a> · Des transcriptions simples. Sans étapes superflues.</span></div></footer>
+
+    <script>
+    const form = document.getElementById('transcript-form');
+    const input = document.getElementById('tiktok-url');
+    const button = document.getElementById('submit-button');
+    const status = document.getElementById('status');
+    const result = document.getElementById('transcript-result');
+    const transcriptText = document.getElementById('transcript-text');
+    const copyButton = document.getElementById('copy-button');
+    const downloadButton = document.getElementById('download-button');
+    const jsonButton = document.getElementById('json-button');
+    const aiOutput = document.getElementById('ai-output');
+    const copyAiButton = document.getElementById('copy-ai-button');
+    const transcriptMeta = document.getElementById('transcript-meta');
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function supportedPlatform(value) {
+      try {
+        const url = new URL(value);
+        if (url.protocol !== 'https:' || url.username || url.password || url.port) return null;
+        const host = url.hostname.toLowerCase();
+        if (/(^|\.)tiktok\.com$/.test(host)) return 'TikTok';
+        if (/(^|\.)(youtube\.com|youtu\.be)$/.test(host)) return 'YouTube';
+        if (/(^|\.)(facebook\.com|fb\.watch)$/.test(host)) return 'Facebook';
+        if (/(^|\.)instagram\.com$/.test(host)) return 'Instagram';
+        return null;
+      } catch { return null; }
+    }
+
+    function showStatus(message, isError = false) {
+      status.classList.add('show');
+      status.textContent = message;
+      status.style.borderColor = isError ? '#744040' : '#393939';
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const value = input.value.trim();
+      result.classList.remove('show');
+      transcriptText.textContent = '';
+      aiOutput.classList.remove('show');
+      aiOutput.textContent = '';
+      const selectedPlatform = supportedPlatform(value);
+      if (!selectedPlatform) {
+        showStatus('Veuillez saisir un lien valide vers une vidéo publique TikTok, YouTube, Facebook ou Instagram.', true);
+        input.focus();
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Traitement en cours…';
+      showStatus('Traitement de votre vidéo ' + selectedPlatform + ' et préparation de la transcription…');
+      try {
+        let response = await fetch('/api/transcript', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: value })
+        });
+        let data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          const messages = {
+            CONFIG_MISSING: 'Le service de transcription n’est pas encore configuré. Le propriétaire du site doit vérifier sa configuration.',
+            TRANSCRIPT_UNAVAILABLE: 'Aucune transcription n’est disponible pour cette vidéo. Essayez une autre vidéo publique accessible avec une parole claire.',
+            VIDEO_INACCESSIBLE: 'Cette vidéo est privée, restreinte ou inaccessible au fournisseur. Essayez un lien vers une vidéo publique.',
+            PRIVATE_OR_RESTRICTED: 'Cette vidéo est privée ou restreinte et ne peut pas être consultée.',
+            RATE_LIMITED: 'La limite de demandes gratuites de transcription est atteinte. Veuillez réessayer plus tard.'
+          };
+          throw new Error(messages[data.code] || data.error || 'Impossible d’obtenir la transcription de cette vidéo.');
+        }
+        for (let attempt = 0; data.status === 'processing' && data.jobId && attempt < 40; attempt++) {
+          showStatus('Génération de votre transcription… Cela peut prendre jusqu’à une minute pour certaines vidéos.');
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          response = await fetch('/api/transcript', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ jobId: data.jobId })
+          });
+          data = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(data.error || 'Le traitement de la transcription a échoué.');
+        }
+        if (data.status === 'processing') {
+          showStatus('Le traitement de cette vidéo prend plus de temps que prévu. Veuillez réessayer. Aucune transcription n’a été enregistrée.', true);
+          return;
+        }
+        const text = typeof data.transcript === 'string' ? data.transcript.trim() : '';
+        if (!text) throw new Error('Aucun texte de transcription n’a été renvoyé pour cette vidéo.');
+        transcriptText.textContent = text;
+        transcriptMeta.textContent = (data.platform || selectedPlatform) + (data.language ? ' · Langue détectée : ' + data.language : '') + ' · Prête à copier ou télécharger';
+        result.classList.add('show');
+        showStatus('Transcription prête. Relisez-la avant de la citer ou de la publier.');
+      } catch (error) {
+        showStatus(error.message || 'Une erreur s’est produite. Veuillez réessayer.', true);
+      } finally {
+        button.disabled = false;
+        button.innerHTML = 'Obtenir la transcription <span aria-hidden="true">→</span>';
+      }
+    });
+
+    downloadButton.addEventListener('click', () => {
+      const blob = new Blob([transcriptText.textContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'video-transcript.txt';
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+    });
+
+
+    jsonButton.addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify({ source: input.value.trim(), transcript: transcriptText.textContent, language: transcriptMeta.textContent, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'video-transcript.json'; document.body.appendChild(anchor); anchor.click(); anchor.remove(); URL.revokeObjectURL(url);
+    });
+
+    const aiButtons = Array.from(document.querySelectorAll('.ai-button'));
+    aiButtons.forEach((aiButton) => aiButton.addEventListener('click', async () => {
+      const action = aiButton.dataset.action;
+      if (!transcriptText.textContent.trim()) {
+        aiOutput.classList.add('show');
+        aiOutput.textContent = 'Générez d’abord une transcription, puis choisissez un outil IA.';
+        copyAiButton.hidden = true;
+        return;
+      }
+      aiButtons.forEach((item) => { item.disabled = true; });
+      aiOutput.classList.add('show');
+      aiOutput.setAttribute('aria-busy', 'true');
+      aiOutput.textContent = action === 'summarize' ? 'Création du résumé…' : action === 'caption' ? 'Rédaction d’idées de légendes…' : 'Création d’accroches vidéo…';
+      copyAiButton.hidden = true;
+      try {
+        const response = await fetch('/api/ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action, transcript: transcriptText.textContent })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          const messages = {
+            AI_NOT_CONFIGURED: 'Les outils IA ne sont pas encore connectés. Veuillez réessayer plus tard.',
+            AI_RATE_LIMIT: 'La limite gratuite de l’IA est atteinte ou les modèles sont occupés. Veuillez réessayer plus tard.',
+            AI_SERVICE_ERROR: 'Le service IA n’a pas pu terminer cette demande. Veuillez réessayer.',
+            AI_AUTH_ERROR: 'La configuration du fournisseur IA nécessite une intervention. Contactez le propriétaire du site.',
+            AI_MODEL_UNAVAILABLE: 'Les modèles IA gratuits sont temporairement indisponibles. Veuillez réessayer dans un instant.',
+            AI_EMPTY_RESPONSE: 'Le service IA a renvoyé un résultat vide. Veuillez réessayer.',
+            INVALID_TRANSCRIPT: 'Cette transcription est trop longue pour les outils IA. Essayez une vidéo plus courte.'
+          };
+          throw new Error(messages[data.code] || data.error || 'L’outil IA est temporairement indisponible. Veuillez réessayer.');
+        }
+        if (typeof data.output !== 'string' || !data.output.trim()) {
+          throw new Error('Le service IA a renvoyé un résultat vide. Veuillez réessayer.');
+        }
+        aiOutput.textContent = data.output.trim();
+        copyAiButton.hidden = false;
+      } catch (error) {
+        aiOutput.textContent = error.message || 'L’outil IA est temporairement indisponible. Veuillez réessayer.';
+      } finally {
+        aiOutput.removeAttribute('aria-busy');
+        aiButtons.forEach((item) => { item.disabled = false; });
+      }
+    }));
+
+    copyAiButton.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(aiOutput.textContent); copyAiButton.textContent = 'Copié !'; setTimeout(() => { copyAiButton.textContent = 'Copier le résultat'; }, 1600); }
+      catch { copyAiButton.textContent = 'Copie indisponible'; }
+    });
+
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(transcriptText.textContent);
+        copyButton.textContent = 'Copié !';
+        setTimeout(() => { copyButton.textContent = 'Copier le texte'; }, 1600);
+      } catch {
+        showStatus('La copie n’est pas disponible dans ce navigateur. Sélectionnez le texte de la transcription pour le copier.', true);
+      }
+    });
+  </script>
+</body>
+</html>
