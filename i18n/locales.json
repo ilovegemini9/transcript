@@ -491,30 +491,6 @@
       "direction": "ltr",
       "status": "planned",
       "path": "/fil/"
-    },
-    {
-      "code": "en-CA",
-      "name": "English (Canada)",
-      "nativeName": "English (Canada)",
-      "direction": "ltr",
-      "status": "planned",
-      "path": "/en-ca/",
-      "region": "CA",
-      "localizedSlugs": {
-        "blog": "blog",
-        "articles": {
-          "tiktok-transcript-guide": "tiktok-transcript-guide",
-          "youtube-transcript-download": "youtube-transcript-download",
-          "instagram-reels-transcript": "instagram-reels-transcript",
-          "facebook-video-transcript": "facebook-video-transcript",
-          "convert-video-to-text": "convert-video-to-text",
-          "transcript-vs-subtitles-vs-captions": "transcript-vs-subtitles-vs-captions",
-          "repurpose-video-transcript-into-content": "repurpose-video-transcript-into-content",
-          "video-transcripts-for-accessibility": "video-transcripts-for-accessibility",
-          "how-to-edit-an-automatic-transcript": "how-to-edit-an-automatic-transcript",
-          "transcribe-video-in-another-language": "transcribe-video-in-another-language"
-        }
-      }
     }
   ],
   "seoRules": {
@@ -529,7 +505,6 @@
     "blogIndexPattern": "/{locale}/{localizedSlugs.blog}/",
     "articlePattern": "/{locale}/{localizedSlugs.blog}/{localizedSlugs.articles[englishArticleKey]}/",
     "slugPolicy": "Use translated human-readable slugs; never expose untranslated English slugs on localized pages.",
-    "hreflangPolicy": "Emit only when every alternate page in the cluster exists, is indexable, self-canonical, and reciprocally links to all others.",
-    "canadaEnglish": "/en-ca/"
+    "hreflangPolicy": "Emit only when every alternate page in the cluster exists, is indexable, self-canonical, and reciprocally links to all others."
   }
 }
