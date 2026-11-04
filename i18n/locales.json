@@ -15,7 +15,7 @@
       "name": "French",
       "nativeName": "Français",
       "direction": "ltr",
-      "status": "planned",
+      "status": "preview",
       "path": "/fr/",
       "localizedSlugs": {
         "blog": "blog",
