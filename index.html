@@ -354,6 +354,121 @@
     @media(max-width:600px){.ai-panel{padding:13px}.ai-actions{grid-template-columns:1fr}.ai-tool{min-height:56px}.ai-tool small{font-size:10px}}
     @media(prefers-reduced-motion:reduce){.ai-tool:hover{transform:none}}
 
+  
+    /* Phase 1 visual polish: richer iconography, layered surfaces, and clearer content rhythm. */
+    :root {
+      --accent: #b69cff;
+      --accent-cool: #91c8ff;
+      --surface-glass: rgba(20, 17, 30, .82);
+    }
+    body {
+      background:
+        radial-gradient(ellipse at 8% 18%, rgba(124,58,237,.12), transparent 31rem),
+        radial-gradient(ellipse at 92% 42%, rgba(56,189,248,.07), transparent 28rem),
+        #08080c;
+    }
+    .brand-mark {
+      border: 1px solid rgba(197,177,255,.55);
+      background: linear-gradient(145deg, rgba(167,139,250,.32), rgba(96,165,250,.14));
+      box-shadow: 0 0 22px rgba(167,139,250,.16), inset 0 1px rgba(255,255,255,.12);
+    }
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% -12%, rgba(167,139,250,.19), transparent 54%),
+        radial-gradient(ellipse at 86% 25%, rgba(96,165,250,.08), transparent 30%),
+        transparent;
+    }
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 230px;
+      height: 230px;
+      border: 1px solid rgba(196,181,253,.09);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::before { top: 8%; left: -170px; box-shadow: 0 0 0 24px rgba(196,181,253,.018), 0 0 0 48px rgba(196,181,253,.014); }
+    .hero::after { right: -180px; bottom: 5%; box-shadow: 0 0 0 24px rgba(147,197,253,.018), 0 0 0 48px rgba(147,197,253,.014); }
+    .eyebrow {
+      border-color: rgba(196,181,253,.3);
+      background: rgba(24,20,36,.72);
+      box-shadow: 0 5px 24px rgba(0,0,0,.18);
+    }
+    .dot { background: #c4b5fd; box-shadow: 0 0 13px rgba(196,181,253,.9); }
+    .form-card {
+      background: linear-gradient(145deg, rgba(25,22,37,.96), rgba(12,12,18,.98));
+      border-color: rgba(196,181,253,.38);
+      box-shadow: 0 22px 75px rgba(0,0,0,.34), 0 0 38px rgba(124,58,237,.08);
+    }
+    .form-card button, .bottom-cta a {
+      background: linear-gradient(115deg, #e9ddff, #c7dcff);
+      box-shadow: 0 5px 20px rgba(167,139,250,.15);
+    }
+    .feature, .audience-card, .step {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(167,139,250,.09), transparent 45%),
+        linear-gradient(145deg, rgba(24,21,34,.96), rgba(12,12,18,.98));
+      border-color: rgba(196,181,253,.18);
+      box-shadow: inset 0 1px rgba(255,255,255,.025), 0 12px 30px rgba(0,0,0,.12);
+    }
+    .feature:hover, .audience-card:hover, .step:hover {
+      border-color: rgba(196,181,253,.48);
+      box-shadow: 0 16px 36px rgba(0,0,0,.22), 0 0 24px rgba(124,58,237,.07);
+    }
+    .feature-icon, .step-num {
+      border-color: rgba(196,181,253,.42);
+      background: linear-gradient(145deg, rgba(167,139,250,.22), rgba(96,165,250,.11));
+      color: #e6ddff;
+      box-shadow: inset 0 1px rgba(255,255,255,.1), 0 5px 18px rgba(124,58,237,.12);
+    }
+    .feature-kicker { color: #bba9ed; }
+    .platform-pill {
+      border-color: rgba(196,181,253,.24);
+      background: rgba(25,21,36,.76);
+      color: #d3c8ed;
+    }
+    .ai-panel {
+      background:
+        radial-gradient(ellipse at 100% 0%, rgba(167,139,250,.16), transparent 48%),
+        linear-gradient(145deg, rgba(28,23,42,.98), rgba(10,10,16,.98));
+      box-shadow: inset 0 1px rgba(255,255,255,.045), 0 12px 32px rgba(0,0,0,.2);
+    }
+    .ai-spark, .ai-tool-icon {
+      background: linear-gradient(145deg, rgba(167,139,250,.24), rgba(96,165,250,.15));
+      border-color: rgba(196,181,253,.38);
+      box-shadow: inset 0 1px rgba(255,255,255,.08);
+    }
+    .ai-tool {
+      background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+    }
+    .ai-tool:hover { box-shadow: 0 7px 20px rgba(124,58,237,.12); }
+    .ai-output {
+      border-color: rgba(196,181,253,.25);
+      background: rgba(7,7,12,.78);
+    }
+    .bottom-cta {
+      border-color: rgba(196,181,253,.32);
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(167,139,250,.17), transparent 68%),
+        linear-gradient(145deg, #171321, #0d0d13);
+      box-shadow: 0 18px 55px rgba(0,0,0,.2);
+    }
+    footer { border-top-color: rgba(196,181,253,.16); }
+    @media (max-width: 600px) {
+      .hero::before, .hero::after { width: 150px; height: 150px; opacity: .55; }
+      .feature-grid { gap: 10px; }
+      .feature, .audience-card, .step { border-radius: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .feature:hover, .audience-card:hover, .step:hover { transform: none; }
+    }
+
   </style>
 </head>
 <body>
