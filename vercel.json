@@ -1,6 +1,50 @@
 {
   "rewrites": [
     {
+      "source": "/blog",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/blog/tiktok-transcript-guide",
+      "destination": "/blog/tiktok-transcript-guide.html"
+    },
+    {
+      "source": "/blog/youtube-transcript-download",
+      "destination": "/blog/youtube-transcript-download.html"
+    },
+    {
+      "source": "/blog/instagram-reels-transcript",
+      "destination": "/blog/instagram-reels-transcript.html"
+    },
+    {
+      "source": "/blog/facebook-video-transcript",
+      "destination": "/blog/facebook-video-transcript.html"
+    },
+    {
+      "source": "/blog/convert-video-to-text",
+      "destination": "/blog/convert-video-to-text.html"
+    },
+    {
+      "source": "/blog/transcript-vs-subtitles-vs-captions",
+      "destination": "/blog/transcript-vs-subtitles-vs-captions.html"
+    },
+    {
+      "source": "/blog/repurpose-video-transcript-into-content",
+      "destination": "/blog/repurpose-video-transcript-into-content.html"
+    },
+    {
+      "source": "/blog/video-transcripts-for-accessibility",
+      "destination": "/blog/video-transcripts-for-accessibility.html"
+    },
+    {
+      "source": "/blog/how-to-edit-an-automatic-transcript",
+      "destination": "/blog/how-to-edit-an-automatic-transcript.html"
+    },
+    {
+      "source": "/blog/transcribe-video-in-another-language",
+      "destination": "/blog/transcribe-video-in-another-language.html"
+    },
+    {
       "source": "/tiktok-transcript",
       "destination": "/tiktok-transcript.html"
     },
