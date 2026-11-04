@@ -84,7 +84,7 @@
       "name": "Portuguese",
       "nativeName": "Português",
       "direction": "ltr",
-      "status": "planned",
+      "status": "preview",
       "path": "/pt/",
       "localizedSlugs": {
         "blog": "blog",
