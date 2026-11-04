@@ -469,7 +469,9 @@
       .feature:hover, .audience-card:hover, .step:hover { transform: none; }
     }
 
-  </style>
+  
+    .language-switcher{display:flex;align-items:center;gap:7px;margin-left:2px;color:#999;font-size:11px;white-space:nowrap}.language-switcher select{max-width:120px;min-height:34px;padding:0 25px 0 9px;border:1px solid #383838;border-radius:8px;background:#111;color:#eee;font:500 12px "DM Sans",Arial,sans-serif;cursor:pointer}.language-switcher select:focus{outline:2px solid #777;outline-offset:2px}@media(max-width:650px){.nav-links{gap:10px}.language-switcher{gap:4px}.language-switcher select{max-width:95px;padding-left:6px;font-size:11px}}@media(max-width:480px){.language-switcher span{display:none}.language-switcher select{max-width:82px}}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -484,6 +486,7 @@
         <a href="#faq">FAQ</a>
         <a href="/tiktok-transcript-generator.html">Guide</a>
       </nav>
+      <div class="language-switcher"><span>Site language</span><select id="site-language" aria-label="Choose site language"><option value="en">English</option><option value="fr">Français</option></select></div>
     </div>
   </header>
 
@@ -815,6 +818,33 @@
         showStatus('Copy is not available in this browser. Select the transcript text to copy it.', true);
       }
     });
+
+    // Respect an explicit language choice; otherwise use the browser's preferred language.
+    (() => {
+      const supported = { en: '/', fr: '/fr/' };
+      const current = document.documentElement.lang === 'fr' ? 'fr' : 'en';
+      const picker = document.getElementById('site-language');
+      if (picker) {
+        picker.value = current;
+        picker.addEventListener('change', () => {
+          const next = picker.value;
+          try { localStorage.setItem('transcriptTikTokLanguage', next); } catch (_) {}
+          window.location.href = supported[next] || '/';
+        });
+      }
+      let saved = null;
+      try { saved = localStorage.getItem('transcriptTikTokLanguage'); } catch (_) {}
+      if (saved && supported[saved] && saved !== current) {
+        window.location.replace(supported[saved]);
+        return;
+      }
+      if (!saved && current === 'en') {
+        const preferences = Array.isArray(navigator.languages) && navigator.languages.length
+          ? navigator.languages : [navigator.language || ''];
+        const browserPrefersFrench = preferences.some(value => /^fr(?:-|$)/i.test(value));
+        if (browserPrefersFrench) window.location.replace('/fr/');
+      }
+    })();
   </script>
 </body>
 </html>
