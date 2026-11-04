@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#080808" />
   <meta name="google-site-verification" content="WkXRsZNaG77qk0yXebhvc_3VAHqFVP7NsvdVhtFSO5A" />
-  <meta name="description" content="Free-to-try video transcript generator for public TikTok, YouTube, Facebook, and Instagram videos. Convert speech to text, then copy or download." />
+  <meta name="description" content="Turn public TikTok, YouTube, Instagram Reels, and Facebook videos into text. Generate a transcript online, then copy or download it — no account required." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="author" content="Transcript TikTok" />
   <link rel="canonical" href="https://transcriptiktok.vercel.app/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Transcript TikTok" />
   <meta property="og:url" content="https://transcriptiktok.vercel.app/" />
-  <meta property="og:title" content="Free Video Transcript Generator | Transcript TikTok" />
-  <meta property="og:description" content="Turn public TikTok, YouTube, Facebook, and Instagram videos into readable text." />
+  <meta property="og:title" content="Video Transcript Generator for TikTok, YouTube & More | Transcript TikTok" />
+  <meta property="og:description" content="Turn public TikTok, YouTube, Instagram Reels, and Facebook videos into text. Copy or download your transcript online." />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Free Video Transcript Generator | Transcript TikTok" />
-  <meta name="twitter:description" content="Turn public TikTok, YouTube, Facebook, and Instagram videos into readable text." />
-  <title>Free Video Transcript Generator | Transcript TikTok</title>
+  <meta name="twitter:title" content="Video Transcript Generator for TikTok, YouTube & More | Transcript TikTok" />
+  <meta name="twitter:description" content="Turn public TikTok, YouTube, Instagram Reels, and Facebook videos into text. Copy or download your transcript online." />
+  <title>Video Transcript Generator for TikTok, YouTube & More | Transcript TikTok</title>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -219,9 +219,120 @@
       html { scroll-behavior:auto; }
       *, *::before, *::after { scroll-behavior:auto !important; transition-duration:.01ms !important; }
     }
+  
+    /* Visual refresh: clear brand accent, depth, and calmer responsive spacing. */
+    :root {
+      --accent: #a78bfa;
+      --accent-strong: #c4b5fd;
+      --surface: #111018;
+      --line: #302b3d;
+    }
+    body {
+      background:
+        radial-gradient(ellipse at 12% 12%, rgba(124,58,237,.10), transparent 32rem),
+        radial-gradient(ellipse at 88% 38%, rgba(59,130,246,.07), transparent 30rem),
+        #08080c;
+    }
+    .skip-link {
+      position:absolute; left:14px; top:-60px; z-index:20;
+      padding:10px 14px; border-radius:9px; background:#fff; color:#111;
+      font-size:13px; font-weight:700;
+    }
+    .skip-link:focus { top:12px; }
+    header {
+      position:sticky; top:0; z-index:10;
+      background:rgba(8,8,12,.86); backdrop-filter:blur(16px);
+      border-bottom-color:rgba(167,139,250,.16);
+    }
+    .brand-mark {
+      border-color:rgba(196,181,253,.55);
+      background:linear-gradient(145deg,rgba(167,139,250,.22),rgba(59,130,246,.12));
+      color:var(--accent-strong);
+    }
+    .nav-links a { transition:color .18s ease,border-color .18s ease,background .18s ease; }
+    .nav-links a:hover { color:var(--accent-strong); }
+    .nav-links a:last-child {
+      border-color:rgba(167,139,250,.38);
+      background:rgba(167,139,250,.08);
+    }
+    .hero {
+      background:
+        radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.17),transparent 55%),
+        radial-gradient(ellipse at 50% 12%,#191522 0%,#08080c 65%);
+    }
+    .eyebrow {
+      border-color:rgba(167,139,250,.35);
+      background:rgba(167,139,250,.08);
+      color:#ddd2ff;
+    }
+    .dot { background:#c4b5fd; box-shadow:0 0 14px rgba(196,181,253,.8); }
+    h1 {
+      background:linear-gradient(100deg,#fff 12%,#e9ddff 52%,#c4d8ff 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .subtitle { color:#b6b0c2; }
+    .form-card {
+      border-color:rgba(167,139,250,.42);
+      background:rgba(17,16,24,.92);
+      box-shadow:0 22px 80px rgba(0,0,0,.45),0 0 0 1px rgba(167,139,250,.06);
+    }
+    input { background:#171521; border-color:#292536; }
+    input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(167,139,250,.13); }
+    button:not(.secondary-action) {
+      background:linear-gradient(110deg,#e9ddff,#c4d8ff);
+      color:#171020;
+    }
+    button:not(.secondary-action):hover { background:linear-gradient(110deg,#fff,#dbeafe); }
+    .platform-pill {
+      border-color:#393249; background:rgba(167,139,250,.06); color:#c8bfd8;
+    }
+    .trust b { color:#e4d9ff; }
+    .section { border-top-color:rgba(167,139,250,.12); }
+    .step,.feature,.audience-card {
+      border-color:#302b3d;
+      background:linear-gradient(145deg,rgba(24,21,34,.94),rgba(13,13,19,.96));
+      box-shadow:0 12px 35px rgba(0,0,0,.12);
+    }
+    .step:hover,.audience-card:hover {
+      border-color:rgba(167,139,250,.55);
+      transform:translateY(-2px);
+      transition:transform .2s ease,border-color .2s ease;
+    }
+    .feature:hover { border-color:rgba(167,139,250,.62); }
+    .feature-icon,.step-num {
+      border-color:rgba(167,139,250,.42);
+      background:rgba(167,139,250,.09);
+      color:#ddd2ff;
+    }
+    .audience-card a { text-decoration-color:rgba(196,181,253,.5); text-underline-offset:4px; }
+    .audience-card a:hover { color:var(--accent-strong); }
+    .bottom-cta {
+      border-color:rgba(167,139,250,.36);
+      background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.22),#111018 72%);
+    }
+    .bottom-cta a {
+      background:linear-gradient(110deg,#e9ddff,#c4d8ff);
+      transition:transform .18s ease,filter .18s ease;
+    }
+    .bottom-cta a:hover { transform:translateY(-2px); filter:brightness(1.08); }
+    details[open] summary { color:#e3d8ff; }
+    summary:after { color:var(--accent-strong); }
+    footer { border-top-color:rgba(167,139,250,.16); }
+    footer a:hover { color:var(--accent-strong); }
+    @media(max-width:650px) {
+      header { backdrop-filter:blur(12px); }
+      .hero { background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.16),transparent 62%),#08080c; }
+      .nav-links a:last-child { padding:7px 10px; }
+      .form-card { box-shadow:0 14px 42px rgba(0,0,0,.32); }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .step:hover,.audience-card:hover,.bottom-cta a:hover { transform:none; }
+    }
+
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header>
     <div class="wrap nav">
       <a class="brand" href="/" aria-label="Transcript TikTok home"><span class="brand-mark">T</span>Transcript TikTok</a>
@@ -235,7 +346,7 @@
     </div>
   </header>
 
-  <main id="top">
+  <main id="main-content" tabindex="-1">
     <section class="hero">
       <div class="wrap">
         <div class="eyebrow"><span class="dot"></span> Fast, clean video transcripts</div>
