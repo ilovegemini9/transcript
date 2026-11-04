@@ -18,4 +18,4 @@
 - Transcript language is independent of UI locale.
 
 ## Current release status
-English is the published default. French, Spanish, Arabic and Portuguese currently have homepage preview routes; these previews are noindex and are not included in the sitemap or hreflang clusters. All remaining locales are planning metadata only. Do not expose planned URLs in navigation, sitemap, canonical or hreflang until their translated pages and route rewrites pass QA.
+English is the published default. French, Spanish, Arabic, Portuguese and German currently have homepage preview routes; these previews are noindex and are not included in the sitemap or hreflang clusters. All remaining locales are planning metadata only. Do not expose planned URLs in navigation, sitemap, canonical or hreflang until their translated pages and route rewrites pass QA.
