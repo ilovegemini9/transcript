@@ -61,7 +61,7 @@
       "name": "Arabic",
       "nativeName": "العربية",
       "direction": "rtl",
-      "status": "planned",
+      "status": "preview",
       "path": "/ar/",
       "localizedSlugs": {
         "blog": "المدونة",
