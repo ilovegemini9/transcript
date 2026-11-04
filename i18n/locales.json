@@ -107,7 +107,7 @@
       "name": "German",
       "nativeName": "Deutsch",
       "direction": "ltr",
-      "status": "planned",
+      "status": "preview",
       "path": "/de/",
       "localizedSlugs": {
         "blog": "blog",
