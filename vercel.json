@@ -1,6 +1,26 @@
 {
   "rewrites": [
     {
+      "source": "/es/blog/transcripcion-facebook-video",
+      "destination": "/locales/es/blog/transcripcion-facebook-video.html"
+    },
+    {
+      "source": "/es/blog/transcripcion-subtitulos-y-leyendas",
+      "destination": "/locales/es/blog/transcripcion-subtitulos-y-leyendas.html"
+    },
+    {
+      "source": "/es/blog/reutilizar-transcripcion-para-contenido",
+      "destination": "/locales/es/blog/reutilizar-transcripcion-para-contenido.html"
+    },
+    {
+      "source": "/es/blog/corregir-transcripcion-automatica",
+      "destination": "/locales/es/blog/corregir-transcripcion-automatica.html"
+    },
+    {
+      "source": "/es/blog/transcribir-video-otro-idioma",
+      "destination": "/locales/es/blog/transcribir-video-otro-idioma.html"
+    },
+    {
       "source": "/es/blog",
       "destination": "/locales/es/blog/index.html"
     },
