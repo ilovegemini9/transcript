@@ -1,13 +1,27 @@
-// Optional AI repurposing endpoint. OpenRouter is the preferred free-tier provider.
+// Optional AI repurposing endpoint. OpenRouter free models with ordered free-only fallbacks.
 const ACTIONS = {
-  summarize: 'Summarize this short-form video transcript in 3 concise bullet points. Return plain text only.',
-  caption: 'Write 3 original social media captions based on this transcript. Keep them concise and separate them with blank lines. Return plain text only.',
-  hooks: 'Write 5 original scroll-stopping hooks inspired by this transcript. Do not copy long phrases. Number them and return plain text only.'
+  summarize: 'Summarize this short-form video transcript in 3 concise bullet points. Preserve the transcript language. Return plain text only.',
+  caption: 'Write 3 original social media captions based on this transcript. Keep them concise, preserve the transcript language, and separate them with blank lines. Return plain text only.',
+  hooks: 'Write 5 original scroll-stopping hooks inspired by this transcript. Preserve the transcript language. Do not copy long phrases. Number them and return plain text only.'
 };
+
+// Keep every entry on the :free tier so fallback routing cannot select a paid model.
+const FREE_MODELS = [
+  'google/gemma-4-31b:free',
+  'google/gemma-4-26b-a4b:free',
+  'nvidia/nemotron-3-nano-omni:free',
+  'xingchen-agi/xing4.0-29b-a4b:free'
+];
+
 function respond(res, status, body) { return res.status(status).json(body); }
 
 async function callOpenRouter(transcript, instruction) {
-  const model = process.env.OPENROUTER_MODEL || 'openrouter/free';
+  // Optional override is accepted only if it remains explicitly free.
+  const preferred = process.env.OPENROUTER_MODEL;
+  const models = preferred && preferred.endsWith(':free')
+    ? [preferred, ...FREE_MODELS.filter(model => model !== preferred)]
+    : FREE_MODELS;
+
   const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -17,7 +31,7 @@ async function callOpenRouter(transcript, instruction) {
       'X-Title': 'Transcript TikTok'
     },
     body: JSON.stringify({
-      model,
+      models,
       temperature: 0.5,
       max_tokens: 700,
       messages: [
@@ -25,11 +39,14 @@ async function callOpenRouter(transcript, instruction) {
         { role: 'user', content: transcript }
       ]
     }),
-    signal: AbortSignal.timeout(25000)
+    signal: AbortSignal.timeout(30000)
   });
   const data = await upstream.json().catch(() => ({}));
   if (!upstream.ok) throw new Error('OpenRouter provider error ' + upstream.status);
-  return data.choices?.[0]?.message?.content?.trim() || '';
+  return {
+    output: data.choices?.[0]?.message?.content?.trim() || '',
+    model: data.model || null
+  };
 }
 
 async function callGemini(transcript, instruction) {
@@ -62,8 +79,11 @@ module.exports = async function handler(req, res) {
   try {
     let output;
     let provider;
+    let usedModel = null;
     if (process.env.OPENROUTER_API_KEY) {
-      output = await callOpenRouter(transcript, ACTIONS[action]);
+      const result = await callOpenRouter(transcript, ACTIONS[action]);
+      output = result.output;
+      usedModel = result.model;
       provider = 'openrouter';
     } else if (process.env.GEMINI_API_KEY) {
       output = await callGemini(transcript, ACTIONS[action]);
@@ -73,10 +93,10 @@ module.exports = async function handler(req, res) {
       provider = 'openai';
     }
     if (!output) return respond(res, 502, { code: 'AI_EMPTY_RESPONSE', error: 'The AI tool returned no text.' });
-    return respond(res, 200, { action, output, provider });
+    return respond(res, 200, { action, output, provider, model: usedModel });
   } catch (error) {
     console.error('AI request failed', error.message);
     const limited = /provider error (402|429|503)/.test(error.message);
-    return respond(res, limited ? 429 : 502, { code: limited ? 'AI_RATE_LIMIT' : 'AI_SERVICE_ERROR', error: limited ? 'The free AI model is busy, unavailable, or its quota has been reached. Please try again later.' : 'The AI tool is temporarily unavailable. Please try again.' });
+    return respond(res, limited ? 429 : 502, { code: limited ? 'AI_RATE_LIMIT' : 'AI_SERVICE_ERROR', error: limited ? 'The free AI models are busy, unavailable, or their quota has been reached. Please try again later.' : 'The AI tool is temporarily unavailable. Please try again.' });
   }
 };
