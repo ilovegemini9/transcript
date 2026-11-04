@@ -111,7 +111,7 @@ module.exports = async function handler(req, res) {
     return respond(res, 200, { action, output, provider, model: usedModel });
   } catch (error) {
     console.error('AI request failed', error.message);
-    const status = Number(error.status) || Number(error.message.match(/provider error (\\d+)/)?.[1]) || 0;
+    const status = Number(error.status) || Number(error.message.match(/provider error (\d+)/)?.[1]) || 0;
     if ([402, 429].includes(status)) {
       return respond(res, 429, { code: 'AI_RATE_LIMIT', error: 'The free AI quota or rate limit has been reached. Please try again later.' });
     }
