@@ -61,7 +61,7 @@ The project is connected to Vercel and deploys from the `main` branch when deplo
 
 ## Optional AI Creator Studio
 
-The homepage includes three transcript repurposing actions: **Summarize**, **Generate captions**, and **Generate hooks**. OpenRouter is the preferred provider and the default model selector is `openrouter/free`, which routes requests to an available free model.
+The homepage includes three transcript repurposing actions: **Summarize**, **Generate captions**, and **Generate hooks**. OpenRouter is the preferred provider. Requests use an ordered list of four free-only models: `google/gemma-4-31b:free` (primary), then `google/gemma-4-26b-a4b:free`, `nvidia/nemotron-3-nano-omni:free`, and `xingchen-agi/xing4.0-29b-a4b:free` as fallbacks. OpenRouter automatically tries the next model if the current one errors.
 
 To enable the AI tools:
 
@@ -69,7 +69,7 @@ To enable the AI tools:
 2. In Vercel, open the `transcript` project → **Settings** → **Environment Variables**.
 3. Add `OPENROUTER_API_KEY` with your key. Keep it server-side; never put it in HTML or client JavaScript.
 4. Apply it to Production (and Preview if desired), then redeploy.
-5. Optionally set `OPENROUTER_MODEL` to a specific model ID ending in `:free`; otherwise the endpoint uses `openrouter/free`.
+5. Optional: set `OPENROUTER_MODEL` to another model ID ending in `:free` to make it the first choice; the three built-in free fallbacks remain enabled.
 
 OpenRouter's free models have low rate limits and availability can vary. Its published free-tier allowance currently includes up to 50 free-model requests per day for accounts that have not purchased credits; model/provider-specific limits may also apply. Free models are intended for testing and low-volume projects, not guaranteed high-volume production use. See [free models](https://openrouter.ai/collections/free-models), [rate limits](https://openrouter.ai/docs/api-reference/limits), and [pricing](https://openrouter.ai/pricing/).
 
