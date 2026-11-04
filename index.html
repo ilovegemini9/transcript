@@ -639,17 +639,48 @@
       const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'video-transcript.json'; document.body.appendChild(anchor); anchor.click(); anchor.remove(); URL.revokeObjectURL(url);
     });
 
-    document.querySelectorAll('.ai-button').forEach((aiButton) => aiButton.addEventListener('click', async () => {
+    const aiButtons = Array.from(document.querySelectorAll('.ai-button'));
+    aiButtons.forEach((aiButton) => aiButton.addEventListener('click', async () => {
       const action = aiButton.dataset.action;
-      aiButton.disabled = true; aiOutput.classList.add('show'); aiOutput.textContent = 'Preparing ' + action + '…';
+      if (!transcriptText.textContent.trim()) {
+        aiOutput.classList.add('show');
+        aiOutput.textContent = 'Generate a transcript first, then choose an AI tool.';
+        copyAiButton.hidden = true;
+        return;
+      }
+      aiButtons.forEach((item) => { item.disabled = true; });
+      aiOutput.classList.add('show');
+      aiOutput.setAttribute('aria-busy', 'true');
+      aiOutput.textContent = action === 'summarize' ? 'Creating your summary…' : action === 'caption' ? 'Writing caption ideas…' : 'Coming up with video hooks…';
+      copyAiButton.hidden = true;
       try {
-        const response = await fetch('/api/ai', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, transcript: transcriptText.textContent }) });
+        const response = await fetch('/api/ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action, transcript: transcriptText.textContent })
+        });
         const data = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(data.error || 'AI tool unavailable.');
-        aiOutput.textContent = data.output;
+        if (!response.ok) {
+          const messages = {
+            AI_NOT_CONFIGURED: 'AI tools are not connected yet. Please try again later.',
+            AI_RATE_LIMIT: 'The free AI limit has been reached or the models are busy. Please try again later.',
+            AI_SERVICE_ERROR: 'The AI service could not complete this request. Please try again.',
+            AI_MODEL_UNAVAILABLE: 'The selected free AI model is unavailable right now. Please try again.',
+            INVALID_TRANSCRIPT: 'This transcript is too long for the AI tools. Try a shorter video.'
+          };
+          throw new Error(messages[data.code] || data.error || 'The AI tool is temporarily unavailable. Please try again.');
+        }
+        if (typeof data.output !== 'string' || !data.output.trim()) {
+          throw new Error('The AI service returned an empty result. Please try again.');
+        }
+        aiOutput.textContent = data.output.trim();
         copyAiButton.hidden = false;
-      } catch (error) { aiOutput.textContent = error.message || 'AI tool unavailable.'; copyAiButton.hidden = true; }
-      finally { aiButton.disabled = false; }
+      } catch (error) {
+        aiOutput.textContent = error.message || 'The AI tool is temporarily unavailable. Please try again.';
+      } finally {
+        aiOutput.removeAttribute('aria-busy');
+        aiButtons.forEach((item) => { item.disabled = false; });
+      }
     }));
 
     copyAiButton.addEventListener('click', async () => {
