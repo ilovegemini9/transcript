@@ -7,7 +7,7 @@ const SUPPORTED_HOSTS = [
   { platform: 'Instagram', test: /(^|\.)instagram\.com$/i }
 ];
 const JOB_ID = /^[a-zA-Z0-9_-]{5,128}$/;
-const LANGUAGE_CODE = /^[a-z]{2}$/;
+const LANGUAGE_CODE = /^[a-z]{2}$/;\nconst { enforceRateLimit } = require('./_lib/rate-limit');
 
 function jsonError(res, status, code, error) {
   return res.status(status).json({ code, error });
@@ -38,7 +38,7 @@ module.exports = async function handler(req, res) {
     return jsonError(res, 405, 'METHOD_NOT_ALLOWED', 'Use POST.');
   }
 
-  const apiKey = process.env.SUPADATA_API_KEY;
+  if (!(await enforceRateLimit(req, res, 'transcript', { limit: 10 }))) return;\n\n  const apiKey = process.env.SUPADATA_API_KEY;
   if (!apiKey) {
     return jsonError(res, 503, 'CONFIG_MISSING', 'Transcript service is not configured. Please try again later.');
   }
