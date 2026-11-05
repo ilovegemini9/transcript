@@ -85,6 +85,8 @@
     .result-actions { display:flex; gap:7px; flex-wrap:wrap; }
     .secondary-action { background:#202020; color:#eee; border:1px solid #3a3a3a; }
     .copy-button { min-height:36px; padding:0 13px; font-size:12px; }
+    .transcript-language-row { display:flex; align-items:center; justify-content:center; gap:10px; margin:10px auto 2px; color:#aaa; font-size:12px; }
+    .transcript-language-row select { padding:9px 12px; border:1px solid #343434; border-radius:8px; background:#191919; color:#eee; font:inherit; }
     .ai-actions { display:flex; gap:7px; flex-wrap:wrap; margin-top:14px; padding-top:14px; border-top:1px solid #252525; }
     .ai-output { display:none; margin-top:12px; padding:13px; border:1px solid #303030; border-radius:9px; background:#0b0b0b; white-space:pre-wrap; color:#ccc; font-size:13px; line-height:1.7; }
     .ai-output.show { display:block; }
@@ -494,11 +496,12 @@
             <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Paste a public video link (TikTok, YouTube, Facebook, Instagram)..." aria-label="Public video URL" aria-describedby="url-help" required />
             <button id="submit-button" type="submit">Get Transcript <span aria-hidden="true">→</span></button>
           </div>
+          <div class="transcript-language-row"><label for="transcript-language">Transcript language</label><select id="transcript-language" aria-label="Transcript language"><option value="">Auto-detect</option><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="ar">العربية</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="it">Italiano</option></select></div>
           <p class="microcopy" id="url-help">Supports public TikTok, YouTube, Facebook, and Instagram video links. Private or unavailable videos cannot be processed.</p>
         </form>
         <div class="status" id="status" role="status" aria-live="polite"></div>
         <section class="transcript-result" id="transcript-result" aria-label="Video transcript">
-          <div class="result-head"><div><h3>Your video transcript</h3><p id="transcript-meta" class="result-meta">Ready to copy or download</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copy text</button><button class="copy-button secondary-action" id="download-button" type="button">Download TXT</button><button class="copy-button secondary-action" id="json-button" type="button">JSON</button></div></div>
+          <div class="result-head"><div><h3>Your video transcript</h3><p id="transcript-meta" class="result-meta">Ready to copy or download</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copy text</button><button class="copy-button secondary-action" id="download-button" type="button">Download TXT</button><button class="copy-button secondary-action" id="json-button" type="button">JSON</button><button class="copy-button secondary-action" id="srt-button" type="button" hidden>Download SRT</button><button class="copy-button secondary-action" id="vtt-button" type="button" hidden>Download VTT</button></div></div>
           <pre class="transcript-text" id="transcript-text"></pre>
           <div class="ai-panel"><div class="ai-panel-head"><div><span class="ai-kicker">AI CREATOR STUDIO</span><h4>Turn your transcript into content</h4><p>Quick ideas for your next post. Choose one tool to get started.</p></div><span class="ai-spark" aria-hidden="true">✦</span></div><div class="ai-actions" aria-label="AI content tools"><button class="ai-tool ai-button" data-action="summarize" type="button"><span class="ai-tool-icon" aria-hidden="true">▤</span><span><b>Summarize</b><small>Key points in seconds</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button><button class="ai-tool ai-button" data-action="caption" type="button"><span class="ai-tool-icon" aria-hidden="true">✎</span><span><b>Generate captions</b><small>Ready-to-edit post captions</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button><button class="ai-tool ai-button" data-action="hooks" type="button"><span class="ai-tool-icon" aria-hidden="true">⚡</span><span><b>Generate hooks</b><small>Attention-grabbing openers</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button></div><div class="ai-output-wrap"><div class="ai-output-head"><span>AI result</span><button class="copy-button secondary-action" id="copy-ai-button" type="button" hidden>Copy result</button></div><div class="ai-output" id="ai-output" role="status" aria-live="polite"></div></div><p class="ai-footnote">AI suggestions can be imperfect — review and edit before posting.</p></div>
         </section>
@@ -650,6 +653,8 @@
     const aiOutput = document.getElementById('ai-output');
     const copyAiButton = document.getElementById('copy-ai-button');
     const transcriptMeta = document.getElementById('transcript-meta');
+    const transcriptLanguage = document.getElementById('transcript-language');
+    let transcriptSegments = [];
     document.getElementById('year').textContent = new Date().getFullYear();
 
     function supportedPlatform(value) {
@@ -665,6 +670,31 @@
       } catch { return null; }
     }
 
+    function formatSubtitleTime(ms, decimal = ',') {
+      const total = Math.max(0, Math.round(ms));
+      const hours = Math.floor(total / 3600000);
+      const minutes = Math.floor((total % 3600000) / 60000);
+      const seconds = Math.floor((total % 60000) / 1000);
+      const millis = total % 1000;
+      return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0') + decimal + String(millis).padStart(3, '0');
+    }
+    function subtitleContent(format) {
+      return transcriptSegments.map((segment, index) => {
+        const start = formatSubtitleTime(segment.offset, format === 'vtt' ? '.' : ',');
+        const end = formatSubtitleTime(segment.offset + segment.duration, format === 'vtt' ? '.' : ',');
+        return (format === 'srt' ? String(index + 1) + '\\n' : '') + start + ' --> ' + end + '\\n' + segment.text;
+      }).join('\\n\\n') + (format === 'vtt' ? '' : '\\n');
+    }
+    function downloadSubtitle(format) {
+      if (!transcriptSegments.length) return;
+      const body = (format === 'vtt' ? 'WEBVTT\\n\\n' : '') + subtitleContent(format);
+      const blob = new Blob([body], { type: 'text/' + (format === 'vtt' ? 'vtt' : 'plain') + ';charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url; anchor.download = 'video-transcript.' + format;
+      document.body.appendChild(anchor); anchor.click(); anchor.remove(); URL.revokeObjectURL(url);
+    }
+
     function showStatus(message, isError = false) {
       status.classList.add('show');
       status.textContent = message;
@@ -676,6 +706,9 @@
       const value = input.value.trim();
       result.classList.remove('show');
       transcriptText.textContent = '';
+      transcriptSegments = [];
+      document.getElementById('srt-button').hidden = true;
+      document.getElementById('vtt-button').hidden = true;
       aiOutput.classList.remove('show');
       aiOutput.textContent = '';
       const selectedPlatform = supportedPlatform(value);
@@ -692,7 +725,7 @@
         let response = await fetch('/api/transcript', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: value, lang: 'en' })
+          body: JSON.stringify({ url: value, ...(transcriptLanguage.value ? { lang: transcriptLanguage.value } : {}) })
         });
         let data = await response.json().catch(() => ({}));
         if (!response.ok) {
@@ -723,7 +756,10 @@
         const text = typeof data.transcript === 'string' ? data.transcript.trim() : '';
         if (!text) throw new Error('No transcript text was returned for this video.');
         transcriptText.textContent = text;
-        transcriptMeta.textContent = (data.platform || selectedPlatform) + (data.language ? ' · Detected language: ' + data.language : '') + ' · Ready to copy or download';
+        transcriptSegments = Array.isArray(data.segments) ? data.segments.filter(segment => segment && typeof segment.text === 'string' && Number.isFinite(segment.offset) && Number.isFinite(segment.duration) && segment.offset >= 0 && segment.duration > 0) : [];
+        document.getElementById('srt-button').hidden = transcriptSegments.length === 0;
+        document.getElementById('vtt-button').hidden = transcriptSegments.length === 0;
+        transcriptMeta.textContent = (data.platform || selectedPlatform) + (data.language ? ' · Detected language: ' + data.language : '') + ' · Source: not disclosed by provider' + (transcriptSegments.length ? ' · Timestamps available' : ' · No timestamps returned') + ' · Ready to copy or download';
         result.classList.add('show');
         showStatus('Transcript ready. Review it before quoting or publishing.');
       } catch (error) {
@@ -748,9 +784,12 @@
 
 
     jsonButton.addEventListener('click', () => {
-      const blob = new Blob([JSON.stringify({ source: input.value.trim(), transcript: transcriptText.textContent, language: transcriptMeta.textContent, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json;charset=utf-8' });
+      const blob = new Blob([JSON.stringify({ source: input.value.trim(), transcript: transcriptText.textContent, segments: transcriptSegments, source: null, language: transcriptMeta.textContent, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json;charset=utf-8' });
       const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'video-transcript.json'; document.body.appendChild(anchor); anchor.click(); anchor.remove(); URL.revokeObjectURL(url);
     });
+
+    document.getElementById('srt-button').addEventListener('click', () => downloadSubtitle('srt'));
+    document.getElementById('vtt-button').addEventListener('click', () => downloadSubtitle('vtt'));
 
     const aiButtons = Array.from(document.querySelectorAll('.ai-button'));
     aiButtons.forEach((aiButton) => aiButton.addEventListener('click', async () => {
