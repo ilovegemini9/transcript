@@ -32,7 +32,16 @@ section,article{scroll-margin-top:85px}
 </style><link rel="stylesheet" href="/site-shared.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"YouTube Transcript Generator | Transcript TikTok","url":"https://transcriptiktok.vercel.app/youtube-transcript","applicationCategory":"MultimediaApplication","operatingSystem":"Any","description":"Turn accessible public YouTube videos and Shorts into readable text.","featureList":["Single public video link per request","Copy transcript text","Download transcript as TXT"]}</script>
 </head>
 <body data-platform="YouTube">
-<a class="skip-link" href="#main-content">Skip to content</a><header><div class="wrap nav"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">T</span>Transcript TikTok</a><nav class="nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/video-to-text">All platforms</a><a href="/tiktok-transcript">TikTok</a><a href="/youtube-transcript">YouTube</a><a href="/facebook-video-transcript">Facebook</a><a href="/instagram-reels-transcript">Instagram</a></nav></div></header>
+<a class="skip-link" href="#main-content">Skip to content</a><header>
+<div class="wrap nav">
+<a class="brand" href="/" aria-label="Transcript TikTok home"><span class="brand-mark" aria-hidden="true">T</span>Transcript TikTok</a>
+<nav class="nav-links" aria-label="Main navigation">
+<a href="/">Home</a><a href="/tiktok-transcript">TikTok</a><a href="/youtube-transcript">YouTube</a><a href="/facebook-video-transcript">Facebook</a><a href="/instagram-reels-transcript">Instagram</a><a href="/video-to-text">Video to text</a>
+</nav>
+<div class="language-switcher"><label for="site-language">Language</label><select id="site-language" aria-label="Choose site language">
+<option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="ar">العربية</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="it">Italiano</option>
+</select></div>
+</div></header>
 <main id="main-content" tabindex="-1" class="wrap page"><p class="eyebrow">Free-to-try online video transcription</p><h1>YouTube Transcript Generator</h1><p class="lead">Turn speech from a public YouTube video into readable text for study notes, research, accessibility, or content planning. Paste a YouTube watch, Shorts, or youtu.be link.</p>
 <section class="tool" aria-label="YouTube transcript tool"><form id="video-form"><div class="inputrow"><input id="video-url" type="url" required autocomplete="url" placeholder="Paste a public YouTube video URL…" aria-label="Public video URL"><button id="submit" type="submit">Get transcript</button></div></form><p id="status" role="status" aria-live="polite" hidden></p><section id="transcript" aria-label="Transcript result" hidden></section><div class="actions" hidden><button id="copy" class="secondary" type="button">Copy text</button><button id="download" class="secondary" type="button">Download TXT</button></div></section>
 <section class="section"><h2>How to get a YouTube transcript</h2><ol><li>Open the public YouTube video or Short and copy its share URL.</li><li>Paste the YouTube or youtu.be link into the box above.</li><li>Generate the transcript, then review and copy or download the text.</li></ol>
@@ -45,4 +54,18 @@ section,article{scroll-margin-top:85px}
 <h3>Why did a YouTube transcript fail?</h3><p>The video may be private, age- or region-restricted, unavailable, or inaccessible to the provider. Audio quality and provider capacity can also affect results.</p>
 </section><section class="section"><h2>Explore other transcript tools</h2><p><a href="/tiktok-transcript">TikTok transcript</a> · <a href="/facebook-video-transcript">Facebook transcript</a> · <a href="/instagram-reels-transcript">Instagram transcript</a> · <a href="/video-to-text">Video to text</a></p><p><a href="/features.html">Features</a> · <a href="/pricing.html">Pricing information</a> · <a href="/">Homepage</a></p>
 </section></main><footer><div class="wrap"><strong>Transcript TikTok</strong> · One public video link per request · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/">Home</a></div></footer>
-<script src="/platform-tool.js" defer></script></body></html>
+<script src="/platform-tool.js" defer></script><script>
+(function () {
+  const destinations = { en: '/', fr: '/fr/', es: '/es/', ar: '/ar/', pt: '/pt/', de: '/de/', it: '/it/' };
+  const picker = document.getElementById('site-language');
+  if (!picker) return;
+  const current = (document.documentElement.lang || 'en').toLowerCase().split('-')[0];
+  picker.value = destinations[current] ? current : 'en';
+  picker.addEventListener('change', function () {
+    const destination = destinations[picker.value];
+    if (!destination) return;
+    try { localStorage.setItem('transcriptTikTokLanguage', picker.value); } catch (_) {}
+    window.location.href = destination;
+  });
+})();
+</script></body></html>
