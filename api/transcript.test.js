@@ -104,6 +104,20 @@ test('passes an explicitly requested transcript language to Supadata', async () 
   assert.equal(res.body.language, 'ar');
 });
 
+test('passes each currently available site language preference to the provider', async () => {
+  const languages = ['en', 'fr', 'es', 'ar', 'pt', 'de', 'it'];
+  for (const lang of languages) {
+    const res = await invoke({ url: 'https://www.youtube.com/watch?v=demo', lang }, {
+      fetch: async (url) => {
+        assert.equal(new URL(String(url)).searchParams.get('lang'), lang);
+        return { status: 200, ok: true, json: async () => ({ content: 'sample transcript', lang }) };
+      }
+    });
+    assert.equal(res.statusCode, 200, lang);
+    assert.equal(res.body.language, lang, lang);
+  }
+});
+
 test('rejects malformed transcript language preferences', async () => {
   const res = await invoke({ url: 'https://www.tiktok.com/@demo/video/123', lang: 'arabic<script>' }, {
     fetch: async () => { throw new Error('fetch must not run'); }
