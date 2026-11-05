@@ -159,3 +159,36 @@ test('returns a useful error when no transcript is available', async () => {
   assert.equal(res.body.code, 'TRANSCRIPT_UNAVAILABLE');
 });
 
+test('maps provider rate limits to a safe retryable response', async () => {
+  const res = await invoke({ url: 'https://www.youtube.com/watch?v=demo' }, {
+    fetch: providerResponse(429, { message: 'provider internal detail' })
+  });
+  assert.equal(res.statusCode, 429);
+  assert.equal(res.body.code, 'RATE_LIMITED');
+  assert.doesNotMatch(res.body.error, /provider internal detail/);
+});
+
+test('maps provider timeouts to a gateway timeout response', async () => {
+  const res = await invoke({ url: 'https://www.youtube.com/watch?v=demo' }, {
+    fetch: async () => { throw Object.assign(new Error('upstream timed out'), { name: 'TimeoutError' }); }
+  });
+  assert.equal(res.statusCode, 504);
+  assert.equal(res.body.code, 'PROVIDER_TIMEOUT');
+  assert.doesNotMatch(res.body.error, /upstream timed out/);
+});
+
+test('rejects a provider success response that contains no usable transcript', async () => {
+  const res = await invoke({ url: 'https://www.youtube.com/watch?v=demo' }, {
+    fetch: providerResponse(200, { content: [{ text: 42 }, null, {}], lang: 'en' })
+  });
+  assert.equal(res.statusCode, 422);
+  assert.equal(res.body.code, 'TRANSCRIPT_UNAVAILABLE');
+});
+
+test('rejects malformed job identifiers before contacting the provider', async () => {
+  const res = await invoke({ jobId: '../private' }, {
+    fetch: async () => { throw new Error('fetch must not run'); }
+  });
+  assert.equal(res.statusCode, 400);
+  assert.equal(res.body.code, 'INVALID_JOB');
+});
