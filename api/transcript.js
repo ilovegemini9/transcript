@@ -7,6 +7,7 @@ const SUPPORTED_HOSTS = [
   { platform: 'Instagram', test: /(^|\.)instagram\.com$/i }
 ];
 const JOB_ID = /^[a-zA-Z0-9_-]{5,128}$/;
+const LANGUAGE_CODE = /^[a-z]{2}$/;
 
 function jsonError(res, status, code, error) {
   return res.status(status).json({ code, error });
@@ -44,8 +45,13 @@ module.exports = async function handler(req, res) {
 
   const jobId = typeof req.body?.jobId === 'string' ? req.body.jobId.trim() : '';
   const videoUrl = typeof req.body?.url === 'string' ? req.body.url.trim() : '';
+  const requestedLanguage = typeof req.body?.lang === 'string' ? req.body.lang.trim().toLowerCase() : '';
   let endpoint;
   let platform = null;
+
+  if (requestedLanguage && !LANGUAGE_CODE.test(requestedLanguage)) {
+    return jsonError(res, 400, 'INVALID_LANGUAGE', 'Use a two-letter ISO 639-1 language code.');
+  }
 
   if (jobId) {
     if (!JOB_ID.test(jobId)) {
@@ -79,6 +85,8 @@ module.exports = async function handler(req, res) {
     endpoint.searchParams.set('text', 'true');
     // Auto mode prefers native captions and can use speech recognition when supported.
     endpoint.searchParams.set('mode', 'auto');
+    // A requested language is a preference; Supadata may fall back if it is unavailable.
+    if (requestedLanguage) endpoint.searchParams.set('lang', requestedLanguage);
   }
 
   try {
