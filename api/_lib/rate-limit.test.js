@@ -70,3 +70,34 @@ test('fails closed and returns 503 if configured shared storage is unavailable',
     } finally { global.fetch = previousFetch; }
   });
 });
+
+test('does not trust spoofable X-Forwarded-For for client identity', async () => {
+  await withEnv({ UPSTASH_REDIS_REST_URL: 'https://redis.example', UPSTASH_REDIS_REST_TOKEN: 'test-token' }, async () => {
+    const previousFetch = global.fetch;
+    const keys = [];
+    global.fetch = async (_url, options) => {
+      keys.push(JSON.parse(options.body)[3]);
+      return { ok: true, json: async () => ({ result: [1, 59] }) };
+    };
+    try {
+      await checkRateLimit({ headers: { 'x-forwarded-for': '198.51.100.10' } }, 'transcript');
+      await checkRateLimit({ headers: { 'x-forwarded-for': '203.0.113.20' } }, 'transcript');
+      assert.equal(keys[0], keys[1], 'untrusted forwarded headers must not let clients rotate their bucket');
+    } finally { global.fetch = previousFetch; }
+  });
+});
+
+test('uses the trusted edge client address when available', async () => {
+  await withEnv({ UPSTASH_REDIS_REST_URL: 'https://redis.example', UPSTASH_REDIS_REST_TOKEN: 'test-token' }, async () => {
+    const previousFetch = global.fetch;
+    let key;
+    global.fetch = async (_url, options) => {
+      key = JSON.parse(options.body)[3];
+      return { ok: true, json: async () => ({ result: [1, 59] }) };
+    };
+    try {
+      await checkRateLimit({ headers: { 'x-real-ip': '198.51.100.10', 'x-forwarded-for': '203.0.113.20' } }, 'transcript');
+      assert.match(key, /^transcript:rl:transcript:[a-f0-9]{64}$/);
+    } finally { global.fetch = previousFetch; }
+  });
+});
