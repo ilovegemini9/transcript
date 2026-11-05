@@ -8,9 +8,8 @@ function normalize(value) {
   return String(value || '')
     .normalize('NFC')
     .toLocaleLowerCase()
-    // Keep combining marks: Arabic tashkeel and other diacritics are meaningful.
-    .replace(/[^\\p{L}\\p{M}\\p{N}\\s]/gu, ' ')
-    .replace(/\\s+/gu, ' ')
+    .replace(/[^\p{L}\p{M}\p{N}\s]/gu, ' ')
+    .replace(/\s+/gu, ' ')
     .trim();
 }
 
@@ -32,8 +31,8 @@ function distance(left, right) {
 function scorePair(reference, hypothesis) {
   const refWords = normalize(reference).split(' ').filter(Boolean);
   const hypWords = normalize(hypothesis).split(' ').filter(Boolean);
-  const refChars = Array.from(normalize(reference).replace(/\\s/gu, ''));
-  const hypChars = Array.from(normalize(hypothesis).replace(/\\s/gu, ''));
+  const refChars = Array.from(normalize(reference).replace(/\s/gu, ''));
+  const hypChars = Array.from(normalize(hypothesis).replace(/\s/gu, ''));
   return {
     wordErrors: distance(refWords, hypWords),
     referenceWords: refWords.length,
@@ -123,7 +122,7 @@ function formatReport(report) {
     }
   }
   if (!report.fixtureCount) lines.push('', 'No benchmark fixtures yet. Add licensed, consented recordings and human-verified references; do not treat empty results as a quality pass.');
-  return lines.join('\\n');
+  return lines.join('\n');
 }
 
 if (require.main === module) {
