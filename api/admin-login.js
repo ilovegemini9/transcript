@@ -1,4 +1,5 @@
-const { COOKIE_NAME, SESSION_SECONDS, getConfig, safeEqual, createSession, hasAdminSession } = require('./_lib/admin-session');\nconst { enforceRateLimit } = require('./_lib/rate-limit');
+const { COOKIE_NAME, SESSION_SECONDS, getConfig, safeEqual, createSession, hasAdminSession } = require('./_lib/admin-session');
+const { enforceRateLimit } = require('./_lib/rate-limit');
 
 function send(res, status, body, headers = {}) {
   res.statusCode = status;
@@ -35,7 +36,10 @@ module.exports = async function handler(req, res) {
   if (action !== 'login' || typeof body.password !== 'string') {
     return send(res, 400, { ok: false, error: 'INVALID_REQUEST' });
   }
-  // Login attempts share a durable per-IP window across serverless instances.\n  // The login endpoint stays available locally when Upstash is not configured.\n  if (!await enforceRateLimit(req, res, 'adminLogin', { limit: 5, windowSeconds: 900 })) return;\n  if (!safeEqual(body.password, config.password)) {
+  // Login attempts share a durable per-IP window across serverless instances.
+  // The login endpoint stays available locally when Upstash is not configured.
+  if (!await enforceRateLimit(req, res, 'adminLogin', { limit: 5, windowSeconds: 900 })) return;
+  if (!safeEqual(body.password, config.password)) {
     return send(res, 401, { ok: false, error: 'INVALID_CREDENTIALS' });
   }
 
