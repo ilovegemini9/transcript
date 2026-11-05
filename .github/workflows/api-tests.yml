@@ -17,4 +17,4 @@ jobs:
         with:
           node-version: 20
       - name: Run serverless API tests
-        run: node --test api/transcript.test.js api/ai.test.js scripts/transcript-quality.test.js
+        run: node --test api/transcript.test.js api/ai.test.js scripts/transcript-quality.test.js scripts/locale-language.test.js
