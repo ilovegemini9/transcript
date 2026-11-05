@@ -18,6 +18,19 @@ function getPlatform(hostname) {
   return SUPPORTED_HOSTS.find((entry) => entry.test.test(hostname))?.platform || null;
 }
 
+function getSegments(content) {
+  if (!Array.isArray(content)) return [];
+  return content
+    .filter((part) => part && typeof part.text === 'string' && part.text.trim() &&
+      Number.isFinite(part.offset) && part.offset >= 0 &&
+      Number.isFinite(part.duration) && part.duration > 0)
+    .map((part) => ({
+      text: part.text.trim(),
+      offset: part.offset,
+      duration: part.duration
+    }));
+}
+
 function getTranscript(content) {
   if (typeof content === 'string') return content.trim();
   if (!Array.isArray(content)) return '';
@@ -88,7 +101,6 @@ module.exports = async function handler(req, res) {
 
     endpoint = new URL('https://api.supadata.ai/v1/transcript');
     endpoint.searchParams.set('url', parsed.toString());
-    endpoint.searchParams.set('text', 'true');
     // Auto mode prefers native captions and can use speech recognition when supported.
     endpoint.searchParams.set('mode', 'auto');
     // A requested language is a preference; Supadata may fall back if it is unavailable.
@@ -138,6 +150,7 @@ module.exports = async function handler(req, res) {
     }
 
     const transcript = getTranscript(payload.content);
+    const segments = getSegments(payload.content);
     if (!transcript) {
       return jsonError(res, 422, 'TRANSCRIPT_UNAVAILABLE', 'No transcript text was returned for this video.');
     }
@@ -145,7 +158,10 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({
       transcript,
       platform: platform || 'Video',
-      language: typeof payload.lang === 'string' ? payload.lang : null
+      language: typeof payload.lang === 'string' ? payload.lang : null,
+      segments,
+      // Supadata's auto mode does not identify whether native captions or AI fallback supplied the text.
+      source: null
     });
   } catch (error) {
     if (error && error.name === 'TimeoutError') {
