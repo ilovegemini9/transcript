@@ -8,7 +8,9 @@ function normalize(value) {
   return String(value || '')
     .normalize('NFC')
     .toLocaleLowerCase()
-    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+    // Keep combining marks: Arabic tashkeel and other language diacritics
+    // are meaningful transcript content and must count in quality scoring.
+    .replace(/[^\p{L}\p{M}\p{N}\s]/gu, ' ')
     .replace(/\s+/gu, ' ')
     .trim();
 }
