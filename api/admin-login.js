@@ -8,7 +8,7 @@ function send(res, status, body, headers = {}) {
   res.end(JSON.stringify(body));
 }
 
-module.exports = function handler(req, res) {
+module.exports = async function handler(req, res) {
   const config = getConfig();
   if (!config) return send(res, 503, { ok: false, error: 'ADMIN_AUTH_NOT_CONFIGURED' });
 
