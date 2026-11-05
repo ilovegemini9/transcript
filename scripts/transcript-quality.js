@@ -117,7 +117,9 @@ function formatReport(report) {
   for (const [heading, rows] of [
     ['By language', report.languages],
     ['By source platform', report.sources],
-    ['By recording condition', report.conditions]
+    ['By recording condition', report.conditions],
+    ['By requested language', report.requestedLanguages],
+    ['By provider-returned language', report.returnedLanguages]
   ]) {
     lines.push('', heading, 'Group | Samples | Failures | Failure rate | Language mismatches | Mismatch rate | WER | CER',
       '--- | ---: | ---: | ---: | ---: | ---: | ---: | ---:');
