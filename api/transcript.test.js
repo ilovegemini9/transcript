@@ -196,9 +196,7 @@ test('returns timestamped segments when the provider supplies valid timing data'
         json: async () => ({
           content: [
             { text: 'Hello', offset: 0, duration: 1200 },
-            { text: 'world', offset: 1200, duration: 900 },
-            { text: 'bad timing', offset: -1, duration: 0 },
-            { text: 'missing timing' }
+            { text: 'world', offset: 1200, duration: 900 }
           ],
           lang: 'en'
         })
@@ -212,6 +210,22 @@ test('returns timestamped segments when the provider supplies valid timing data'
     { text: 'world', offset: 1200, duration: 900 }
   ]);
   assert.equal(res.body.source, null);
+});
+
+
+test('disables timestamp exports when any transcript segment lacks timing', async () => {
+  const res = await invoke({ url: 'https://www.tiktok.com/@demo/video/123' }, {
+    fetch: providerResponse(200, {
+      content: [
+        { text: 'Timed text', offset: 0, duration: 1200 },
+        { text: 'Untimed text' }
+      ],
+      lang: 'en'
+    })
+  });
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.transcript, 'Timed text Untimed text');
+  assert.deepEqual(res.body.segments, []);
 });
 
 test('returns no timestamp segments for plain-text provider responses', async () => {
