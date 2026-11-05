@@ -3,6 +3,7 @@ const { createHash } = require('node:crypto');
 const WINDOW_SECONDS = 60;
 const LIMITS = {
   transcript: Number(process.env.TRANSCRIPT_RATE_LIMIT || 10),
+  transcriptPoll: Number(process.env.TRANSCRIPT_POLL_RATE_LIMIT || 50),
   ai: Number(process.env.AI_RATE_LIMIT || 5),
   adminLogin: Number(process.env.ADMIN_LOGIN_RATE_LIMIT || 5)
 };
