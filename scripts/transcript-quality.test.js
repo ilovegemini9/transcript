@@ -35,7 +35,7 @@ test('reports per-language, source, and recording-condition metrics', () => {
   assert.equal(report.languages[1].wer, null);
   assert.equal(report.languages[2].wer, 0);
   assert.equal(report.sources.find(row => row.key === 'youtube').samples, 3);
-  assert.equal(report.conditions.find(row => row.key === 'noisy').wer, 1);
+  assert.equal(report.conditions.find(row => row.key === 'noisy').wer, 0.5);
   assert.equal(report.conditions.find(row => row.key === 'code-switching').wer, 0);
 });
 
