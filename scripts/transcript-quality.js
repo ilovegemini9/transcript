@@ -90,7 +90,8 @@ function evaluate(fixtures) {
       row.total++;
       const requested = typeof fixture.requestedLanguage === 'string' ? fixture.requestedLanguage.trim().toLowerCase() : '';
       const returned = typeof fixture.returnedLanguage === 'string' ? fixture.returnedLanguage.trim().toLowerCase() : '';
-      if (requested && (!returned || requested !== returned)) row.languageMismatches++;
+      // "mixed" is a valid provider result for code-switched speech, not a mismatch.
+      if (requested && (!returned || (requested !== returned && returned !== 'mixed'))) row.languageMismatches++;
       if (failed) {
         row.failures++;
       } else {
