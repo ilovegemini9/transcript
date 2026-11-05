@@ -39,7 +39,7 @@ test('reports per-language, source, and recording-condition metrics', () => {
   assert.equal(report.conditions.find(row => row.key === 'code-switching').wer, 0);
   assert.equal(report.requestedLanguages.find(row => row.key === 'ar').samples, 1);
   assert.equal(report.returnedLanguages.find(row => row.key === 'mixed').samples, 1);
-  assert.equal(report.languages.find(row => row.key === 'mixed').languageMismatches, 1);
+  assert.equal(report.languages.find(row => row.key === 'mixed').languageMismatches, 0);
 });
 
 test('rejects malformed fixtures and missing references for successful transcripts', () => {
@@ -54,15 +54,17 @@ test('treats empty transcripts as failures', () => {
   assert.equal(report.languages[0].failureRate, 1);
 });
 
-test('counts missing or different provider language as a language mismatch', () => {
+test('counts missing or different provider language as a mismatch but accepts mixed detection', () => {
   const report = evaluate([
     { language: 'fr', requestedLanguage: 'fr', returnedLanguage: 'en', reference: 'bonjour', transcript: 'hello' },
     { language: 'ar', requestedLanguage: 'ar', reference: 'مرحبا', transcript: 'مرحبا' },
     { language: 'en', requestedLanguage: 'en', returnedLanguage: 'en', reference: 'hello', transcript: 'hello' },
-    { language: 'de', reference: 'hallo', transcript: 'hallo' }
+    { language: 'de', reference: 'hallo', transcript: 'hallo' },
+    { language: 'mixed', requestedLanguage: 'ar', returnedLanguage: 'mixed', reference: 'مرحبا hello', transcript: 'مرحبا hello' }
   ]);
   assert.equal(report.languages.find(row => row.key === 'fr').languageMismatches, 1);
   assert.equal(report.languages.find(row => row.key === 'ar').languageMismatches, 1);
   assert.equal(report.languages.find(row => row.key === 'en').languageMismatchRate, 0);
   assert.equal(report.languages.find(row => row.key === 'de').languageMismatches, 0);
+  assert.equal(report.languages.find(row => row.key === 'mixed').languageMismatches, 0);
 });
