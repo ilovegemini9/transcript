@@ -17,12 +17,12 @@ const localePages = [
 ];
 
 for (const [relativePath, language] of localePages) {
-  test(relativePath + ' requests transcripts in its selected language', () => {
+  test(relativePath + ' exposes transcript language selection', () => {
     const html = fs.readFileSync(path.join(root, relativePath), 'utf8');
     assert.match(html, /fetch\(['"]\/api\/transcript['"]/);
-    assert.ok(
-      html.includes("lang: '" + language + "'") || html.includes("lang:'" + language + "'"),
-      'initial transcript request must send lang=' + language
-    );
+    assert.match(html, /id="transcript-language"/, 'a transcript language selector must be present');
+    assert.match(html, new RegExp('<option value="' + language + '"'), 'the page language must be selectable');
+    assert.match(html, /value="">[^<]*(Auto|auto|autom|Autom|Détection|Detect|اكتشاف|Rilevamento)/i, 'automatic language detection must be available');
+    assert.match(html, /language\.value|transcriptLanguage\.value/, 'the selected language must be sent with the request');
   });
 }
