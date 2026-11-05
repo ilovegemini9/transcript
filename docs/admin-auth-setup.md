@@ -17,4 +17,17 @@ Redeploy after adding or changing the variables. Until both values are configure
 - No database is used.
 - The current dashboard is still a static preview with placeholder metrics and no privileged data-changing actions. The static HTML itself is not a security boundary.
 - Every future admin API must call `hasAdminSession(req)` from `api/_lib/admin-session.js` before returning private data or performing an action.
-- Login-attempt throttling with a shared store is not implemented yet. Do not expose this preview publicly with the six-digit password. Add shared rate limiting before production.
+- Login-attempt throttling uses Upstash Redis when configured: five attempts per 15 minutes per trusted Vercel edge IP. Without the Upstash variables, throttling is disabled. Do not expose the preview publicly with the six-digit password.
+
+## Shared API rate limits
+
+Configure `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in Vercel to activate shared serverless rate limiting.
+
+- New transcript jobs: 10 requests per 60 seconds per trusted edge IP.
+- Transcript job polling: 50 requests per 60 seconds per trusted edge IP, kept separate so the browser's 1.5-second polling interval is not blocked by the new-job limit.
+- AI generation: 5 requests per 60 seconds per trusted edge IP.
+- Admin login: 5 attempts per 900 seconds per trusted edge IP.
+
+Optional overrides: `TRANSCRIPT_RATE_LIMIT`, `TRANSCRIPT_POLL_RATE_LIMIT`, `AI_RATE_LIMIT`, and `ADMIN_LOGIN_RATE_LIMIT`.
+
+The limiter uses Vercel's `x-real-ip` header and deliberately ignores the client-controlled left-most `x-forwarded-for` value. If the Upstash variables are absent, limits are not active. If configured storage is unavailable, protected endpoints return HTTP 503 rather than bypassing the limit.
