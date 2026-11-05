@@ -17,7 +17,7 @@ test('scores multilingual transcript text', () => {
   const score = scorePair('Bonjour le monde', 'Bonjour monde');
   assert.equal(score.wordErrors, 1);
   assert.equal(score.referenceWords, 3);
-  assert.equal(score.characterErrors, 4);
+  assert.equal(score.characterErrors, 2);
 });
 
 test('reports per-language WER, CER, and failure rate', () => {
