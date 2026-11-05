@@ -8,10 +8,9 @@ function normalize(value) {
   return String(value || '')
     .normalize('NFC')
     .toLocaleLowerCase()
-    // Keep combining marks: Arabic tashkeel and other language diacritics
-    // are meaningful transcript content and must count in quality scoring.
-    .replace(/[^\p{L}\p{M}\p{N}\s]/gu, ' ')
-    .replace(/\s+/gu, ' ')
+    // Keep combining marks: Arabic tashkeel and other diacritics are meaningful.
+    .replace(/[^\\p{L}\\p{M}\\p{N}\\s]/gu, ' ')
+    .replace(/\\s+/gu, ' ')
     .trim();
 }
 
@@ -22,11 +21,8 @@ function distance(left, right) {
   for (let i = 1; i <= a.length; i++) {
     const current = [i];
     for (let j = 1; j <= b.length; j++) {
-      current[j] = Math.min(
-        current[j - 1] + 1,
-        previous[j] + 1,
-        previous[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
-      );
+      current[j] = Math.min(current[j - 1] + 1, previous[j] + 1,
+        previous[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
     }
     previous = current;
   }
@@ -36,8 +32,8 @@ function distance(left, right) {
 function scorePair(reference, hypothesis) {
   const refWords = normalize(reference).split(' ').filter(Boolean);
   const hypWords = normalize(hypothesis).split(' ').filter(Boolean);
-  const refChars = Array.from(normalize(reference).replace(/\s/gu, ''));
-  const hypChars = Array.from(normalize(hypothesis).replace(/\s/gu, ''));
+  const refChars = Array.from(normalize(reference).replace(/\\s/gu, ''));
+  const hypChars = Array.from(normalize(hypothesis).replace(/\\s/gu, ''));
   return {
     wordErrors: distance(refWords, hypWords),
     referenceWords: refWords.length,
@@ -46,65 +42,88 @@ function scorePair(reference, hypothesis) {
   };
 }
 
+function summarize(rows) {
+  return rows.map(row => ({
+    key: row.key,
+    samples: row.total,
+    failures: row.failures,
+    failureRate: row.total ? row.failures / row.total : 0,
+    wer: row.referenceWords ? row.wordErrors / row.referenceWords : null,
+    cer: row.referenceCharacters ? row.characterErrors / row.referenceCharacters : null
+  }));
+}
+
 function evaluate(fixtures) {
   if (!Array.isArray(fixtures)) throw new TypeError('Fixtures must be a JSON array.');
-  const groups = new Map();
+  const dimensions = {
+    language: fixture => fixture.language.trim().toLowerCase(),
+    source: fixture => typeof fixture.source === 'string' && fixture.source.trim() ? fixture.source.trim().toLowerCase() : 'unspecified',
+    condition: fixture => typeof fixture.condition === 'string' && fixture.condition.trim() ? fixture.condition.trim().toLowerCase() : 'unspecified'
+  };
+  const grouped = Object.fromEntries(Object.keys(dimensions).map(key => [key, new Map()]));
+
   for (const [index, fixture] of fixtures.entries()) {
-    if (!fixture || typeof fixture !== 'object') throw new TypeError('Fixture ' + index + ' must be an object.');
+    if (!fixture || typeof fixture !== 'object' || Array.isArray(fixture)) {
+      throw new TypeError('Fixture ' + index + ' must be an object.');
+    }
     const language = typeof fixture.language === 'string' ? fixture.language.trim().toLowerCase() : '';
-    if (!/^(?:[a-z]{2}|mixed)$/u.test(language)) throw new TypeError('Fixture ' + index + ' has an invalid language code.');
+    if (!/^(?:[a-z]{2}|mixed)$/u.test(language)) {
+      throw new TypeError('Fixture ' + index + ' has an invalid language code.');
+    }
     const failed = fixture.status === 'failed' || typeof fixture.transcript !== 'string' || !fixture.transcript.trim();
     if (!failed && (typeof fixture.reference !== 'string' || !fixture.reference.trim())) {
       throw new TypeError('Successful fixture ' + index + ' needs a reference transcript.');
     }
-    if (!groups.has(language)) groups.set(language, { language, total: 0, failures: 0, wordErrors: 0, referenceWords: 0, characterErrors: 0, referenceCharacters: 0 });
-    const group = groups.get(language);
-    group.total++;
-    if (failed) {
-      group.failures++;
-      continue;
+    const score = failed ? null : scorePair(fixture.reference, fixture.transcript);
+
+    for (const [dimension, getKey] of Object.entries(dimensions)) {
+      const key = getKey({ ...fixture, language });
+      const map = grouped[dimension];
+      if (!map.has(key)) map.set(key, {
+        key, total: 0, failures: 0, wordErrors: 0, referenceWords: 0,
+        characterErrors: 0, referenceCharacters: 0
+      });
+      const row = map.get(key);
+      row.total++;
+      if (failed) {
+        row.failures++;
+      } else {
+        row.wordErrors += score.wordErrors;
+        row.referenceWords += score.referenceWords;
+        row.characterErrors += score.characterErrors;
+        row.referenceCharacters += score.referenceCharacters;
+      }
     }
-    const score = scorePair(fixture.reference, fixture.transcript);
-    group.wordErrors += score.wordErrors;
-    group.referenceWords += score.referenceWords;
-    group.characterErrors += score.characterErrors;
-    group.referenceCharacters += score.referenceCharacters;
   }
-  const rows = Array.from(groups.values()).sort((a, b) => a.language.localeCompare(b.language));
-  return {
-    fixtureCount: fixtures.length,
-    languages: rows.map(row => ({
-      language: row.language,
-      samples: row.total,
-      failures: row.failures,
-      failureRate: row.total ? row.failures / row.total : 0,
-      wer: row.referenceWords ? row.wordErrors / row.referenceWords : null,
-      cer: row.referenceCharacters ? row.characterErrors / row.referenceCharacters : null
-    }))
-  };
+
+  const result = { fixtureCount: fixtures.length };
+  for (const dimension of Object.keys(dimensions)) {
+    const rows = Array.from(grouped[dimension].values()).sort((a, b) => a.key.localeCompare(b.key));
+    result[dimension === 'language' ? 'languages' : dimension === 'source' ? 'sources' : 'conditions'] = summarize(rows);
+  }
+  return result;
 }
 
 function formatReport(report) {
-  const lines = [
-    'Multilingual transcript quality report',
-    'Fixtures: ' + report.fixtureCount,
-    '',
-    'Language | Samples | Failures | Failure rate | WER | CER',
-    '--- | ---: | ---: | ---: | ---: | ---:'
-  ];
-  for (const row of report.languages) {
-    const pct = value => (value * 100).toFixed(1) + '%';
-    lines.push([
-      row.language,
-      row.samples,
-      row.failures,
-      pct(row.failureRate),
-      row.wer === null ? 'n/a' : pct(row.wer),
-      row.cer === null ? 'n/a' : pct(row.cer)
-    ].join(' | '));
+  const lines = ['Multilingual transcript quality report', 'Fixtures: ' + report.fixtureCount];
+  const pct = value => (value * 100).toFixed(1) + '%';
+  for (const [heading, rows] of [
+    ['By language', report.languages],
+    ['By source platform', report.sources],
+    ['By recording condition', report.conditions]
+  ]) {
+    lines.push('', heading, 'Group | Samples | Failures | Failure rate | WER | CER',
+      '--- | ---: | ---: | ---: | ---: | ---:');
+    for (const row of rows || []) {
+      lines.push([
+        row.key, row.samples, row.failures, pct(row.failureRate),
+        row.wer === null ? 'n/a' : pct(row.wer),
+        row.cer === null ? 'n/a' : pct(row.cer)
+      ].join(' | '));
+    }
   }
   if (!report.fixtureCount) lines.push('', 'No benchmark fixtures yet. Add licensed, consented recordings and human-verified references; do not treat empty results as a quality pass.');
-  return lines.join('\n');
+  return lines.join('\\n');
 }
 
 if (require.main === module) {
@@ -113,8 +132,7 @@ if (require.main === module) {
     console.log(formatReport(evaluate([])));
   } else {
     try {
-      const fixtures = JSON.parse(fs.readFileSync(fixturePath, 'utf8'));
-      console.log(formatReport(evaluate(fixtures)));
+      console.log(formatReport(evaluate(JSON.parse(fs.readFileSync(fixturePath, 'utf8')))));
     } catch (error) {
       console.error('Could not evaluate transcript fixtures:', error.message);
       process.exitCode = 1;
