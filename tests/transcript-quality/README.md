@@ -65,7 +65,7 @@ node scripts/transcript-quality.js
 node scripts/transcript-quality.js path/to/your/fixtures.json
 ```
 
-The report calculates corpus-level word error rate (WER), character error rate (CER), and failure rate grouped by language, source platform, and recording condition. WER/CER are `n/a` when there are no successful scored samples. Arabic tashkeel and Unicode combining marks are retained in normalization. An empty fixture set is explicitly reported as **no benchmark data**, never as a pass.
+The report calculates corpus-level word error rate (WER), character error rate (CER), and failure rate grouped by reference language, source platform, and recording condition. It also breaks down samples by requested and provider-returned language, and reports language mismatches (including missing provider language) separately. WER/CER are `n/a` when there are no successful scored samples. Arabic tashkeel and Unicode combining marks are retained in normalization. An empty fixture set is explicitly reported as **no benchmark data**, never as a pass.
 
 ## Benchmark design
 
