@@ -204,7 +204,7 @@ test('returns timestamped segments when the provider supplies valid timing data'
     }
   });
   assert.equal(res.statusCode, 200);
-  assert.equal(res.body.transcript, 'Hello world bad timing missing timing');
+  assert.equal(res.body.transcript, 'Hello world');
   assert.deepEqual(res.body.segments, [
     { text: 'Hello', offset: 0, duration: 1200 },
     { text: 'world', offset: 1200, duration: 900 }
