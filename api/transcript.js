@@ -19,16 +19,16 @@ function getPlatform(hostname) {
 }
 
 function getSegments(content) {
-  if (!Array.isArray(content)) return [];
-  return content
-    .filter((part) => part && typeof part.text === 'string' && part.text.trim() &&
-      Number.isFinite(part.offset) && part.offset >= 0 &&
-      Number.isFinite(part.duration) && part.duration > 0)
-    .map((part) => ({
-      text: part.text.trim(),
-      offset: part.offset,
-      duration: part.duration
-    }));
+  if (!Array.isArray(content) || content.length === 0) return [];
+  // Do not offer subtitle exports if any transcript text would be omitted for missing timing.
+  if (content.some((part) => !part || typeof part.text !== 'string' || !part.text.trim() ||
+    !Number.isFinite(part.offset) || part.offset < 0 ||
+    !Number.isFinite(part.duration) || part.duration <= 0)) return [];
+  return content.map((part) => ({
+    text: part.text.trim(),
+    offset: part.offset,
+    duration: part.duration
+  }));
 }
 
 function getTranscript(content) {
