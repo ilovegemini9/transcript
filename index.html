@@ -682,12 +682,12 @@
       return transcriptSegments.map((segment, index) => {
         const start = formatSubtitleTime(segment.offset, format === 'vtt' ? '.' : ',');
         const end = formatSubtitleTime(segment.offset + segment.duration, format === 'vtt' ? '.' : ',');
-        return (format === 'srt' ? String(index + 1) + '\\n' : '') + start + ' --> ' + end + '\\n' + segment.text;
-      }).join('\\n\\n') + (format === 'vtt' ? '' : '\\n');
+        return (format === 'srt' ? String(index + 1) + '\n' : '') + start + ' --> ' + end + '\n' + segment.text;
+      }).join('\n\n') + (format === 'vtt' ? '' : '\n');
     }
     function downloadSubtitle(format) {
       if (!transcriptSegments.length) return;
-      const body = (format === 'vtt' ? 'WEBVTT\\n\\n' : '') + subtitleContent(format);
+      const body = (format === 'vtt' ? 'WEBVTT\n\n' : '') + subtitleContent(format);
       const blob = new Blob([body], { type: 'text/' + (format === 'vtt' ? 'vtt' : 'plain') + ';charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
