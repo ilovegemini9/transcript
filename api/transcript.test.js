@@ -185,6 +185,44 @@ test('rejects a provider success response that contains no usable transcript', a
   assert.equal(res.body.code, 'TRANSCRIPT_UNAVAILABLE');
 });
 
+
+test('returns timestamped segments when the provider supplies valid timing data', async () => {
+  const res = await invoke({ url: 'https://www.tiktok.com/@demo/video/123', lang: 'en' }, {
+    fetch: async (url) => {
+      assert.equal(new URL(String(url)).searchParams.has('text'), false);
+      return {
+        status: 200,
+        ok: true,
+        json: async () => ({
+          content: [
+            { text: 'Hello', offset: 0, duration: 1200 },
+            { text: 'world', offset: 1200, duration: 900 },
+            { text: 'bad timing', offset: -1, duration: 0 },
+            { text: 'missing timing' }
+          ],
+          lang: 'en'
+        })
+      };
+    }
+  });
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.transcript, 'Hello world bad timing missing timing');
+  assert.deepEqual(res.body.segments, [
+    { text: 'Hello', offset: 0, duration: 1200 },
+    { text: 'world', offset: 1200, duration: 900 }
+  ]);
+  assert.equal(res.body.source, null);
+});
+
+test('returns no timestamp segments for plain-text provider responses', async () => {
+  const res = await invoke({ url: 'https://www.youtube.com/watch?v=demo' }, {
+    fetch: providerResponse(200, { content: 'Plain transcript only', lang: 'en' })
+  });
+  assert.equal(res.statusCode, 200);
+  assert.deepEqual(res.body.segments, []);
+  assert.equal(res.body.source, null);
+});
+
 test('rejects malformed job identifiers before contacting the provider', async () => {
   const res = await invoke({ jobId: '../private' }, {
     fetch: async () => { throw new Error('fetch must not run'); }
