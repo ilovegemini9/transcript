@@ -15,8 +15,10 @@ const SCRIPT = [
 ].join('\n');
 
 function getClientAddress(req) {
-  const raw = req.headers?.['x-forwarded-for'] || req.headers?.['x-real-ip'] || '';
-  const address = String(raw).split(',')[0].trim().slice(0, 128);
+  // Vercel supplies x-real-ip from its trusted edge. Do not trust the client-controlled
+  // left-most x-forwarded-for value: attackers can spoof it to evade per-IP limits.
+  const raw = req.headers?.['x-real-ip'] || '';
+  const address = String(raw).trim().slice(0, 128);
   return address || 'unknown';
 }
 
