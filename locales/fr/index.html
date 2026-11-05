@@ -692,7 +692,7 @@
         let response = await fetch('/api/transcript', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: value })
+          body: JSON.stringify({ url: value, lang: 'fr' })
         });
         let data = await response.json().catch(() => ({}));
         if (!response.ok) {
