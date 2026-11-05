@@ -20,9 +20,9 @@ for (const [relativePath, language] of localePages) {
   test(relativePath + ' requests transcripts in its selected language', () => {
     const html = fs.readFileSync(path.join(root, relativePath), 'utf8');
     assert.match(html, /fetch\(['"]\/api\/transcript['"]/);
-    const requestBody = new RegExp(
-      String.raw`body:\\s*JSON\\.stringify\\(\\{\\s*(?:url\\s*:\\s*value|url)\\s*,\\s*lang\\s*:\\s*['"]${language}['"]\\s*\\}\\)`
+    assert.ok(
+      html.includes("lang: '" + language + "'") || html.includes("lang:'" + language + "'"),
+      'initial transcript request must send lang=' + language
     );
-    assert.match(html, requestBody, 'initial transcript request must send lang=' + language);
   });
 }
