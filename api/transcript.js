@@ -39,14 +39,17 @@ module.exports = async function handler(req, res) {
     return jsonError(res, 405, 'METHOD_NOT_ALLOWED', 'Use POST.');
   }
 
-  if (!(await enforceRateLimit(req, res, 'transcript', { limit: 10 }))) return;
+  const jobId = typeof req.body?.jobId === 'string' ? req.body.jobId.trim() : '';
+  // Polling can occur every 1.5s for up to a minute; keep it separate from new jobs.
+  const rateScope = jobId ? 'transcriptPoll' : 'transcript';
+  const rateLimit = jobId ? 50 : 10;
+  if (!(await enforceRateLimit(req, res, rateScope, { limit: rateLimit }))) return;
 
   const apiKey = process.env.SUPADATA_API_KEY;
   if (!apiKey) {
     return jsonError(res, 503, 'CONFIG_MISSING', 'Transcript service is not configured. Please try again later.');
   }
 
-  const jobId = typeof req.body?.jobId === 'string' ? req.body.jobId.trim() : '';
   const videoUrl = typeof req.body?.url === 'string' ? req.body.url.trim() : '';
   const requestedLanguage = typeof req.body?.lang === 'string' ? req.body.lang.trim().toLowerCase() : '';
   let endpoint;
