@@ -90,6 +90,28 @@ test('returns transcript text and language from the provider', async () => {
   assert.equal(res.body.language, 'en');
 });
 
+test('passes an explicitly requested transcript language to Supadata', async () => {
+  const res = await invoke({ url: 'https://www.tiktok.com/@demo/video/123', lang: 'ar' }, {
+    fetch: async (url, options) => {
+      assert.equal(new URL(String(url)).searchParams.get('lang'), 'ar');
+      assert.equal(new URL(String(url)).searchParams.get('mode'), 'auto');
+      assert.equal(options.headers['x-api-key'], 'test-key');
+      return { status: 200, ok: true, json: async () => ({ content: 'مرحبا', lang: 'ar' }) };
+    }
+  });
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.transcript, 'مرحبا');
+  assert.equal(res.body.language, 'ar');
+});
+
+test('rejects malformed transcript language preferences', async () => {
+  const res = await invoke({ url: 'https://www.tiktok.com/@demo/video/123', lang: 'arabic<script>' }, {
+    fetch: async () => { throw new Error('fetch must not run'); }
+  });
+  assert.equal(res.statusCode, 400);
+  assert.equal(res.body.code, 'INVALID_LANGUAGE');
+});
+
 test('returns a validated async job for polling', async () => {
   const res = await invoke({ url: 'https://vm.tiktok.com/example/' }, {
     fetch: providerResponse(202, { status: 'processing', jobId: 'job_12345' })
