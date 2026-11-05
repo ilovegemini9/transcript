@@ -32,7 +32,16 @@ section,article{scroll-margin-top:85px}
 </style><link rel="stylesheet" href="/site-shared.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Instagram Reels Transcript | Transcript TikTok","url":"https://transcriptiktok.vercel.app/instagram-reels-transcript","applicationCategory":"MultimediaApplication","operatingSystem":"Any","description":"Turn accessible public Instagram Reels and videos into readable text.","featureList":["Single public video link per request","Copy transcript text","Download transcript as TXT"]}</script>
 </head>
 <body data-platform="Instagram">
-<a class="skip-link" href="#main-content">Skip to content</a><header><div class="wrap nav"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">T</span>Transcript TikTok</a><nav class="nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/video-to-text">All platforms</a><a href="/tiktok-transcript">TikTok</a><a href="/youtube-transcript">YouTube</a><a href="/facebook-video-transcript">Facebook</a><a href="/instagram-reels-transcript">Instagram</a></nav></div></header>
+<a class="skip-link" href="#main-content">Skip to content</a><header>
+<div class="wrap nav">
+<a class="brand" href="/" aria-label="Transcript TikTok home"><span class="brand-mark" aria-hidden="true">T</span>Transcript TikTok</a>
+<nav class="nav-links" aria-label="Main navigation">
+<a href="/">Home</a><a href="/tiktok-transcript">TikTok</a><a href="/youtube-transcript">YouTube</a><a href="/facebook-video-transcript">Facebook</a><a href="/instagram-reels-transcript">Instagram</a><a href="/video-to-text">Video to text</a>
+</nav>
+<div class="language-switcher"><label for="site-language">Language</label><select id="site-language" aria-label="Choose site language">
+<option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="ar">العربية</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="it">Italiano</option>
+</select></div>
+</div></header>
 <main id="main-content" tabindex="-1" class="wrap page"><p class="eyebrow">Free-to-try online video transcription</p><h1>Instagram Reels Transcript</h1><p class="lead">Convert speech in an accessible public Instagram Reel or video into readable text. Paste an Instagram post or Reel link to generate, copy, and save a transcript.</p>
 <section class="tool" aria-label="Instagram transcript tool"><form id="video-form"><div class="inputrow"><input id="video-url" type="url" required autocomplete="url" placeholder="Paste a public Instagram video URL…" aria-label="Public video URL"><button id="submit" type="submit">Get transcript</button></div></form><p id="status" role="status" aria-live="polite" hidden></p><section id="transcript" aria-label="Transcript result" hidden></section><div class="actions" hidden><button id="copy" class="secondary" type="button">Copy text</button><button id="download" class="secondary" type="button">Download TXT</button></div></section>
 <section class="section"><h2>How to get an Instagram transcript</h2><ol><li>Open a public Instagram Reel or video post.</li><li>Use Share or the menu to copy its link.</li><li>Paste the link above, request a transcript, then review and save the result.</li></ol>
@@ -45,4 +54,18 @@ section,article{scroll-margin-top:85px}
 <h3>What if the Reel has music and speech?</h3><p>Recognition quality depends on speech clarity, background music, language, and provider availability. Always review the transcript.</p>
 </section><section class="section"><h2>Explore other transcript tools</h2><p><a href="/tiktok-transcript">TikTok transcript</a> · <a href="/youtube-transcript">YouTube transcript</a> · <a href="/facebook-video-transcript">Facebook transcript</a> · <a href="/video-to-text">Video to text</a></p><p><a href="/features.html">Features</a> · <a href="/pricing.html">Pricing information</a> · <a href="/">Homepage</a></p>
 </section></main><footer><div class="wrap"><strong>Transcript TikTok</strong> · One public video link per request · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/">Home</a></div></footer>
-<script src="/platform-tool.js" defer></script></body></html>
+<script src="/platform-tool.js" defer></script><script>
+(function () {
+  const destinations = { en: '/', fr: '/fr/', es: '/es/', ar: '/ar/', pt: '/pt/', de: '/de/', it: '/it/' };
+  const picker = document.getElementById('site-language');
+  if (!picker) return;
+  const current = (document.documentElement.lang || 'en').toLowerCase().split('-')[0];
+  picker.value = destinations[current] ? current : 'en';
+  picker.addEventListener('change', function () {
+    const destination = destinations[picker.value];
+    if (!destination) return;
+    try { localStorage.setItem('transcriptTikTokLanguage', picker.value); } catch (_) {}
+    window.location.href = destination;
+  });
+})();
+</script></body></html>
