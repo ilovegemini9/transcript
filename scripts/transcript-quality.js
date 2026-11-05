@@ -47,6 +47,8 @@ function summarize(rows) {
     samples: row.total,
     failures: row.failures,
     failureRate: row.total ? row.failures / row.total : 0,
+    languageMismatches: row.languageMismatches,
+    languageMismatchRate: row.total ? row.languageMismatches / row.total : 0,
     wer: row.referenceWords ? row.wordErrors / row.referenceWords : null,
     cer: row.referenceCharacters ? row.characterErrors / row.referenceCharacters : null
   }));
@@ -57,7 +59,9 @@ function evaluate(fixtures) {
   const dimensions = {
     language: fixture => fixture.language.trim().toLowerCase(),
     source: fixture => typeof fixture.source === 'string' && fixture.source.trim() ? fixture.source.trim().toLowerCase() : 'unspecified',
-    condition: fixture => typeof fixture.condition === 'string' && fixture.condition.trim() ? fixture.condition.trim().toLowerCase() : 'unspecified'
+    condition: fixture => typeof fixture.condition === 'string' && fixture.condition.trim() ? fixture.condition.trim().toLowerCase() : 'unspecified',
+    requestedLanguage: fixture => typeof fixture.requestedLanguage === 'string' && fixture.requestedLanguage.trim() ? fixture.requestedLanguage.trim().toLowerCase() : 'unspecified',
+    returnedLanguage: fixture => typeof fixture.returnedLanguage === 'string' && fixture.returnedLanguage.trim() ? fixture.returnedLanguage.trim().toLowerCase() : 'unspecified'
   };
   const grouped = Object.fromEntries(Object.keys(dimensions).map(key => [key, new Map()]));
 
@@ -80,10 +84,13 @@ function evaluate(fixtures) {
       const map = grouped[dimension];
       if (!map.has(key)) map.set(key, {
         key, total: 0, failures: 0, wordErrors: 0, referenceWords: 0,
-        characterErrors: 0, referenceCharacters: 0
+        characterErrors: 0, referenceCharacters: 0, languageMismatches: 0
       });
       const row = map.get(key);
       row.total++;
+      const requested = typeof fixture.requestedLanguage === 'string' ? fixture.requestedLanguage.trim().toLowerCase() : '';
+      const returned = typeof fixture.returnedLanguage === 'string' ? fixture.returnedLanguage.trim().toLowerCase() : '';
+      if (requested && (!returned || requested !== returned)) row.languageMismatches++;
       if (failed) {
         row.failures++;
       } else {
@@ -98,7 +105,8 @@ function evaluate(fixtures) {
   const result = { fixtureCount: fixtures.length };
   for (const dimension of Object.keys(dimensions)) {
     const rows = Array.from(grouped[dimension].values()).sort((a, b) => a.key.localeCompare(b.key));
-    result[dimension === 'language' ? 'languages' : dimension === 'source' ? 'sources' : 'conditions'] = summarize(rows);
+    const outputKey = ({ language: 'languages', source: 'sources', condition: 'conditions', requestedLanguage: 'requestedLanguages', returnedLanguage: 'returnedLanguages' })[dimension];
+    result[outputKey] = summarize(rows);
   }
   return result;
 }
@@ -111,11 +119,11 @@ function formatReport(report) {
     ['By source platform', report.sources],
     ['By recording condition', report.conditions]
   ]) {
-    lines.push('', heading, 'Group | Samples | Failures | Failure rate | WER | CER',
-      '--- | ---: | ---: | ---: | ---: | ---:');
+    lines.push('', heading, 'Group | Samples | Failures | Failure rate | Language mismatches | Mismatch rate | WER | CER',
+      '--- | ---: | ---: | ---: | ---: | ---: | ---: | ---:');
     for (const row of rows || []) {
       lines.push([
-        row.key, row.samples, row.failures, pct(row.failureRate),
+        row.key, row.samples, row.failures, pct(row.failureRate), row.languageMismatches, pct(row.languageMismatchRate),
         row.wer === null ? 'n/a' : pct(row.wer),
         row.cer === null ? 'n/a' : pct(row.cer)
       ].join(' | '));
