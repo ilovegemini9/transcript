@@ -30,9 +30,13 @@ section,article{scroll-margin-top:85px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
 </style><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"TikTok Transcript Generator | Transcript TikTok","url":"https://transcriptiktok.vercel.app/tiktok-transcript","applicationCategory":"MultimediaApplication","operatingSystem":"Any","description":"Turn accessible public TikTok videos into readable text.","featureList":["Single public video link per request","Copy transcript text","Download transcript as TXT"]}</script>
-</head>
+<link rel="stylesheet" href="/site-shared.css"></head>
 <body data-platform="TikTok">
-<a class="skip-link" href="#main-content">Skip to content</a><header><div class="wrap"><a class="brand" href="/">Transcript TikTok</a> · <a href="/video-to-text">All platforms</a></div></header>
+<a class="skip-link" href="#main-content">Skip to content</a><header><div class="wrap nav">
+<a class="brand" href="/" aria-label="Transcript TikTok home"><span class="brand-mark" aria-hidden="true">T</span>Transcript TikTok</a>
+<nav class="nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/tiktok-transcript">TikTok</a><a href="/youtube-transcript">YouTube</a><a href="/facebook-video-transcript">Facebook</a><a href="/instagram-reels-transcript">Instagram</a><a href="/video-to-text">Video to text</a></nav>
+<div class="language-switcher"><label for="site-language">Language</label><select id="site-language" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="ar">العربية</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="it">Italiano</option></select></div>
+</div></header>
 <main id="main-content" tabindex="-1" class="wrap page"><p class="eyebrow">Free-to-try online video transcription</p><h1>TikTok Transcript Generator</h1><p class="lead">Convert the spoken words in a public TikTok video into text you can search, review, copy, and save. Paste one supported TikTok link to get started.</p>
 <section class="tool" aria-label="TikTok transcript tool"><form id="video-form"><div class="inputrow"><input id="video-url" type="url" required autocomplete="url" placeholder="Paste a public TikTok video URL…" aria-label="Public video URL"><button id="submit" type="submit">Get transcript</button></div></form><p id="status" role="status" aria-live="polite" hidden></p><section id="transcript" aria-label="Transcript result" hidden></section><div class="actions" hidden><button id="copy" class="secondary" type="button">Copy text</button><button id="download" class="secondary" type="button">Download TXT</button></div></section>
 <h2>How to get a TikTok transcript</h2><ol><li>Open a public TikTok video and tap Share.</li><li>Choose Copy link, then paste the link above.</li><li>Select Get transcript. Review the result before using or quoting it.</li></ol>
