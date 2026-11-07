@@ -1,4 +1,6 @@
 // Optional AI repurposing endpoint. OpenRouter free models with ordered free-only fallbacks.
+const { enforceRateLimit } = require('./_lib/rate-limit');
+
 const ACTIONS = {
   summarize: 'Summarize this short-form video transcript in 3 concise bullet points. Preserve the transcript language. Return plain text only.',
   caption: 'Write 3 original social media captions based on this transcript. Keep them concise, preserve the transcript language, and separate them with blank lines. Return plain text only.',
@@ -84,6 +86,7 @@ async function callOpenAI(transcript, instruction) {
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return respond(res, 405, { code: 'METHOD_NOT_ALLOWED', error: 'Use POST.' }); }
+  if (!(await enforceRateLimit(req, res, 'ai', { limit: 5 }))) return;
   if (!process.env.OPENROUTER_API_KEY && !process.env.GEMINI_API_KEY && !process.env.OPENAI_API_KEY) {
     return respond(res, 503, { code: 'AI_NOT_CONFIGURED', error: 'AI tools are not connected yet. Add OPENROUTER_API_KEY in Vercel → Project Settings → Environment Variables, then redeploy.' });
   }

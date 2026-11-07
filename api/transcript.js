@@ -7,6 +7,8 @@ const SUPPORTED_HOSTS = [
   { platform: 'Instagram', test: /(^|\.)instagram\.com$/i }
 ];
 const JOB_ID = /^[a-zA-Z0-9_-]{5,128}$/;
+const LANGUAGE_CODE = /^[a-z]{2}$/;
+const { enforceRateLimit } = require('./_lib/rate-limit');
 
 function jsonError(res, status, code, error) {
   return res.status(status).json({ code, error });
@@ -14,6 +16,19 @@ function jsonError(res, status, code, error) {
 
 function getPlatform(hostname) {
   return SUPPORTED_HOSTS.find((entry) => entry.test.test(hostname))?.platform || null;
+}
+
+function getSegments(content) {
+  if (!Array.isArray(content) || content.length === 0) return [];
+  // Do not offer subtitle exports if any transcript text would be omitted for missing timing.
+  if (content.some((part) => !part || typeof part.text !== 'string' || !part.text.trim() ||
+    !Number.isFinite(part.offset) || part.offset < 0 ||
+    !Number.isFinite(part.duration) || part.duration <= 0)) return [];
+  return content.map((part) => ({
+    text: part.text.trim(),
+    offset: part.offset,
+    duration: part.duration
+  }));
 }
 
 function getTranscript(content) {
@@ -37,15 +52,25 @@ module.exports = async function handler(req, res) {
     return jsonError(res, 405, 'METHOD_NOT_ALLOWED', 'Use POST.');
   }
 
+  const jobId = typeof req.body?.jobId === 'string' ? req.body.jobId.trim() : '';
+  // Polling can occur every 1.5s for up to a minute; keep it separate from new jobs.
+  const rateScope = jobId ? 'transcriptPoll' : 'transcript';
+  const rateLimit = jobId ? 50 : 10;
+  if (!(await enforceRateLimit(req, res, rateScope, { limit: rateLimit }))) return;
+
   const apiKey = process.env.SUPADATA_API_KEY;
   if (!apiKey) {
     return jsonError(res, 503, 'CONFIG_MISSING', 'Transcript service is not configured. Please try again later.');
   }
 
-  const jobId = typeof req.body?.jobId === 'string' ? req.body.jobId.trim() : '';
   const videoUrl = typeof req.body?.url === 'string' ? req.body.url.trim() : '';
+  const requestedLanguage = typeof req.body?.lang === 'string' ? req.body.lang.trim().toLowerCase() : '';
   let endpoint;
   let platform = null;
+
+  if (requestedLanguage && !LANGUAGE_CODE.test(requestedLanguage)) {
+    return jsonError(res, 400, 'INVALID_LANGUAGE', 'Use a two-letter ISO 639-1 language code.');
+  }
 
   if (jobId) {
     if (!JOB_ID.test(jobId)) {
@@ -76,9 +101,10 @@ module.exports = async function handler(req, res) {
 
     endpoint = new URL('https://api.supadata.ai/v1/transcript');
     endpoint.searchParams.set('url', parsed.toString());
-    endpoint.searchParams.set('text', 'true');
     // Auto mode prefers native captions and can use speech recognition when supported.
     endpoint.searchParams.set('mode', 'auto');
+    // A requested language is a preference; Supadata may fall back if it is unavailable.
+    if (requestedLanguage) endpoint.searchParams.set('lang', requestedLanguage);
   }
 
   try {
@@ -124,6 +150,7 @@ module.exports = async function handler(req, res) {
     }
 
     const transcript = getTranscript(payload.content);
+    const segments = getSegments(payload.content);
     if (!transcript) {
       return jsonError(res, 422, 'TRANSCRIPT_UNAVAILABLE', 'No transcript text was returned for this video.');
     }
@@ -131,7 +158,10 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({
       transcript,
       platform: platform || 'Video',
-      language: typeof payload.lang === 'string' ? payload.lang : null
+      language: typeof payload.lang === 'string' ? payload.lang : null,
+      segments,
+      // Supadata's auto mode does not identify whether native captions or AI fallback supplied the text.
+      source: null
     });
   } catch (error) {
     if (error && error.name === 'TimeoutError') {

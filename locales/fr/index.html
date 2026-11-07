@@ -24,7 +24,8 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Transcript TikTok",
-    "url": "https://transcriptiktok.vercel.app/",
+    "url": "https://transcriptiktok.vercel.app/fr/",
+    "inLanguage": "fr",
     "applicationCategory": "MultimediaApplication",
     "operatingSystem": "Any",
     "description": "Un outil en ligne pour transcrire les vidéos publiques accessibles de TikTok, YouTube, Facebook et Instagram.",
@@ -85,6 +86,8 @@
     .result-actions { display:flex; gap:7px; flex-wrap:wrap; }
     .secondary-action { background:#202020; color:#eee; border:1px solid #3a3a3a; }
     .copy-button { min-height:36px; padding:0 13px; font-size:12px; }
+    .transcript-language-row { display:flex; align-items:center; justify-content:center; gap:10px; margin:10px auto 2px; color:#aaa; font-size:12px; }
+    .transcript-language-row select { padding:9px 12px; border:1px solid #343434; border-radius:8px; background:#191919; color:#eee; font:inherit; }
     .ai-actions { display:flex; gap:7px; flex-wrap:wrap; margin-top:14px; padding-top:14px; border-top:1px solid #252525; }
     .ai-output { display:none; margin-top:12px; padding:13px; border:1px solid #303030; border-radius:9px; background:#0b0b0b; white-space:pre-wrap; color:#ccc; font-size:13px; line-height:1.7; }
     .ai-output.show { display:block; }
@@ -479,7 +482,7 @@
   <header>
     <div class="wrap nav">
       <a class="brand" href="/fr/" aria-label="Accueil Transcript TikTok"><span class="brand-mark">T</span>Transcript TikTok</a>
-      <nav class="nav-links" aria-label="Navigation principale"><a href="#transcript-form">Outil</a><a href="#how-it-works">Fonctionnement</a><a href="#faq">FAQ</a></nav>
+      <nav class="nav-links" aria-label="Navigation principale"><a href="#transcript-form">Outil</a><a href="#platforms">Plateformes</a><a href="#features">Fonctionnalités</a><a href="#how-it-works">Fonctionnement</a><a href="#faq">FAQ</a></nav>
       <div class="language-switcher"><label for="site-language">Langue du site</label><select id="site-language" aria-label="Choisir la langue du site"><optgroup label="Disponibles actuellement"><option value="en">English</option><option value="fr">Français (aperçu)</option><option value="es">Español (aperçu)</option><option value="ar">العربية (aperçu)</option><option value="pt">Português (aperçu)</option><option value="de">Deutsch (aperçu)</option><option value="it">Italiano (aperçu)</option></optgroup><optgroup label="Bientôt disponibles"><option value="nl" disabled>Nederlands — bientôt disponible</option><option value="pl" disabled>Polski — bientôt disponible</option><option value="tr" disabled>Türkçe — bientôt disponible</option><option value="ru" disabled>Русский — bientôt disponible</option><option value="uk" disabled>Українська — bientôt disponible</option><option value="hi" disabled>हिन्दी — bientôt disponible</option><option value="bn" disabled>বাংলা — bientôt disponible</option><option value="ur" disabled>اردو — bientôt disponible</option><option value="id" disabled>Bahasa Indonesia — bientôt disponible</option><option value="ms" disabled>Bahasa Melayu — bientôt disponible</option><option value="vi" disabled>Tiếng Việt — bientôt disponible</option><option value="th" disabled>ไทย — bientôt disponible</option><option value="ja" disabled>日本語 — bientôt disponible</option><option value="ko" disabled>한국어 — bientôt disponible</option><option value="zh-CN" disabled>简体中文 — bientôt disponible</option><option value="zh-TW" disabled>繁體中文 — bientôt disponible</option><option value="sv" disabled>Svenska — bientôt disponible</option><option value="no" disabled>Norsk — bientôt disponible</option><option value="da" disabled>Dansk — bientôt disponible</option><option value="fi" disabled>Suomi — bientôt disponible</option><option value="el" disabled>Ελληνικά — bientôt disponible</option><option value="he" disabled>עברית — bientôt disponible</option><option value="fa" disabled>فارسی — bientôt disponible</option><option value="ro" disabled>Română — bientôt disponible</option><option value="hu" disabled>Magyar — bientôt disponible</option><option value="cs" disabled>Čeština — bientôt disponible</option><option value="sk" disabled>Slovenčina — bientôt disponible</option><option value="bg" disabled>Български — bientôt disponible</option><option value="hr" disabled>Hrvatski — bientôt disponible</option><option value="sr" disabled>Српски — bientôt disponible</option><option value="sl" disabled>Slovenščina — bientôt disponible</option><option value="et" disabled>Eesti — bientôt disponible</option><option value="lv" disabled>Latviešu — bientôt disponible</option><option value="lt" disabled>Lietuvių — bientôt disponible</option><option value="ca" disabled>Català — bientôt disponible</option><option value="eu" disabled>Euskara — bientôt disponible</option><option value="gl" disabled>Galego — bientôt disponible</option><option value="af" disabled>Afrikaans — bientôt disponible</option><option value="sw" disabled>Kiswahili — bientôt disponible</option><option value="ta" disabled>தமிழ் — bientôt disponible</option><option value="te" disabled>తెలుగు — bientôt disponible</option><option value="mr" disabled>मराठी — bientôt disponible</option><option value="fil" disabled>Filipino — bientôt disponible</option><option value="az" disabled>Azərbaycanca — bientôt disponible</option><option value="hy" disabled>Հայերեն — bientôt disponible</option><option value="ka" disabled>ქართული — bientôt disponible</option><option value="kk" disabled>Қазақша — bientôt disponible</option><option value="uz" disabled>Oʻzbekcha — bientôt disponible</option><option value="ps" disabled>پښتو — bientôt disponible</option><option value="ne" disabled>नेपाली — bientôt disponible</option><option value="si" disabled>සිංහල — bientôt disponible</option><option value="my" disabled>မြန်မာ — bientôt disponible</option><option value="km" disabled>ខ្មែរ — bientôt disponible</option><option value="lo" disabled>ລາວ — bientôt disponible</option><option value="am" disabled>አማርኛ — bientôt disponible</option><option value="yo" disabled>Yorùbá — bientôt disponible</option><option value="ha" disabled>Hausa — bientôt disponible</option><option value="ig" disabled>Asụsụ Igbo — bientôt disponible</option><option value="zu" disabled>isiZulu — bientôt disponible</option><option value="xh" disabled>isiXhosa — bientôt disponible</option><option value="is" disabled>Íslenska — bientôt disponible</option><option value="ga" disabled>Gaeilge — bientôt disponible</option><option value="sq" disabled>Shqip — bientôt disponible</option><option value="mk" disabled>Македонски — bientôt disponible</option><option value="bs" disabled>Bosanski — bientôt disponible</option><option value="be" disabled>Беларуская — bientôt disponible</option><option value="ps-AF" disabled>پښتو (افغانستان) — bientôt disponible</option><option value="jv" disabled>Basa Jawa — bientôt disponible</option></optgroup></select></div>
     </div>
   </header>
@@ -494,11 +497,12 @@
             <input id="tiktok-url" type="url" inputmode="url" autocomplete="url" placeholder="Collez le lien d’une vidéo publique (TikTok, YouTube, Facebook, Instagram)…" aria-label="URL de la vidéo publique" aria-describedby="url-help" required />
             <button id="submit-button" type="submit">Obtenir la transcription <span aria-hidden="true">→</span></button>
           </div>
+          <div class="transcript-language-row"><label for="transcript-language">Langue de transcription</label><select id="transcript-language" aria-label="Langue de transcription"><option value="">Détection automatique</option><option value="en">English</option><option value="fr" selected>Français</option><option value="es">Español</option><option value="ar">العربية</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="it">Italiano</option></select></div>
           <p class="microcopy" id="url-help">Liens publics TikTok, YouTube, Facebook et Instagram acceptés. Les vidéos privées ou indisponibles ne peuvent pas être traitées.</p>
         </form>
         <div class="status" id="status" role="status" aria-live="polite"></div>
         <section class="transcript-result" id="transcript-result" aria-label="Transcription vidéo">
-          <div class="result-head"><div><h3>Votre transcription vidéo</h3><p id="transcript-meta" class="result-meta">Prête à copier ou télécharger</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copier le texte</button><button class="copy-button secondary-action" id="download-button" type="button">Télécharger TXT</button><button class="copy-button secondary-action" id="json-button" type="button">JSON</button></div></div>
+          <div class="result-head"><div><h3>Votre transcription vidéo</h3><p id="transcript-meta" class="result-meta">Prête à copier ou télécharger</p></div><div class="result-actions"><button class="copy-button" id="copy-button" type="button">Copier le texte</button><button class="copy-button secondary-action" id="download-button" type="button">Télécharger TXT</button><button class="copy-button secondary-action" id="json-button" type="button">JSON</button><button class="copy-button secondary-action" id="srt-button" type="button" hidden>Télécharger SRT</button><button class="copy-button secondary-action" id="vtt-button" type="button" hidden>Télécharger VTT</button></div></div>
           <pre class="transcript-text" id="transcript-text"></pre>
           <div class="ai-panel"><div class="ai-panel-head"><div><span class="ai-kicker">STUDIO DE CRÉATION IA</span><h4>Transformez votre transcription en contenu</h4><p>Des idées rapides pour votre prochaine publication. Choisissez un outil pour commencer.</p></div><span class="ai-spark" aria-hidden="true">✦</span></div><div class="ai-actions" aria-label="Outils de création IA"><button class="ai-tool ai-button" data-action="summarize" type="button"><span class="ai-tool-icon" aria-hidden="true">▤</span><span><b>Résumer</b><small>Les points clés en quelques secondes</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button><button class="ai-tool ai-button" data-action="caption" type="button"><span class="ai-tool-icon" aria-hidden="true">✎</span><span><b>Créer des légendes</b><small>Des légendes à modifier et publier</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button><button class="ai-tool ai-button" data-action="hooks" type="button"><span class="ai-tool-icon" aria-hidden="true">⚡</span><span><b>Créer des accroches</b><small>Des introductions qui captent l’attention</small></span><span class="ai-tool-arrow" aria-hidden="true">↗</span></button></div><div class="ai-output-wrap"><div class="ai-output-head"><span>Résultat de l’IA</span><button class="copy-button secondary-action" id="copy-ai-button" type="button" hidden>Copier le résultat</button></div><div class="ai-output" id="ai-output" role="status" aria-live="polite"></div></div><p class="ai-footnote">Les suggestions de l’IA peuvent être imparfaites : relisez-les et modifiez-les avant publication.</p></div>
         </section>
@@ -558,7 +562,7 @@
           <article class="audience-card"><h3>Convertir la parole d’une vidéo en texte</h3><p>Une transcription facilite la lecture, la recherche, la citation, l’étude et l’organisation des informations orales. Collez ci-dessus le lien d’une vidéo publique pour demander sa transcription.</p></article>
           <article class="audience-card"><h3>Utilisez les transcriptions de manière responsable</h3><p>Vérifiez le texte à partir de la vidéo originale avant de le partager. La reconnaissance vocale peut mal interpréter les noms, les accents, les bruits de fond et les termes techniques. Ne traitez que les vidéos que vous êtes autorisé à utiliser.</p></article>
         </div>
-        <p style="text-align:center;color:#999;font-size:13px;margin-top:22px">En savoir plus : <a href="/fr/blog/guide-transcription-tiktok" style="text-decoration:underline">obtenir la transcription d’une vidéo TikTok</a> · <a href="/fr/blog/convertir-video-en-texte" style="text-decoration:underline">convertir une vidéo TikTok en texte</a> · <a href="/fr/blog/guide-transcription-tiktok" style="text-decoration:underline">use a Transcription TikTok tool without login</a>.</p>
+        <p style="text-align:center;color:#999;font-size:13px;margin-top:22px">En savoir plus : <a href="/fr/blog/guide-transcription-tiktok" style="text-decoration:underline">obtenir la transcription d’une vidéo TikTok</a> · <a href="/fr/blog/convertir-video-en-texte" style="text-decoration:underline">convertir une vidéo TikTok en texte</a> · <a href="/fr/blog/guide-transcription-tiktok" style="text-decoration:underline">utiliser un outil de transcription TikTok sans créer de compte</a>.</p>
       </div>
     </section>
 
@@ -570,7 +574,7 @@
           <p>Une fois la transcription obtenue, transformez les idées principales en contenu utile pour votre prochaine publication.</p>
         </div>
         <div class="feature-grid">
-          <article class="feature"><div class="feature-icon">▤</div><span class="feature-kicker">Comprendre plus vite</span><h3>Résumer a video transcript</h3><p>Obtenez un aperçu concis et les points clés d’une longue explication, d’un tutoriel, d’une interview ou d’une vidéo sociale.</p></article>
+          <article class="feature"><div class="feature-icon">▤</div><span class="feature-kicker">Comprendre plus vite</span><h3>Résumer une transcription vidéo</h3><p>Obtenez un aperçu concis et les points clés d’une longue explication, d’un tutoriel, d’une interview ou d’une vidéo sociale.</p></article>
           <article class="feature"><div class="feature-icon">✎</div><span class="feature-kicker">Écrire plus vite</span><h3>Créer des légendes pour les réseaux sociaux</h3><p>Transformez le message principal de la transcription en idées de légendes à relire, modifier et adapter à votre public.</p></article>
           <article class="feature"><div class="feature-icon">⚡</div><span class="feature-kicker">Créer de meilleures introductions</span><h3>Créer des accroches vidéo</h3><p>Trouvez d’autres phrases d’ouverture et angles inspirés de la transcription, sans reprendre les mots originaux.</p></article>
         </div>
@@ -635,7 +639,7 @@
     </section>
   </main>
 
-  <footer><div class="wrap footer-inner"><span>© <span id="year"></span> Transcript TikTok</span><span><a href="/fr/#features">Fonctionnalités</a> · <a href="/fr/blog">Blog</a> · <a href="/fr/#faq">Tarifs gratuits</a> · <a href="/fr/blog/guide-transcription-tiktok">Guide de transcription</a> · <a href="/fr/#transcript-form">YouTube</a> · <a href="/fr/#transcript-form">Facebook</a> · <a href="/fr/#transcript-form">Instagram</a> · <a href="/fr/#transcript-form">Vidéo en texte</a> · <a href="/fr/blog/convertir-video-en-texte">TikTok en texte</a> · <a href="/fr/blog/guide-transcription-tiktok">Outil sans connexion</a> · <a href="/fr/confidentialite">Confidentialité</a> · <a href="/fr/conditions">Conditions</a> · Des transcriptions simples. Sans étapes superflues.</span></div></footer>
+  <footer><div class="wrap footer-inner"><span>© <span id="year"></span> Transcript TikTok</span><span><a href="#features">Fonctionnalités</a> · <a href="/fr/blog/">Blog</a> · <a href="/tiktok-transcript-generator.html">Guide TikTok</a> · <a href="/fr/youtube-transcript">YouTube</a> · <a href="/fr/facebook-video-transcript">Facebook</a> · <a href="/fr/instagram-reels-transcript">Instagram</a> · <a href="/fr/video-to-text">Vidéo en texte</a> · <a href="/privacy.html">Confidentialité</a> · <a href="/terms.html">Conditions</a></span></div></footer>
 
     <script>
     const form = document.getElementById('transcript-form');
@@ -650,6 +654,8 @@
     const aiOutput = document.getElementById('ai-output');
     const copyAiButton = document.getElementById('copy-ai-button');
     const transcriptMeta = document.getElementById('transcript-meta');
+    const transcriptLanguage = document.getElementById('transcript-language');
+    let transcriptSegments = [];
     document.getElementById('year').textContent = new Date().getFullYear();
 
     function supportedPlatform(value) {
@@ -665,6 +671,31 @@
       } catch { return null; }
     }
 
+    function formatSubtitleTime(ms, decimal = ',') {
+      const total = Math.max(0, Math.round(ms));
+      const hours = Math.floor(total / 3600000);
+      const minutes = Math.floor((total % 3600000) / 60000);
+      const seconds = Math.floor((total % 60000) / 1000);
+      const millis = total % 1000;
+      return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0') + decimal + String(millis).padStart(3, '0');
+    }
+    function subtitleContent(format) {
+      return transcriptSegments.map((segment, index) => {
+        const start = formatSubtitleTime(segment.offset, format === 'vtt' ? '.' : ',');
+        const end = formatSubtitleTime(segment.offset + segment.duration, format === 'vtt' ? '.' : ',');
+        return (format === 'srt' ? String(index + 1) + '\n' : '') + start + ' --> ' + end + '\n' + segment.text;
+      }).join('\n\n') + (format === 'vtt' ? '' : '\n');
+    }
+    function downloadSubtitle(format) {
+      if (!transcriptSegments.length) return;
+      const body = (format === 'vtt' ? 'WEBVTT\n\n' : '') + subtitleContent(format);
+      const blob = new Blob([body], { type: 'text/' + (format === 'vtt' ? 'vtt' : 'plain') + ';charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url; anchor.download = 'video-transcript.' + format;
+      document.body.appendChild(anchor); anchor.click(); anchor.remove(); URL.revokeObjectURL(url);
+    }
+
     function showStatus(message, isError = false) {
       status.classList.add('show');
       status.textContent = message;
@@ -676,6 +707,9 @@
       const value = input.value.trim();
       result.classList.remove('show');
       transcriptText.textContent = '';
+      transcriptSegments = [];
+      document.getElementById('srt-button').hidden = true;
+      document.getElementById('vtt-button').hidden = true;
       aiOutput.classList.remove('show');
       aiOutput.textContent = '';
       const selectedPlatform = supportedPlatform(value);
@@ -692,7 +726,7 @@
         let response = await fetch('/api/transcript', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: value })
+          body: JSON.stringify({ url: value, ...(transcriptLanguage.value ? { lang: transcriptLanguage.value } : {}) })
         });
         let data = await response.json().catch(() => ({}));
         if (!response.ok) {
@@ -723,7 +757,10 @@
         const text = typeof data.transcript === 'string' ? data.transcript.trim() : '';
         if (!text) throw new Error('Aucun texte de transcription n’a été renvoyé pour cette vidéo.');
         transcriptText.textContent = text;
-        transcriptMeta.textContent = (data.platform || selectedPlatform) + (data.language ? ' · Langue détectée : ' + data.language : '') + ' · Prête à copier ou télécharger';
+        transcriptSegments = Array.isArray(data.segments) ? data.segments.filter(segment => segment && typeof segment.text === 'string' && Number.isFinite(segment.offset) && Number.isFinite(segment.duration) && segment.offset >= 0 && segment.duration > 0) : [];
+        document.getElementById('srt-button').hidden = transcriptSegments.length === 0;
+        document.getElementById('vtt-button').hidden = transcriptSegments.length === 0;
+        transcriptMeta.textContent = (data.platform || selectedPlatform) + (data.language ? ' · Langue détectée : ' + data.language : '') + ' · Source : non communiquée par le fournisseur' + (transcriptSegments.length ? ' · Horodatages disponibles' : ' · Aucun horodatage fourni') + ' · Prête à copier ou télécharger';
         result.classList.add('show');
         showStatus('Transcription prête. Relisez-la avant de la citer ou de la publier.');
       } catch (error) {
@@ -748,9 +785,12 @@
 
 
     jsonButton.addEventListener('click', () => {
-      const blob = new Blob([JSON.stringify({ source: input.value.trim(), transcript: transcriptText.textContent, language: transcriptMeta.textContent, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json;charset=utf-8' });
+      const blob = new Blob([JSON.stringify({ source: input.value.trim(), transcript: transcriptText.textContent, segments: transcriptSegments, source: null, language: transcriptMeta.textContent, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json;charset=utf-8' });
       const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'video-transcript.json'; document.body.appendChild(anchor); anchor.click(); anchor.remove(); URL.revokeObjectURL(url);
     });
+
+    document.getElementById('srt-button').addEventListener('click', () => downloadSubtitle('srt'));
+    document.getElementById('vtt-button').addEventListener('click', () => downloadSubtitle('vtt'));
 
     const aiButtons = Array.from(document.querySelectorAll('.ai-button'));
     aiButtons.forEach((aiButton) => aiButton.addEventListener('click', async () => {
@@ -816,7 +856,7 @@
     // Respect an explicit language choice; otherwise use the browser's preferred language.
     (() => {
       const supported = { en: '/', fr: '/fr/', es: '/es/', ar: '/ar/', pt: '/pt/', de: '/de/', it: '/it/' };
-      const current = document.documentElement.lang === 'fr' ? 'fr' : 'en';
+      const current = ({ en: 'en', fr: 'fr', es: 'es', ar: 'ar', pt: 'pt', de: 'de', it: 'it' })[document.documentElement.lang] || 'en';
       const picker = document.getElementById('site-language');
       if (picker) {
         picker.value = current;
