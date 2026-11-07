@@ -855,7 +855,7 @@
     // Respect an explicit language choice; otherwise use the browser's preferred language.
     (() => {
       const supported = { en: '/', fr: '/fr/', es: '/es/', ar: '/ar/', pt: '/pt/', de: '/de/', it: '/it/' };
-      const current = document.documentElement.lang === 'fr' ? 'fr' : 'en';
+      const current = ({ en: 'en', fr: 'fr', es: 'es', ar: 'ar', pt: 'pt', de: 'de', it: 'it' })[document.documentElement.lang] || 'en';
       const picker = document.getElementById('site-language');
       if (picker) {
         picker.value = current;
