@@ -224,5 +224,107 @@
       "source": "/video-to-text",
       "destination": "/video-to-text.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/fr/tiktok-transcript",
+      "destination": "/fr/",
+      "permanent": false
+    },
+    {
+      "source": "/fr/youtube-transcript",
+      "destination": "/fr/",
+      "permanent": false
+    },
+    {
+      "source": "/fr/facebook-video-transcript",
+      "destination": "/fr/",
+      "permanent": false
+    },
+    {
+      "source": "/fr/instagram-reels-transcript",
+      "destination": "/fr/",
+      "permanent": false
+    },
+    {
+      "source": "/fr/video-to-text",
+      "destination": "/fr/",
+      "permanent": false
+    },
+    {
+      "source": "/es/tiktok-transcript",
+      "destination": "/es/",
+      "permanent": false
+    },
+    {
+      "source": "/es/youtube-transcript",
+      "destination": "/es/",
+      "permanent": false
+    },
+    {
+      "source": "/es/facebook-video-transcript",
+      "destination": "/es/",
+      "permanent": false
+    },
+    {
+      "source": "/es/instagram-reels-transcript",
+      "destination": "/es/",
+      "permanent": false
+    },
+    {
+      "source": "/es/video-to-text",
+      "destination": "/es/",
+      "permanent": false
+    },
+    {
+      "source": "/pt/tiktok-transcript",
+      "destination": "/pt/",
+      "permanent": false
+    },
+    {
+      "source": "/pt/youtube-transcript",
+      "destination": "/pt/",
+      "permanent": false
+    },
+    {
+      "source": "/pt/facebook-video-transcript",
+      "destination": "/pt/",
+      "permanent": false
+    },
+    {
+      "source": "/pt/instagram-reels-transcript",
+      "destination": "/pt/",
+      "permanent": false
+    },
+    {
+      "source": "/pt/video-to-text",
+      "destination": "/pt/",
+      "permanent": false
+    },
+    {
+      "source": "/ar/tiktok-transcript",
+      "destination": "/ar/",
+      "permanent": false
+    },
+    {
+      "source": "/ar/youtube-transcript",
+      "destination": "/ar/",
+      "permanent": false
+    },
+    {
+      "source": "/ar/facebook-video-transcript",
+      "destination": "/ar/",
+      "permanent": false
+    },
+    {
+      "source": "/ar/instagram-reels-transcript",
+      "destination": "/ar/",
+      "permanent": false
+    },
+    {
+      "source": "/ar/video-to-text",
+      "destination": "/ar/",
+      "permanent": false
+    }
   ]
 }
