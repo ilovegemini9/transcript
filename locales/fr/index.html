@@ -6,9 +6,17 @@
   <meta name="theme-color" content="#080808" />
   <meta name="google-site-verification" content="WkXRsZNaG77qk0yXebhvc_3VAHqFVP7NsvdVhtFSO5A" />
   <meta name="description" content="Convertissez les vidéos publiques TikTok, YouTube, Instagram Reels et Facebook en texte. Générez une transcription, puis copiez-la ou téléchargez-la gratuitement, sans compte." />
-  <meta name="robots" content="noindex,follow" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="author" content="Transcript TikTok" />
   <link rel="canonical" href="https://www.sctools.online/fr/" />
+  <link rel="alternate" hreflang="en" href="https://www.sctools.online/" />
+  <link rel="alternate" hreflang="fr" href="https://www.sctools.online/fr/" />
+  <link rel="alternate" hreflang="es" href="https://www.sctools.online/es/" />
+  <link rel="alternate" hreflang="ar" href="https://www.sctools.online/ar/" />
+  <link rel="alternate" hreflang="pt" href="https://www.sctools.online/pt/" />
+  <link rel="alternate" hreflang="de" href="https://www.sctools.online/de/" />
+  <link rel="alternate" hreflang="it" href="https://www.sctools.online/it/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.sctools.online/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Transcript TikTok" />
   <meta property="og:url" content="https://www.sctools.online/fr/" />
@@ -743,13 +751,13 @@
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
-      URL.revokeObjectURL(url);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
 
 
     jsonButton.addEventListener('click', () => {
       const blob = new Blob([JSON.stringify({ source: input.value.trim(), transcript: transcriptText.textContent, language: transcriptMeta.textContent, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json;charset=utf-8' });
-      const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'video-transcript.json'; document.body.appendChild(anchor); anchor.click(); anchor.remove(); URL.revokeObjectURL(url);
+      const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'video-transcript.json'; document.body.appendChild(anchor); anchor.click(); anchor.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
 
     const aiButtons = Array.from(document.querySelectorAll('.ai-button'));
@@ -813,33 +821,18 @@
       }
     });
 
-    // Respect an explicit language choice; otherwise use the browser's preferred language.
+    // Language changes happen only after an explicit selection; keep every locale URL directly accessible.
     (() => {
       const supported = { en: '/', fr: '/fr/', es: '/es/', ar: '/ar/', pt: '/pt/', de: '/de/', it: '/it/' };
-      const current = document.documentElement.lang === 'fr' ? 'fr' : 'en';
       const picker = document.getElementById('site-language');
-      if (picker) {
-        picker.value = current;
-        picker.addEventListener('change', () => {
-          const next = picker.value;
-          if (!supported[next]) return;
-          try { localStorage.setItem('transcriptTikTokLanguage', next); } catch (_) {}
-          window.location.href = supported[next];
-        });
-      }
-      let saved = null;
-      try { saved = localStorage.getItem('transcriptTikTokLanguage'); } catch (_) {}
-      if (saved && supported[saved] && saved !== current) {
-        window.location.replace(supported[saved]);
-        return;
-      }
-      if (!saved && current === 'en') {
-        const preferences = Array.isArray(navigator.languages) && navigator.languages.length
-          ? navigator.languages : [navigator.language || ''];
-        const preferred = preferences.map(value => String(value).toLowerCase().split('-')[0])
-          .find(value => value === 'fr' || value === 'es' || value === 'pt' || value === 'de' || value === 'it');
-        if (preferred) window.location.replace(supported[preferred]);
-      }
+      if (!picker) return;
+      picker.value = document.documentElement.lang || 'en';
+      picker.addEventListener('change', () => {
+        const next = picker.value;
+        if (!supported[next]) return;
+        try { localStorage.setItem('transcriptTikTokLanguage', next); } catch (_) {}
+        window.location.href = supported[next];
+      });
     })();
   </script>
 </body>
