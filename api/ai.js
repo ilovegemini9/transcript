@@ -31,7 +31,7 @@ async function callOpenRouter(transcript, instruction) {
       headers: {
         Authorization: 'Bearer ' + process.env.OPENROUTER_API_KEY,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://transcriptiktok.vercel.app',
+        'HTTP-Referer': 'https://www.sctools.online',
         'X-Title': 'Transcript TikTok'
       },
       body: JSON.stringify({

@@ -216,5 +216,18 @@
       "source": "/video-to-text",
       "destination": "/video-to-text.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "transcriptiktok.vercel.app"
+        }
+      ],
+      "destination": "https://www.sctools.online/:path*",
+      "permanent": true
+    }
   ]
 }

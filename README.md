@@ -2,7 +2,7 @@
 
 Transcript TikTok is a browser-based video transcript tool for accessible public videos from TikTok, YouTube, Facebook, and Instagram.
 
-Website: https://transcriptiktok.vercel.app/
+Website: https://www.sctools.online/
 
 ## Supported platforms
 
@@ -15,16 +15,16 @@ The tool processes one video link per request. Private, deleted, age-restricted,
 
 ## Public pages
 
-- Homepage: https://transcriptiktok.vercel.app/
-- Video to text: https://transcriptiktok.vercel.app/video-to-text
-- TikTok transcript: https://transcriptiktok.vercel.app/tiktok-transcript
-- YouTube transcript: https://transcriptiktok.vercel.app/youtube-transcript
-- Facebook video transcript: https://transcriptiktok.vercel.app/facebook-video-transcript
-- Instagram Reels transcript: https://transcriptiktok.vercel.app/instagram-reels-transcript
-- Features: https://transcriptiktok.vercel.app/features.html
-- Pricing: https://transcriptiktok.vercel.app/pricing.html
-- Privacy: https://transcriptiktok.vercel.app/privacy.html
-- Terms: https://transcriptiktok.vercel.app/terms.html
+- Homepage: https://www.sctools.online/
+- Video to text: https://www.sctools.online/video-to-text
+- TikTok transcript: https://www.sctools.online/tiktok-transcript
+- YouTube transcript: https://www.sctools.online/youtube-transcript
+- Facebook video transcript: https://www.sctools.online/facebook-video-transcript
+- Instagram Reels transcript: https://www.sctools.online/instagram-reels-transcript
+- Features: https://www.sctools.online/features.html
+- Pricing: https://www.sctools.online/pricing.html
+- Privacy: https://www.sctools.online/privacy.html
+- Terms: https://www.sctools.online/terms.html
 
 ## Architecture
 
