@@ -13,9 +13,22 @@ const FREE_MODELS = [
   'xingchen-agi/xing4.0-29b-a4b:free'
 ];
 
+const TOTAL_AI_TIMEOUT_MS = 25000;
+const PROVIDER_TIMEOUT_MS = 8000;
+
 function respond(res, status, body) { return res.status(status).json(body); }
 
-async function callOpenRouter(transcript, instruction) {
+function providerSignal(deadlineAt) {
+  const remaining = deadlineAt - Date.now();
+  if (remaining <= 0) {
+    const error = new Error('AI request deadline exceeded');
+    error.status = 504;
+    throw error;
+  }
+  return AbortSignal.timeout(Math.min(PROVIDER_TIMEOUT_MS, remaining));
+}
+
+async function callOpenRouter(transcript, instruction, deadlineAt) {
   // Prefer OpenRouter's free-model router so model availability can change without a code update.
   // If it is unavailable, retry with the explicitly free, ordered model list below.
   const preferred = process.env.OPENROUTER_MODEL;
@@ -43,7 +56,7 @@ async function callOpenRouter(transcript, instruction) {
           { role: 'user', content: transcript }
         ]
       }),
-      signal: AbortSignal.timeout(18000)
+      signal: providerSignal(deadlineAt)
     });
 
     const data = await upstream.json().catch(() => ({}));
@@ -64,18 +77,18 @@ async function callOpenRouter(transcript, instruction) {
   throw error;
 }
 
-async function callGemini(transcript, instruction) {
+async function callGemini(transcript, instruction, deadlineAt) {
   const model = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
   const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + encodeURIComponent(model) + ':generateContent';
-  const upstream = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': process.env.GEMINI_API_KEY }, body: JSON.stringify({ systemInstruction: { parts: [{ text: instruction }] }, contents: [{ role: 'user', parts: [{ text: transcript }] }], generationConfig: { temperature: 0.5, maxOutputTokens: 700 } }), signal: AbortSignal.timeout(25000) });
+  const upstream = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': process.env.GEMINI_API_KEY }, body: JSON.stringify({ systemInstruction: { parts: [{ text: instruction }] }, contents: [{ role: 'user', parts: [{ text: transcript }] }], generationConfig: { temperature: 0.5, maxOutputTokens: 700 } }), signal: providerSignal(deadlineAt) });
   const data = await upstream.json().catch(() => ({}));
   if (!upstream.ok) { const error = new Error('Gemini provider error ' + upstream.status); error.status = upstream.status; throw error; }
   return data.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('').trim() || '';
 }
 
-async function callOpenAI(transcript, instruction) {
+async function callOpenAI(transcript, instruction, deadlineAt) {
   const base = (process.env.OPENAI_API_BASE || 'https://api.openai.com/v1').replace(/\/$/, '');
-  const upstream = await fetch(base + '/chat/completions', { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.OPENAI_API_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ model: process.env.OPENAI_MODEL || 'gpt-4o-mini', temperature: 0.5, max_tokens: 700, messages: [{ role: 'system', content: instruction }, { role: 'user', content: transcript }] }), signal: AbortSignal.timeout(25000) });
+  const upstream = await fetch(base + '/chat/completions', { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.OPENAI_API_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ model: process.env.OPENAI_MODEL || 'gpt-4o-mini', temperature: 0.5, max_tokens: 700, messages: [{ role: 'system', content: instruction }, { role: 'user', content: transcript }] }), signal: providerSignal(deadlineAt) });
   const data = await upstream.json().catch(() => ({}));
   if (!upstream.ok) { const error = new Error('OpenAI provider error ' + upstream.status); error.status = upstream.status; throw error; }
   return data.choices?.[0]?.message?.content?.trim() || '';
@@ -91,6 +104,7 @@ module.exports = async function handler(req, res) {
   const transcript = typeof req.body?.transcript === 'string' ? req.body.transcript.trim() : '';
   if (!ACTIONS[action]) return respond(res, 400, { code: 'INVALID_ACTION', error: 'Choose summarize, caption, or hooks.' });
   if (!transcript || transcript.length > 12000) return respond(res, 400, { code: 'INVALID_TRANSCRIPT', error: 'Transcript is required and must be under 12,000 characters.' });
+  const deadlineAt = Date.now() + TOTAL_AI_TIMEOUT_MS;
   try {
     let output = '';
     let provider = '';
@@ -99,12 +113,12 @@ module.exports = async function handler(req, res) {
     // Try independent providers in order; Gemini is the backup for exhausted OpenRouter free quota.
     const providers = [];
     if (process.env.OPENROUTER_API_KEY) providers.push(['openrouter', async () => {
-      const result = await callOpenRouter(transcript, ACTIONS[action]);
+      const result = await callOpenRouter(transcript, ACTIONS[action], deadlineAt);
       usedModel = result.model;
       return result.output;
     }]);
-    if (process.env.GEMINI_API_KEY) providers.push(['gemini', () => callGemini(transcript, ACTIONS[action])]);
-    if (process.env.OPENAI_API_KEY) providers.push(['openai', () => callOpenAI(transcript, ACTIONS[action])]);
+    if (process.env.GEMINI_API_KEY) providers.push(['gemini', () => callGemini(transcript, ACTIONS[action], deadlineAt)]);
+    if (process.env.OPENAI_API_KEY) providers.push(['openai', () => callOpenAI(transcript, ACTIONS[action], deadlineAt)]);
 
     for (const [name, run] of providers) {
       try {
@@ -113,8 +127,10 @@ module.exports = async function handler(req, res) {
         lastError = new Error(name + ' provider error 502');
         lastError.status = 502;
       } catch (providerError) {
+        if (providerError && (providerError.name === 'TimeoutError' || providerError.name === 'AbortError')) providerError.status = 504;
         lastError = providerError;
         console.error('AI provider failed:', name, providerError.message);
+        if (providerError.status === 504 || Date.now() >= deadlineAt) break;
       }
     }
 
@@ -124,6 +140,9 @@ module.exports = async function handler(req, res) {
   } catch (error) {
     console.error('AI request failed', error.message);
     const status = Number(error.status) || Number(error.message.match(/provider error (\d+)/)?.[1]) || 0;
+    if (status === 504) {
+      return respond(res, 504, { code: 'AI_TIMEOUT', error: 'AI generation took too long. Please try again.' });
+    }
     if ([402, 429].includes(status)) {
       return respond(res, 429, { code: 'AI_RATE_LIMIT', error: 'The free AI quota or rate limit has been reached. Please try again later.' });
     }
