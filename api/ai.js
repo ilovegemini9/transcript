@@ -39,9 +39,7 @@ async function callOpenRouter(transcript, instruction, deadlineAt) {
   let lastStatus = 0;
 
   for (const model of attempts) {
-    let upstream;
-    try {
-      upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + process.env.OPENROUTER_API_KEY,
@@ -58,13 +56,8 @@ async function callOpenRouter(transcript, instruction, deadlineAt) {
           { role: 'user', content: transcript }
         ]
       }),
-        signal: providerSignal(deadlineAt)
-      });
-    } catch (error) {
-      // A single model timeout should not consume the entire fallback window.
-      if ((error.name === 'TimeoutError' || error.name === 'AbortError') && Date.now() < deadlineAt) continue;
-      throw error;
-    }
+      signal: providerSignal(deadlineAt)
+    });
 
     const data = await upstream.json().catch(() => ({}));
     if (upstream.ok) {
@@ -134,10 +127,10 @@ module.exports = async function handler(req, res) {
         lastError = new Error(name + ' provider error 502');
         lastError.status = 502;
       } catch (providerError) {
-        if (providerError && (providerError.name === 'TimeoutError' || providerError.name === 'AbortError')) providerError.status = Date.now() >= deadlineAt ? 504 : 503;
+        if (providerError && (providerError.name === 'TimeoutError' || providerError.name === 'AbortError')) providerError.status = 504;
         lastError = providerError;
         console.error('AI provider failed:', name, providerError.message);
-        if (Date.now() >= deadlineAt) break;
+        if (providerError.status === 504 || Date.now() >= deadlineAt) break;
       }
     }
 
