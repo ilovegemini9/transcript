@@ -32,6 +32,45 @@
 - Privacy: https://www.sctools.online/privacy.html
 - Terms: https://www.sctools.online/terms.html
 
+## Localized homepages
+- English: https://www.sctools.online/
+- French: https://www.sctools.online/fr/
+- Spanish: https://www.sctools.online/es/
+- Arabic: https://www.sctools.online/ar/
+- Portuguese (Brazil): https://www.sctools.online/pt/
+- German: https://www.sctools.online/de/
+- Italian: https://www.sctools.online/it/
+
+## Blog hubs
+- English: https://www.sctools.online/blog
+- French: https://www.sctools.online/fr/blog/
+- Spanish: https://www.sctools.online/es/blog/
+
+## Localized blog articles
+French:
+- https://www.sctools.online/fr/blog/guide-transcription-tiktok
+- https://www.sctools.online/fr/blog/telecharger-transcription-youtube
+- https://www.sctools.online/fr/blog/transcription-reels-instagram
+- https://www.sctools.online/fr/blog/transcription-video-facebook
+- https://www.sctools.online/fr/blog/convertir-video-en-texte
+- https://www.sctools.online/fr/blog/transcription-sous-titres-legendes
+- https://www.sctools.online/fr/blog/reutiliser-transcription-video
+- https://www.sctools.online/fr/blog/transcriptions-video-accessibilite
+- https://www.sctools.online/fr/blog/modifier-transcription-automatique
+- https://www.sctools.online/fr/blog/transcrire-video-autre-langue
+
+Spanish:
+- https://www.sctools.online/es/blog/transcripcion-tiktok-guia-completa
+- https://www.sctools.online/es/blog/transcripcion-youtube-descargar-texto
+- https://www.sctools.online/es/blog/transcripcion-instagram-reels
+- https://www.sctools.online/es/blog/transcripcion-facebook-video
+- https://www.sctools.online/es/blog/convertir-video-a-texto-guia
+- https://www.sctools.online/es/blog/transcripcion-subtitulos-y-leyendas
+- https://www.sctools.online/es/blog/reutilizar-transcripcion-para-contenido
+- https://www.sctools.online/es/blog/transcripciones-video-accesibilidad
+- https://www.sctools.online/es/blog/corregir-transcripcion-automatica
+- https://www.sctools.online/es/blog/transcribir-video-otro-idioma
+
 ## Important limitations
 - Only accessible public links from the supported platforms are accepted.
 - Private, deleted, restricted, or inaccessible videos may fail.
