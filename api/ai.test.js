@@ -44,3 +44,21 @@ test('AI endpoint stops provider fallback on a provider timeout', async () => {
   assert.equal(res.body.code, 'AI_TIMEOUT');
   assert.equal(calls, 1);
 });
+
+
+test('OpenAI provider requests receive the bounded deadline signal', async () => {
+  let capturedSignal;
+  const fetchImpl = async (url, options) => {
+    assert.match(String(url), /^https:\/\/api\.openai\.com\/v1\/chat\/completions$/);
+    capturedSignal = options.signal;
+    return { ok: true, status: 200, json: async () => ({ choices: [{ message: { content: 'A concise summary.' } }] }) };
+  };
+  const res = await invoke(
+    { action: 'summarize', transcript: 'hello' },
+    { OPENAI_API_KEY: 'openai-test', OPENROUTER_API_KEY: null, GEMINI_API_KEY: null },
+    fetchImpl
+  );
+  assert.equal(res.statusCode, 200);
+  assert.ok(capturedSignal instanceof AbortSignal);
+  assert.equal(capturedSignal.aborted, false);
+});
