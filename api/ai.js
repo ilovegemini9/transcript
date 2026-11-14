@@ -88,7 +88,7 @@ async function callGemini(transcript, instruction, deadlineAt) {
 
 async function callOpenAI(transcript, instruction, deadlineAt) {
   const base = (process.env.OPENAI_API_BASE || 'https://api.openai.com/v1').replace(/\/$/, '');
-  const upstream = await fetch(base + '/chat/completions', { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.OPENAI_API_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ model: process.env.OPENAI_MODEL || 'gpt-4o-mini', temperature: 0.5, max_tokens: 700, messages: [{ role: 'system', content: instruction }, { role: 'user', content: transcript }] }), signal: providerSignal(deadlineAt) });
+  const upstream = await fetch(base + '/chat/completions', { method: 'POST', headers: { Authorization: 'Bearer ' + process.env.OPENAI_API_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ model: process.env.OPENAI_MODEL || 'gpt-4o-mini', temperature: 0.5, max_tokens: 700, messages: [{ role: 'system', content: instruction }, { role: 'user', content: transcript }] }), signal: providerSignal(deadlineAt), signal: providerSignal(deadlineAt) });
   const data = await upstream.json().catch(() => ({}));
   if (!upstream.ok) { const error = new Error('OpenAI provider error ' + upstream.status); error.status = upstream.status; throw error; }
   return data.choices?.[0]?.message?.content?.trim() || '';
